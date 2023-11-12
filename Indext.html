@@ -4,6 +4,7 @@
   
   <meta charset='utf-8'>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <>
 
 <!-- choose language -->
 
@@ -46,4 +47,55 @@
   <link rel="icon" sizes="192x192" href="logo.png" type="image/x-icon"/>
   <link rel="shortcut icon" href="logo.png" type="image/x-icon"/>
   <link rel="apple-touch-icon" href="logo.png" type="image/x-icon"/>
-  
+ 
+<!-- Performance API Polyfills -->
+  <script>
+  (function () {
+    var noop = function noop() {};
+    if ("performance" in window === false) {
+      window.performance = {};
+    }
+    window.performance.mark = performance.mark || noop;
+    window.performance.measure = performance.measure || noop;
+    if ("now" in window.performance === false) {
+      var nowOffset = Date.now();
+      if (performance.timing && performance.timing.navigationStart) {
+        nowOffset = performance.timing.navigationStart;
+      }
+      window.performance.now = function now() {
+        return Date.now() - nowOffset;
+      };
+    }
+  })();
+  </script>
+
+  <!-- Globals Definitions -->
+  <script>
+    (function () {
+      var now = Date.now()
+      window.initialTimestamps = {
+        initialTimestamp: now,
+        initialRequestTimestamp: Math.round(performance.timeOrigin ? performance.timeOrigin : now - performance.now())
+      }
+
+      window.thunderboltTag = "libs-releases-GA-local"
+      window.thunderboltVersion = "1.13125.0"
+    })();
+  </script>
+  <!-- Polyfills check -->
+  <script>
+    if (
+      typeof Promise === 'undefined' ||
+      typeof Set === 'undefined' ||
+      typeof Object.assign === 'undefined' ||
+      typeof Array.from === 'undefined' ||
+      typeof Symbol === 'undefined'
+    ) {
+      // send bi in order to detect the browsers in which polyfills are not working
+      window.fedops.phaseStarted('missing_polyfills')
+    }
+  </script>
+
+
+</body>
+</html> 
