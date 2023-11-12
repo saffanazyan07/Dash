@@ -1,159 +1,305 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  
-  <meta charset='utf-8'>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <meta name="stylesheet" href="style.css">
-  
-  <!-- Icon Page bar -->
-  <link rel="icon" sizes="192x192" href="logo.png" type="image/x-icon"/>
-  <link rel="shortcut icon" href="logo.png" type="image/x-icon"/>
-  <link rel="apple-touch-icon" href="logo.png" type="image/x-icon"/>
- 
-</head>  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Responsive Dashboard Design #1 | AsmrProg</title>
+</head>
+
 <body>
-<!-- Logo -->
 
-<header>
-  <h2 class="logo">RT Dash</h2>
-  <nav class="navigation">
-    <a href="#">Home</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Contact</a>
-    <button class="btnLogin-popup">Login</button>
-  </nav>
-</header>
+    <div class="container">
+        <!-- Sidebar Section -->
+        <aside>
+            <div class="toggle">
+                <div class="logo">
+                    <img src="images/logo.png">
+                    <h2>Asmr<span class="danger">Prog</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">
+                        close
+                    </span>
+                </div>
+            </div>
 
-<div>
+            <div class="sidebar">
+                <a href="#">
+                    <span class="material-icons-sharp">
+                        dashboard
+                    </span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">
+                        person_outline
+                    </span>
+                    <h3>Users</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">
+                        receipt_long
+                    </span>
+                    <h3>History</h3>
+                </a>
+                <a href="#" class="active">
+                    <span class="material-icons-sharp">
+                        insights
+                    </span>
+                    <h3>Analytics</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">
+                        mail_outline
+                    </span>
+                    <h3>Tickets</h3>
+                    <span class="message-count">27</span>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">
+                        inventory
+                    </span>
+                    <h3>Sale List</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">
+                        report_gmailerrorred
+                    </span>
+                    <h3>Reports</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">
+                        settings
+                    </span>
+                    <h3>Settings</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">
+                        add
+                    </span>
+                    <h3>New Login</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">
+                        logout
+                    </span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+        </aside>
+        <!-- End of Sidebar Section -->
 
-</div>
-<!-- Logo -->
-</div>
- <select id="select-language">
-    <option value="en">English</option>
-    <option value="id">Bahasa Indonesia</option>
-    <option value="fr">Français</option>
-    <option value="es">Español</option>
- </select>
- <button id="btn-change-language">Ubah Bahasa</button>
+        <!-- Main Content -->
+        <main>
+            <h1>Analytics</h1>
+            <!-- Analyses -->
+            <div class="analyse">
+                <div class="sales">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Total Sales</h3>
+                            <h1>$65,024</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="percentage">
+                                <p>+81%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="visits">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Site Visit</h3>
+                            <h1>24,981</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="percentage">
+                                <p>-48%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="searches">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Searches</h3>
+                            <h1>14,147</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="percentage">
+                                <p>+21%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Analyses -->
 
- <script>
-    document.getElementById("btn-change-language").addEventListener("click", function() {
-      let selectedLanguage = document.getElementById("select-language").value;
-      window.location.href = `?lang=${selectedLanguage}`;
-    });
- </script>
-  
+            <!-- New Users Section -->
+            <div class="new-users">
+                <h2>New Users</h2>
+                <div class="user-list">
+                    <div class="user">
+                        <img src="images/profile-2.jpg">
+                        <h2>Jack</h2>
+                        <p>54 Min Ago</p>
+                    </div>
+                    <div class="user">
+                        <img src="images/profile-3.jpg">
+                        <h2>Amir</h2>
+                        <p>3 Hours Ago</p>
+                    </div>
+                    <div class="user">
+                        <img src="images/profile-4.jpg">
+                        <h2>Ember</h2>
+                        <p>6 Hours Ago</p>
+                    </div>
+                    <div class="user">
+                        <img src="images/plus.png">
+                        <h2>More</h2>
+                        <p>New User</p>
+                    </div>
+                </div>
+            </div>
+            <!-- End of New Users Section -->
 
-<!-- Performance API Polyfills -->
-  <script>
-  (function () {
-    var noop = function noop() {};
-    if ("performance" in window === false) {
-      window.performance = {};
-    }
-    window.performance.mark = performance.mark || noop;
-    window.performance.measure = performance.measure || noop;
-    if ("now" in window.performance === false) {
-      var nowOffset = Date.now();
-      if (performance.timing && performance.timing.navigationStart) {
-        nowOffset = performance.timing.navigationStart;
-      }
-      window.performance.now = function now() {
-        return Date.now() - nowOffset;
-      };
-    }
-  })();
-  </script>
+            <!-- Recent Orders Table -->
+            <div class="recent-orders">
+                <h2>Recent Orders</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Course Name</th>
+                            <th>Course Number</th>
+                            <th>Payment</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <a href="#">Show All</a>
+            </div>
+            <!-- End of Recent Orders -->
 
-  <!-- Globals Definitions -->
-  <script>
-    (function () {
-      var now = Date.now()
-      window.initialTimestamps = {
-        initialTimestamp: now,
-        initialRequestTimestamp: Math.round(performance.timeOrigin ? performance.timeOrigin : now - performance.now())
-      }
+        </main>
+        <!-- End of Main Content -->
 
-      window.thunderboltTag = "libs-releases-GA-local"
-      window.thunderboltVersion = "1.13125.0"
-    })();
-  </script>
-  <!-- Polyfills check -->
-  <script>
-    if (
-      typeof Promise === 'undefined' ||
-      typeof Set === 'undefined' ||
-      typeof Object.assign === 'undefined' ||
-      typeof Array.from === 'undefined' ||
-      typeof Symbol === 'undefined'
-    ) {
-      // send bi in order to detect the browsers in which polyfills are not working
-      window.fedops.phaseStarted('missing_polyfills')
-    }
-  </script>
-<div>
-<p class="font_8 wixui-rich-text__text" style="line-height:1.8em; font-size:18px;">
-  <span style="letter-spacing:normal;" class="wixui-rich-text__text">
-    <span class="color_15 wixui-rich-text__text">Tel: 123-456-7890</span>
-  </span>
-</p>
-</div>
-<div id="comp-kq6hvv141" class="comp-kq6hvv141 WzbAF8">
-  <ul class="mpGTIt" aria-label="Social Bar">
-    <li id="dataItem-kq6hvv143-comp-kq6hvv141" class="O6KwRn">
-      <a data-testid="linkElement" href="https://www.linkedin.com/company/" target="_blank" class="oRtuWN">
-        <wow-image id="img_0_comp-kq6hvv141" class="HlRz5e YaS0jR" data-image-info="{&quot;containerId&quot;:&quot;dataItem-kq6hvv143-comp-kq6hvv141&quot;,&quot;displayMode&quot;:&quot;fill&quot;,&quot;imageData&quot;:{&quot;width&quot;:200,&quot;height&quot;:200,&quot;uri&quot;:&quot;6ea5b4a88f0b4f91945b40499aa0af00.png&quot;,&quot;name&quot;:&quot;&quot;,&quot;displayMode&quot;:&quot;fill&quot;}}" data-bg-effect-name="" data-has-ssr-src="" style="--wix-img-max-width:max(200px, 100%)">
-          <img alt="LinkedIn"/>
-        </wow-image>
-      </a>
-    </li>
-    <li id="dataItem-kq6hvv16-comp-kq6hvv141" class="O6KwRn">
-      <a data-testid="linkElement" href="https://www.facebook.com/" target="_blank" class="oRtuWN">
-        <wow-image id="img_1_comp-kq6hvv141" class="HlRz5e YaS0jR" data-image-info="{&quot;containerId&quot;:&quot;dataItem-kq6hvv16-comp-kq6hvv141&quot;,&quot;displayMode&quot;:&quot;fill&quot;,&quot;imageData&quot;:{&quot;width&quot;:200,&quot;height&quot;:200,&quot;uri&quot;:&quot;0fdef751204647a3bbd7eaa2827ed4f9.png&quot;,&quot;name&quot;:&quot;&quot;,&quot;displayMode&quot;:&quot;fill&quot;}}" data-bg-effect-name="" data-has-ssr-src="" style="--wix-img-max-width:max(200px, 100%)">
-          <img alt="Facebook"/>
-        </wow-image>
-      </a>
-    </li>
-    <li id="dataItem-kq6hvv162-comp-kq6hvv141" class="O6KwRn">
-      <a data-testid="linkElement" href="https://www.twitter.com/wix" target="_blank" class="oRtuWN">
-        <wow-image id="img_2_comp-kq6hvv141" class="HlRz5e YaS0jR" data-image-info="{&quot;containerId&quot;:&quot;dataItem-kq6hvv162-comp-kq6hvv141&quot;,&quot;displayMode&quot;:&quot;fill&quot;,&quot;imageData&quot;:{&quot;width&quot;:200,&quot;height&quot;:200,&quot;uri&quot;:&quot;c7d035ba85f6486680c2facedecdcf4d.png&quot;,&quot;name&quot;:&quot;&quot;,&quot;displayMode&quot;:&quot;fill&quot;}}" data-bg-effect-name="" data-has-ssr-src="" style="--wix-img-max-width:max(200px, 100%)">
-          <img alt="Twitter"/>
-        </wow-image>
-        </a>
-      </li>
-    </ul>
-  </div>
-</div>
-</div>
-</div>
-<div id="comp-kq6hvv18" class="comp-kq6hvv18 YzqVVZ wixui-column-strip__column">
-  <div id="bgLayers_comp-kq6hvv18" data-hook="bgLayers" class="MW5IWV">
-    <div data-testid="colorUnderlay" class="LWbAav Kv1aVt">     
+        <!-- Right Section -->
+        <div class="right-section">
+            <div class="nav">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">
+                        menu
+                    </span>
+                </button>
+                <div class="dark-mode">
+                    <span class="material-icons-sharp active">
+                        light_mode
+                    </span>
+                    <span class="material-icons-sharp">
+                        dark_mode
+                    </span>
+                </div>
+
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>Reza</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="images/profile-1.jpg">
+                    </div>
+                </div>
+
+            </div>
+            <!-- End of Nav -->
+
+            <div class="user-profile">
+                <div class="logo">
+                    <img src="images/logo.png">
+                    <h2>AsmrProg</h2>
+                    <p>Fullstack Web Developer</p>
+                </div>
+            </div>
+
+            <div class="reminders">
+                <div class="header">
+                    <h2>Reminders</h2>
+                    <span class="material-icons-sharp">
+                        notifications_none
+                    </span>
+                </div>
+
+                <div class="notification">
+                    <div class="icon">
+                        <span class="material-icons-sharp">
+                            volume_up
+                        </span>
+                    </div>
+                    <div class="content">
+                        <div class="info">
+                            <h3>Workshop</h3>
+                            <small class="text_muted">
+                                08:00 AM - 12:00 PM
+                            </small>
+                        </div>
+                        <span class="material-icons-sharp">
+                            more_vert
+                        </span>
+                    </div>
+                </div>
+
+                <div class="notification deactive">
+                    <div class="icon">
+                        <span class="material-icons-sharp">
+                            edit
+                        </span>
+                    </div>
+                    <div class="content">
+                        <div class="info">
+                            <h3>Workshop</h3>
+                            <small class="text_muted">
+                                08:00 AM - 12:00 PM
+                            </small>
+                        </div>
+                        <span class="material-icons-sharp">
+                            more_vert
+                        </span>
+                    </div>
+                </div>
+
+                <div class="notification add-reminder">
+                    <div>
+                        <span class="material-icons-sharp">
+                            add
+                        </span>
+                        <h3>Add Reminder</h3>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
     </div>
-    <div id="bgMedia_comp-kq6hvv18" class="VgO9Yg"></div>
-  </div>
-<!-- footer -->
 
-<div data-mesh-id="comp-kpz4b1prinlineContent" data-testid="inline-content" class="">
-  <div data-mesh-id="comp-kpz4b1prinlineContent-gridContainer" data-testid="mesh-container-content">
-    <div id="comp-kpz6sbjm" class="KcpHeO tz5f0K comp-kpz6sbjm wixui-rich-text" data-testid="richTextElement">
-      <p class="font_9 color_15 wixui-rich-text__text" style="text-align:center; line-height:normal; font-size:15px;">
-        <span style="letter-spacing:normal;" class="color_15 wixui-rich-text__text">
-          <span class="color_15 wixui-rich-text__text">© 2023 RT dashboard. Powered and secured by 
-            <span style="text-decoration:underline;" class="color_15 wixui-rich-text__text">
-              <a href="https://sites.google.com/view/rt-lab" target="_blank" rel="noreferrer noopener" class="color_15 wixui-rich-text__text">RT Lab</a>
-            </span>
-          </span>
-        </span>
-      </p>
-</div>
-</div>
-</div>
-</div>
-</footer>
+    <script src="orders.js"></script>
+    <script src="index.js"></script>
 </body>
-</html> 
+
+</html>
