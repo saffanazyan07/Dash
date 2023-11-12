@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- choose language -->
+
+ <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    select {
+      padding: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 5px 10px;
+      font-size: 16px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+ </style>
+</head>
+<body>
+ <h1>Pilih Bahasa</h1>
+ <select id="select-language">
+    <option value="en">English</option>
+    <option value="id">Bahasa Indonesia</option>
+    <option value="fr">Français</option>
+    <option value="es">Español</option>
+ </select>
+ <button id="btn-change-language">Ubah Bahasa</button>
+
+ <script>
+    document.getElementById("btn-change-language").addEventListener("click", function() {
+      let selectedLanguage = document.getElementById("select-language").value;
+      window.location.href = `?lang=${selectedLanguage}`;
+    });
+ </script>
+  
+<!-- Icon Page bar -->
+  <link rel="icon" sizes="192x192" href="logo.png" type="image/x-icon"/>
+  <link rel="shortcut icon" href="logo.png" type="image/x-icon"/>
+  <link rel="apple-touch-icon" href="logo.png" type="image/x-icon"/>
+  
