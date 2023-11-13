@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////
 AMR_table_initial();
 function AMR_table_initial() {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=amf", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=amf", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -21,7 +21,7 @@ function AMR_table_initial() {
 }
 
 setInterval(function () {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=amf", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=amf", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -288,7 +288,7 @@ function AMF_usage_table(source) {
 ///////////////////////////////////////////////////////////////
 SMF_table_initial();
 function SMF_table_initial() {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=smf", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=smf", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -304,7 +304,7 @@ function SMF_table_initial() {
 }
 
 setInterval(function () {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=smf", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=smf", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -570,7 +570,7 @@ function SMF_usage_table(source) {
 ///////////////////////////////////////////////////////////////
 UPF_table_initial();
 function UPF_table_initial() {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=upf", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=upf", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -586,7 +586,7 @@ function UPF_table_initial() {
 }
 
 setInterval(function () {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=upf", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=upf", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -852,7 +852,7 @@ function UPF_usage_table(source) {
 ///////////////////////////////////////////////////////////////
 AUSF_table_initial();
 function AUSF_table_initial() {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=ausf", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=ausf", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -868,7 +868,7 @@ function AUSF_table_initial() {
 }
 
 setInterval(function () {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=ausf", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=ausf", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -1134,7 +1134,7 @@ function AUSF_usage_table(source) {
 ///////////////////////////////////////////////////////////////
 NSSF_table_initial();
 function NSSF_table_initial() {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=nssf", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=nssf", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -1150,7 +1150,7 @@ function NSSF_table_initial() {
 }
 
 setInterval(function () {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=nssf", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=nssf", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -1416,7 +1416,7 @@ function NSSF_usage_table(source) {
 ///////////////////////////////////////////////////////////////
 PCF_table_initial();
 function PCF_table_initial() {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=pcf", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=pcf", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -1432,7 +1432,7 @@ function PCF_table_initial() {
 }
 
 setInterval(function () {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=pcf", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=pcf", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -1698,7 +1698,7 @@ function PCF_usage_table(source) {
 ///////////////////////////////////////////////////////////////
 UDM_table_initial();
 function UDM_table_initial() {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=udm", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=udm", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -1714,7 +1714,7 @@ function UDM_table_initial() {
 }
 
 setInterval(function () {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=udm", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=udm", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -1980,7 +1980,7 @@ function UDM_usage_table(source) {
 ///////////////////////////////////////////////////////////////
 NRF_table_initial();
 function NRF_table_initial() {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=nrf", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=nrf", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -1996,7 +1996,7 @@ function NRF_table_initial() {
 }
 
 setInterval(function () {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=nrf", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=nrf", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -2262,7 +2262,7 @@ function NRF_usage_table(source) {
 ///////////////////////////////////////////////////////////////
 CHART_table_initial();
 function CHART_table_initial() {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=VM", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=VM", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
@@ -2278,7 +2278,7 @@ function CHART_table_initial() {
 }
 
 setInterval(function () {
-    fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=VM", {
+    fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=VM", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
