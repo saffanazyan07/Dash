@@ -58,7 +58,7 @@ LoginmyForm.addEventListener("submit", function (e) {
     let S_Password = document.getElementById("S_Password").value;
     window.sessionStorage.setItem("s_login_email", S_Account);
 
-    let test = "http://140.118.121.109:5678/user/login?s_email=" + S_Account + "&s_password=" + S_Password;
+    let test = "http://140.118.121.85:5000/user/login?s_email=" + S_Account + "&s_password=" + S_Password;
 
     fetch(test, {
         method: "GET",
@@ -81,7 +81,7 @@ LoginmyForm.addEventListener("submit", function (e) {
 });
 
 function NextStep(){
-    fetch("http://140.118.121.109:5678/user/edit?s_email=" + window.sessionStorage.getItem("s_login_email", S_Account), {
+    fetch("http://140.118.121.85:5000/user/edit?s_email=" + window.sessionStorage.getItem("s_login_email", S_Account), {
         method: "GET",
     })
         .then((response) => {
@@ -134,7 +134,7 @@ myForm.addEventListener("submit", function (e) {
     swal("Loading Now", "", "info", { timer: 2000, showConfirmButton: false });
 
     var formdata = new FormData(document.getElementById("myForm"));
-    fetch("http://140.118.121.109:5678/user/signup", {
+    fetch("http://140.118.121.85:5000/user/signup", {
         method: "POST",
         body: formdata,
     })
@@ -160,7 +160,7 @@ function Signuprender(data) {
             var Verifydata = new FormData(document.getElementById("VerifymyForm"));
             Verifydata.append("s_email",u_email);
 
-            fetch("http://140.118.121.109:5678/user/verify", {
+            fetch("http://140.118.121.85:5000/user/verify", {
                 method: "PUT",
                 body: Verifydata,
              }).then((response) => {
@@ -227,7 +227,7 @@ Historyform.addEventListener("submit", function (e) {
     console.log(DateBegin);
     console.log(DateEnd);
 
-    let param = "http://140.118.121.109:5678/nfs/log/recode?s_nf=" + NF + "&dt_infotimefrom=" + DateBegin + "&dt_infotimeto=" + DateEnd;
+    let param = "http://140.118.121.85:5000/nfs/log/recode?s_nf=" + NF + "&dt_infotimefrom=" + DateBegin + "&dt_infotimeto=" + DateEnd;
     fetch(param, {
         method: "GET",
         headers: {
@@ -756,7 +756,7 @@ fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=udm", {
     });
 
 setInterval(function () {
-fetch("http://140.118.121.109:5678/nfs/resource/recode?s_nf=udm", {
+fetch("http://140.118.121.85:5000/nfs/resource/recode?s_nf=udm", {
     method: "GET",
     headers: {
         Accept: "application/json, text/plain",
@@ -784,7 +784,7 @@ function Dashboard_dt(source){
     first[9] = source[9].dt_infotime;
 
 
-    fetch("http://140.118.121.109:5678/ue/dashboard", {
+    fetch("http://140.118.121.85:5000/ue/dashboard", {
         method: "GET",
         headers: {
             Accept: "application/json, text/plain",
