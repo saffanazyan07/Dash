@@ -35,7 +35,7 @@
 
 //john modificatio
 function login() {
-    var username = document.getElementById("username").value;
+    var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
 
     var xhr = new XMLHttpRequest();
@@ -46,5 +46,5 @@ function login() {
             document.getElementById("result").innerHTML = xhr.responseText;
         }
     };
-    xhr.send("username=" + username + "&password=" + password);
+    xhr.send("email=" + email + "&password=" + password);
 }
