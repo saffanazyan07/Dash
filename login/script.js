@@ -33,19 +33,10 @@
         container.classList.remove("active");
     });
 
-//john modificatio
-function login() {
-    var email = document.getElementById("username").value;
-    var password = document.getElementById("password").value;
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "login.php", true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            document.getElementById("result").innerHTML = xhr.responseText;
-        }
-    };
-    xhr.send("email=" + email + "&password=" + password);
-}
 const Logincontainer = document.getElementById("Login-container");
+const SignupClose = document.getElementById("SignupClose");
+const LoginClose = document.getElementById("LoginClose");
+const Signup = document.getElementById("Signup");
+const LoginClose = document.getElementById("LoginClose");
+const Signup = document.getElementById("Signup");
