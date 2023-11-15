@@ -8,8 +8,8 @@
     pwShowHide.forEach(eyeIcon =>{
         eyeIcon.addEventListener("click", ()=>{
             pwFields.forEach(pwField =>{
-                if(pwField.type ==="password"){
-                    pwField.type = "text";
+                if(pwField.type =="password"){
+                    pwField.type == "email";
 
                     pwShowHide.forEach(icon =>{
                         icon.classList.replace("uil-eye-slash", "uil-eye");
