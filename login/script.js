@@ -23,7 +23,7 @@
                 }
             }) 
         })
-    })*/
+    })
 
     // js code to appear signup and login form
     signUp.addEventListener("click", ( )=>{
@@ -31,7 +31,7 @@
     });
     login.addEventListener("click", ( )=>{
         container.classList.remove("active");
-    });
+    });*/
 
 const express = require('express');
 const mysql = require('mysql2');
