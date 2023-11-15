@@ -1,4 +1,4 @@
-    const container = document.querySelector(".container"),
+ /*   const container = document.querySelector(".container"),
       pwShowHide = document.querySelectorAll(".showHidePw"),
       pwFields = document.querySelectorAll(".password"),
       signUp = document.querySelector(".signup-link"),
@@ -23,7 +23,7 @@
                 }
             }) 
         })
-    })
+    })*/
 
     // js code to appear signup and login form
     signUp.addEventListener("click", ( )=>{
