@@ -48,3 +48,4 @@ function login() {
     };
     xhr.send("email=" + email + "&password=" + password);
 }
+const Logincontainer = document.getElementById("Login-container");
