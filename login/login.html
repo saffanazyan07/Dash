@@ -104,3 +104,27 @@
      <script src="script.js"></script> 
 </body>
 </html>
+
+<script>
+    document.getElementById('loginButton').addEventListener('click', () => {
+        const username = document.querySelector('[type="username"]').value;
+        const password = document.querySelector('.password').value;
+
+        // Make an AJAX request to your server
+        fetch('http://your-server-endpoint/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response from the server
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
