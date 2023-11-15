@@ -35,7 +35,7 @@
 
 //john modificatio
 function login() {
-    var email = document.getElementById("email").value;
+    var email = document.getElementById("username").value;
     var password = document.getElementById("password").value;
 
     var xhr = new XMLHttpRequest();
