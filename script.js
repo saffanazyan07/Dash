@@ -92,45 +92,61 @@
 });*/
 
 function submitForm() {
-            var name = document.getElementById("s_name").value;
-            var email = document.getElementById("s_email").value;
-            var password = document.getElementById("s_password").value;
-            var passwordconfirm = document.getElementById('s_password confirm').value;
-            var phone = document.getElementById("s_phone").value;
-            var termsChecked = document.getElementById("termCon").checked;
+    var name = document.getElementById("s_name").value;
+    var email = document.getElementById("s_email").value;
+    var password = document.getElementById("s_password").value;
+    var confirmPassword = document.getElementById("s_password_confirm").value;
+    var phone = document.getElementById("s_phone").value;
+    var termsChecked = document.getElementById("termCon").checked;
 
-            // Additional form validation can be added here
+    // Additional form validation can be added here
 
-            if (termsChecked) {
-                // Create an object with the form data
-                var formData = {
-                    s_name: name,
-                    s_email: email,
-                    s_password: password,
-                    s_passwordconfirm: passwordconfirm,
-                    s_phone: phone
-                };
-
-                // Make a POST request to your API
-                fetch('http://140.118.121.85:5000/user/signup', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Handle the API response here
-                    console.log(data);
-                    alert("Form submitted successfully!");
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert("Error submitting the form. Please try again.");
-                });
-            } else {
-                alert("Please accept the terms and conditions!");
-            }
+    if (termsChecked) {
+        // Validate email field
+        if (!isValidEmail(email)) {
+            alert("Please enter a valid email address.");
+            return;
         }
 
+        // Validate password and confirm password fields
+        if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        }
+
+        // Create an object with the form data
+        var formData = {
+            s_name: name,
+            s_email: email,
+            s_password: password,
+            s_phone: phone
+        };
+
+        // Make a POST request to your API
+        fetch('http://140.118.121.85:5000/user/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the API response here
+            console.log(data);
+            alert("Form submitted successfully!");
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Error submitting the form. Please try again.");
+        });
+    } else {
+        alert("Please accept the terms and conditions!");
+    }
+}
+
+function isValidEmail(email) {
+    // Simple email validation regex
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
