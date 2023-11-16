@@ -150,3 +150,14 @@ function isValidEmail(email) {
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
+// Fetch data from the server
+  fetch('/fetchData')
+    .then(response => response.json())
+    .then(data => {
+      // Assuming the 'message' property exists in the fetched data
+      const alertMessage = data[0].message;
+
+      // Display an alert with the fetched message
+      alert(alertMessage);
+    })
+    .catch(error => console.error('Error fetching data: ', error));
