@@ -140,11 +140,7 @@ function submitForm() {
             alert(alertMessage);
           })
     .catch(error => console.error('Error fetching data: ', error));
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert("Error submitting the form. Please try again.");
-        });
+        
     } else {
         alert("Please accept the terms and conditions!");
     }
