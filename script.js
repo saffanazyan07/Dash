@@ -119,7 +119,7 @@ function submitForm() {
             s_name: name,
             s_email: email,
             s_password: password,
-            s_password confirm: confirmPassword,
+            s_password_confirm: confirmPassword,
             s_phone: phone
         };
 
