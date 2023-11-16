@@ -95,6 +95,7 @@ function submitForm() {
             var name = document.getElementById("s_name").value;
             var email = document.getElementById("s_email").value;
             var password = document.getElementById("s_password").value;
+            var passwordconfirm = document.getElementById('s_password confirm').value;
             var phone = document.getElementById("s_phone").value;
             var termsChecked = document.getElementById("termCon").checked;
 
@@ -106,6 +107,7 @@ function submitForm() {
                     s_name: name,
                     s_email: email,
                     s_password: password,
+                    s_passwordconfirm: passwordconfirm,
                     s_phone: phone
                 };
 
