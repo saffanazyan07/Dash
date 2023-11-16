@@ -145,4 +145,8 @@ function submitForm() {
         alert("Please accept the terms and conditions!");
     }
 }
-
+function isValidEmail(email) {
+    // Simple email validation regex
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
