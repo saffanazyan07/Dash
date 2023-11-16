@@ -40,7 +40,7 @@ signUp.addEventListener("submit", function (e) {
     window.sessionStorage.setItem("s_email", s_email);
     swal("Loading Now", "", "info", { timer: 2000, showConfirmButton: false });
 
-    var formdata = new FormData(document.getElementById("myForm"));
+    var formdata = new FormData(document.getElementById("form signup"));
     fetch("http://140.118.121.85:5000/user/signup", {
         method: "POST",
         body: formdata,
