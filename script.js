@@ -35,11 +35,11 @@
 document.querySelector('#signUp input[type="button"]').addEventListener('click', async function(e) {
     e.preventDefault();
   
-    const name = document.getElementById('s_name').value;
-    const email = document.getElementById('s_email').value;
-    const password = document.getElementById('s_password').value;
-    const passwordConfirm = document.getElementById('s_password confirm').value;
-    const phone = document.getElementById('s_phone').value;
+    const s_name = document.getElementById('s_name').value;
+    const s_email = document.getElementById('s_email').value;
+    const s_password = document.getElementById('s_password').value;
+    const s_passwordConfirm = document.getElementById('s_password confirm').value;
+    const s_phone = document.getElementById('s_phone').value;
   
     if (!password || !passwordConfirm || password !== passwordConfirm) {
       alert('Passwords do not match.');
@@ -54,10 +54,10 @@ document.querySelector('#signUp input[type="button"]').addEventListener('click',
     }
   
     const user = {
-      name,
-      email,
-      password,
-      phone
+      s_name,
+      s_email,
+      s_password,
+      s_phone
     };
   
     swal({
