@@ -32,13 +32,14 @@
     login.addEventListener("click", ( )=>{
         container.classList.remove("active");
     });
+//signup call API
 document.querySelector('#signUp input[type="button"]').addEventListener('click', async function(e) {
     e.preventDefault();
   
     const s_name = document.getElementById('s_name').value;
     const s_email = document.getElementById('s_email').value;
     const s_password = document.getElementById('s_password').value;
-    const s_passwordConfirm = document.getElementById('s_password confirm').value;
+    const s_passwordconfirm = document.getElementById('s_password confirm').value;
     const s_phone = document.getElementById('s_phone').value;
   
     if (!password || !passwordConfirm || password !== passwordConfirm) {
