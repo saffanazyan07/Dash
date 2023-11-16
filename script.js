@@ -103,14 +103,14 @@ function submitForm() {
             if (termsChecked) {
                 // Create an object with the form data
                 var formData = {
-                    name: name,
-                    email: email,
-                    password: password,
-                    phone: phone
+                    s_name: name,
+                    s_email: email,
+                    s_password: password,
+                    s_phone: phone
                 };
 
                 // Make a POST request to your API
-                fetch('YOUR_API_ENDPOINT', {
+                fetch('http://140.118.121.85:5000/user/signup', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
