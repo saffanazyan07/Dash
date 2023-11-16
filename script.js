@@ -32,8 +32,9 @@
     login.addEventListener("click", ( )=>{
         container.classList.remove("active");
     });
+
 //signup call API
-document.getElementById('signUp').addEventListener('click', async function(e) {
+/* document.getElementById('signUp').addEventListener('click', async function(e) {
     e.preventDefault();
   
     const s_name = document.getElementById('s_name').value;
@@ -42,7 +43,7 @@ document.getElementById('signUp').addEventListener('click', async function(e) {
     const s_passwordconfirm = document.getElementById('s_password confirm').value;
     const s_phone = document.getElementById('s_phone').value;
   
-    if (!password || !passwordConfirm || password !== passwordConfirm) {
+   if (!password || !passwordConfirm || password !== passwordConfirm) {
       alert('Passwords do not match.');
       return;
     }
@@ -88,6 +89,46 @@ document.getElementById('signUp').addEventListener('click', async function(e) {
     } catch (error) {
       console.error('An error occurred:', error);
     }
-});
+});*/
 
+function submitForm() {
+            var name = document.getElementById("s_name").value;
+            var email = document.getElementById("s_email").value;
+            var password = document.getElementById("s_password").value;
+            var phone = document.getElementById("s_phone").value;
+            var termsChecked = document.getElementById("termCon").checked;
+
+            // Additional form validation can be added here
+
+            if (termsChecked) {
+                // Create an object with the form data
+                var formData = {
+                    name: name,
+                    email: email,
+                    password: password,
+                    phone: phone
+                };
+
+                // Make a POST request to your API
+                fetch('YOUR_API_ENDPOINT', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the API response here
+                    console.log(data);
+                    alert("Form submitted successfully!");
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("Error submitting the form. Please try again.");
+                });
+            } else {
+                alert("Please accept the terms and conditions!");
+            }
+        }
 
