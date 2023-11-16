@@ -133,14 +133,14 @@ function submitForm() {
         })
         .then(response => response.json())
         .then(data => {
-            // Handle the API response here
-            const alertMessage = data[0].message;
-
-            // Display an alert with the fetched message
-            alert(alertMessage);
-          })
-    .catch(error => console.error('Error fetching data: ', error));
-        
+      // Handle the API response here
+            console.log(data);
+            alert("Form submitted successfully!");
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Error submitting the form. Please try again.");
+        });   
     } else {
         alert("Please accept the terms and conditions!");
     }
