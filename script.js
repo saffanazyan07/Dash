@@ -33,7 +33,7 @@
         container.classList.remove("active");
     });
 //signup call API
-document.querySelector('#signUp input[type="button"]').addEventListener('click', async function(e) {
+document.getElementById('signUp').addEventListener('click', async function(e) {
     e.preventDefault();
   
     const s_name = document.getElementById('s_name').value;
