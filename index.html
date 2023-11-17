@@ -93,7 +93,7 @@
             // Check the response from the server and take appropriate action
            if (data.message === "User found" || data.status_code === 200) {
                 console.log('Login successful:', data.message);
-                window.location.href = 'USER/index.html';
+                window.location.href = '/USER/index.html';
             } else {
                 // Handle failed login
                 console.error('Login failed:', data.message);
