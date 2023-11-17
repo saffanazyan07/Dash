@@ -25,39 +25,40 @@
             
     <!-- Login Form -->
             <div class="form login">
-                <span class="title">Login</span>
+    <span class="title">Login</span>
 
-                <form id="login" action="http://140.118.121.85:5000/user/login" method="GET">
-                    <div class="input-field">
-                        <input type="username" placeholder="Username" required>
-                        <i class="uil uil-envelope icon"></i>
-                    </div>
-                    <div class="input-field">
-                        <input type="password" class="password" placeholder="Enter your password" required>
-                        <i class="uil uil-lock icon"></i>
-                        <i class="uil uil-eye-slash showHidePw"></i>
-                    </div>
+    <form id="login" action="http://140.118.121.85:5000/user/login" method="POST">
+        <div class="input-field">
+            <input type="text" id="username" placeholder="Username" required>
+            <i class="uil uil-envelope icon"></i>
+        </div>
+        <div class="input-field">
+            <input type="password" id="password" class="password" placeholder="Enter your password" required>
+            <i class="uil uil-lock icon"></i>
+            <i class="uil uil-eye-slash showHidePw"></i>
+        </div>
 
-                    <div class="checkbox-text">
-                        <div class="checkbox-content">
-                            <input type="checkbox" id="logCheck">
-                            <label for="logCheck" class="text">Remember me</label>
-                        </div>
-                        
-                        <a href="#" class="text">Forgot password?</a>
-                    </div>
-
-                    <div class="input-field button">
-                        <input type="button" value="Login" onclick="login()" id="loginButton">
-                    </div>
-                </form>
-
-                <div class="login-signup">
-                    <span class="text">Not a member?
-                        <a href="#" class="text signup-link">Signup Now</a>
-                    </span>
-                </div>
+        <div class="checkbox-text">
+            <div class="checkbox-content">
+                <input type="checkbox" id="logCheck">
+                <label for="logCheck" class="text">Remember me</label>
             </div>
+
+            <a href="#" class="text">Forgot password?</a>
+        </div>
+
+        <div class="input-field button">
+            <input type="button" value="Login" onclick="login()" id="loginButton">
+        </div>
+    </form>
+
+    <div class="login-signup">
+        <span class="text">Not a member?
+            <a href="#" class="text signup-link">Signup Now</a>
+        </span>
+    </div>
+</div>
+
 <script>
     async function login() {
         const username = document.getElementById('username').value;
@@ -103,8 +104,8 @@
             alert('An error occurred. Please try again later.');
         }
     }
-                
-            </script>
+</script>
+
   
     <!-- Registration Form -->
             <div class="form signup">
