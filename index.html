@@ -89,11 +89,9 @@
             }
 
             const data = await response.json();
-            console.log('Login failed:', data.ok);
+            console.log('Login failed:', data.message);
             // Check the response from the server and take appropriate action
-            if (data.success) {
-                // Successful login, redirect or perform other actions
-                
+           if (data.message === "User found" || data.status_code === 200) {
                 console.log('Login successful:', data.message);
                 window.location.href = 'home.html';
             } else {
