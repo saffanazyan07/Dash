@@ -3,12 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Data Display</title>
+    <title>ID Details Example</title>
 </head>
 <body>
-    <div id="data-container">
-        <!-- Display API data here -->
+
+    <h2>Enter ID:</h2>
+    <input type="text" id="userIdInput">
+    <button onclick="fetchUserDetails()">Get Details</button>
+
+    <div id="userDetailsContainer">
+        <!-- Display user details here -->
     </div>
-    <script src="scripthome.js"></script>
+
+    <script>
+        function fetchUserDetails() {
+            // Get the user ID from the input field
+            const userId = document.getElementById('userIdInput').value;
+
+            // Replace 'API_ENDPOINT' with the actual API endpoint
+            const apiUrl = `API_ENDPOINT/user/${userId}`;
+
+            // Fetch user details from the API
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(userDetails => {
+                    // Display user details
+                    displayUserDetails(userDetails);
+                })
+                .catch(error => console.error('Error fetching user details:', error));
+        }
+
+        function displayUserDetails(userDetails) {
+            // Access user details properties and update HTML elements
+            const userDetailsContainer = document.getElementById('userDetailsContainer');
+
+            if (userDetails) {
+                userDetailsContainer.innerHTML = `
+                    <h3>User Details:</h3>
+                    <p>ID: ${userDetails.id}</p>
+                    <p>Name: ${userDetails.name}</p>
+                    <!-- Add more details as needed -->
+                `;
+            } else {
+                userDetailsContainer.innerHTML = '<p>User not found</p>';
+            }
+        }
+    </script>
+
 </body>
 </html>
