@@ -139,14 +139,26 @@ function isValidEmail(email) {
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
-/*fetch('/fetchData')
+
+
+//##########UEINFO
+const apiUrl = 'http:// 140.118.121.85:5000/ue/info';
+
+// Fetch data from the API
+fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
-      // Assuming the 'message' property exists in the fetched data
-      const alertMessage = data[0].message;
+        // Handle the retrieved data
+        console.log(data);
 
-      // Display an alert with the fetched message
-      alert(alertMessage);
+        // Call a function to display the data
+        displayData(data);
     })
-    .catch(error => console.error('Error fetching data: ', error));
-*/
+    .catch(error => console.error('Error fetching data:', error));
+
+// Function to display data in the HTML
+function displayData(data) {
+    // Access data properties and update HTML elements
+    const dataContainer = document.getElementById('data-container');
+    dataContainer.innerHTML = `<p>${data.propertyName}</p>`;
+    // Add more HTML manipulation as needed based on the data structure
