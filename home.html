@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NFS Resource Form</title>
-    <!-- Include Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -18,8 +16,7 @@
         <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
     </form>
 
-    <!-- Container for the log-style display -->
-    <div id="logContainer" style="width: 80%; margin: 20px auto; white-space: pre-wrap;"></div>
+    <div id="responseContainer"></div>
 
     <script>
         function fetchNFSResource() {
@@ -44,24 +41,17 @@
             })
             .then(data => {
                 // Handle the successful response
-                displayResourceLog(data);
+                displayResourceInfo(data);
             })
             .catch(error => {
                 // Handle errors
-                console.error(error.message);
+                displayResourceInfo(`Error: ${error.message}`);
             });
         }
 
-        function displayResourceLog(data) {
-            const logContainer = document.getElementById('logContainer');
-
-            // Convert the data object into a log-like string
-            const logText = Object.entries(data)
-                .map(([key, value]) => `${key}: ${value}`)
-                .join('\n');
-
-            // Display the log in the container
-            logContainer.textContent = logText;
+        function displayResourceInfo(data) {
+            const responseContainer = document.getElementById('responseContainer');
+            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
         }
     </script>
 
