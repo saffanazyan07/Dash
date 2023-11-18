@@ -33,7 +33,7 @@
         container.classList.remove("active");
     });
 
-async function login() {
+async function loginUser() {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
@@ -70,7 +70,6 @@ async function login() {
             } else {
                 // Handle failed login
                 console.error('Login failed:', data.message);
-                console.log('Login failed:', data.message);
                 alert('Login failed. Please check your credentials.');
             }
         } catch (error) {
