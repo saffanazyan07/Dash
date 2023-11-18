@@ -3,50 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ID Details Example</title>
+    <title>NFS Resource Form</title>
 </head>
 <body>
 
-    <h2>Enter ID:</h2>
-    <input type="text" id="userIdInput">
-    <button onclick="fetchUserDetails()">Get Details</button>
+    <h2>NFS Resource Information</h2>
 
-    <div id="userDetailsContainer">
-        <!-- Display user details here -->
-    </div>
+    <form id="resourceForm">
+        <label for="nf">Network Function:</label>
+        <input type="text" id="nf" name="s_nf" required>
+
+        <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
+    </form>
+
+    <div id="responseContainer"></div>
 
     <script>
-        function fetchUserDetails() {
-            // Get the user ID from the input field
-            const userId = document.getElementById('userIdInput').value;
+        function fetchNFSResource() {
+            const nfInput = document.getElementById('nf');
+            const nfValue = nfInput.value;
 
-            // Replace 'API_ENDPOINT' with the actual API endpoint
-            const apiUrl = `http:// 140.118.121.85:5000/ue/detail${s_email}`;
+            // Replace 'http://140.118.121.85:5000/nfs/resource' with the actual API endpoint
+            const apiUrl = `http://140.118.121.85:5000/nfs/resource?s_nf=${nfValue}`;
 
-            // Fetch user details from the API
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(userDetails => {
-                    // Display user details
-                    displayUserDetails(userDetails);
-                })
-                .catch(error => console.error('Error fetching user details:', error));
+            fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
+                }
+            })
+            .then(data => {
+                // Handle the successful response
+                displayResourceInfo(data);
+            })
+            .catch(error => {
+                // Handle errors
+                displayResourceInfo(`Error: ${error.message}`);
+            });
         }
 
-        function displayUserDetails(userDetails) {
-            // Access user details properties and update HTML elements
-            const userDetailsContainer = document.getElementById('userDetailsContainer');
-
-            if (userDetails) {
-                userDetailsContainer.innerHTML = `
-                    <h3>User Details:</h3>
-                    <p>ID: ${account.s_email}</p>
-                    <p>Name: ${account.s_name}</p>
-                    <!-- Add more details as needed -->
-                `;
-            } else {
-                userDetailsContainer.innerHTML = '<p>User not found</p>';
-            }
+        function displayResourceInfo(data) {
+            const responseContainer = document.getElementById('responseContainer');
+            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
         }
     </script>
 
