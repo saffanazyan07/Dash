@@ -1,4 +1,4 @@
-   const container = document.querySelector(".container"),
+const container = document.querySelector(".container"),
       pwShowHide = document.querySelectorAll(".showHidePw"),
       pwFields = document.querySelectorAll(".password"),
       signUp = document.querySelector(".signup-link"),
@@ -8,8 +8,8 @@
     pwShowHide.forEach(eyeIcon =>{
         eyeIcon.addEventListener("click", ()=>{
             pwFields.forEach(pwField =>{
-                if(pwField.type =="password"){
-                    pwField.type == "email";
+                if(pwField.type ==="password"){
+                    pwField.type = "email";
 
                     pwShowHide.forEach(icon =>{
                         icon.classList.replace("uil-eye-slash", "uil-eye");
@@ -33,7 +33,9 @@
         container.classList.remove("active");
     });
 
-async function login() {
+document.getElementById('loginButton').addEventListener('click', loginUser);
+
+async function loginUser() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
@@ -62,13 +64,12 @@ async function login() {
         }
 
         const data = await response.json();
-        console.log('Login failed:', data.message);
-        // Check the response from the server and take appropriate action
+        console.log('Login response:', data);
+
         if (data.message === "User found" || data.status_code === 200) {
             console.log('Login successful:', data.message);
             window.location.href = 'USER/index.html';
         } else {
-            // Handle failed login
             console.error('Login failed:', data.message);
             alert('Login failed. Please check your credentials.');
         }
@@ -77,7 +78,6 @@ async function login() {
         alert('An error occurred. Please try again later.');
     }
 }
-document.getElementById('loginButton').addEventListener('click', login);
 
 function submitForm() {
     var name = document.getElementById("s_name").value;
