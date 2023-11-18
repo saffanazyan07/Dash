@@ -33,7 +33,7 @@ const container = document.querySelector(".container"),
         container.classList.remove("active");
     });
 
-document.getElementById('loginButton').addEventListener('click', loginUser);
+
 
 async function loginUser() {
     const username = document.getElementById('username').value;
@@ -78,6 +78,7 @@ async function loginUser() {
         alert('An error occurred. Please try again later.');
     }
 }
+document.getElementById('loginButton').addEventListener('click', loginUser);
 
 function submitForm() {
     var name = document.getElementById("s_name").value;
