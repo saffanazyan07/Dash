@@ -58,55 +58,6 @@
         </span>
     </div>
 </div>
-
-<script>
-    async function login() {
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
-        // Validate username and password (add additional validation if needed)
-        if (!username || !password) {
-            alert('Please enter both username and password.');
-            return;
-        }
-
-        const requestBody = {
-            s_name: username,
-            s_password: password
-        };
-
-        try {
-            const response = await fetch('http://140.118.121.85:5000/user/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestBody),
-            });
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const data = await response.json();
-            console.log('Login failed:', data.message);
-            // Check the response from the server and take appropriate action
-           if (data.message === "User found" || data.status_code === 200) {
-                console.log('Login successful:', data.message);
-                window.location.href = '../USER/index.html';
-            } else {
-                // Handle failed login
-                console.error('Login failed:', data.message);
-                console.log('Login failed:', data.message);
-                alert('Login failed. Please check your credentials.');
-            }
-        } catch (error) {
-    console.error('There was a problem with the fetch operation:', error);
-    alert('An error occurred. Please try again later.');
-}
-    }
-</script>
-
   
     <!-- Registration Form -->
             <div class="form signup">
