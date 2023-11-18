@@ -77,6 +77,7 @@ async function login() {
         alert('An error occurred. Please try again later.');
     }
 }
+document.getElementById('loginButton').addEventListener('click', login);
 
 function submitForm() {
     var name = document.getElementById("s_name").value;
@@ -147,51 +148,3 @@ fetch('/fetchData')
       alert(alertMessage);
     })
     .catch(error => console.error('Error fetching data: ', error));
-
-
-    document.getElementById('loginButton').addEventListener('click', async function () {
-        const username = document.querySelector('#login input[type="username"]').value;
-        const password = document.querySelector('#login input[type="password"]').value;
-        const rememberMe = document.getElementById('logCheck').checked;
-    
-        // Validate username and password (add additional validation if needed)
-        if (!username || !password) {
-            alert('Please enter both username and password.');
-            return;
-        }
-    
-        const requestBody = {
-            s_name: username,
-            s_password: password,
-            rememberMe: rememberMe
-        };
-    
-        try {
-            const response = await fetch('http://140.118.121.85:5000/user/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestBody),
-            });
-    
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-    
-            const data = await response.json();
-    
-            // Check the response from the server and take appropriate action
-            if (data.success) {
-                // Successful login, redirect or perform other actions
-                window.location.href = 'main.html';
-            } else {
-                // Handle failed login
-                console.error('Login failed:', data.message);
-                alert('Login failed. Please check your credentials.');
-            }
-        } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
-            alert('An error occurred. Please try again later.');
-        }
-    });
