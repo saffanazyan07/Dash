@@ -18,10 +18,8 @@
         <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
     </form>
 
-    <!-- Container for the chart -->
-    <div style="width: 80%; margin: 20px auto;">
-        <canvas id="resourceChart"></canvas>
-    </div>
+    <!-- Container for the log-style display -->
+    <div id="logContainer" style="width: 80%; margin: 20px auto; white-space: pre-wrap;"></div>
 
     <script>
         function fetchNFSResource() {
@@ -46,7 +44,7 @@
             })
             .then(data => {
                 // Handle the successful response
-                displayResourceChart(data);
+                displayResourceLog(data);
             })
             .catch(error => {
                 // Handle errors
@@ -54,47 +52,16 @@
             });
         }
 
-        function displayResourceChart(data) {
-            // Extract data for the chart (modify this based on your data structure)
-            const labels = Object.keys(data);
-            const values = Object.values(data);
+        function displayResourceLog(data) {
+            const logContainer = document.getElementById('logContainer');
 
-            // Get the canvas element
-            const ctx = document.getElementById('resourceChart').getContext('2d');
+            // Convert the data object into a log-like string
+            const logText = Object.entries(data)
+                .map(([key, value]) => `${key}: ${value}`)
+                .join('\n');
 
-            // Create a line chart
-            const chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Resource Information',
-                        data: values,
-                        borderColor: 'rgb(75, 192, 192)',
-                        borderWidth: 2,
-                        fill: false,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            type: 'category',
-                            title: {
-                                display: true,
-                                text: 'Time'
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Values'
-                            }
-                        }
-                    }
-                }
-            });
+            // Display the log in the container
+            logContainer.textContent = logText;
         }
     </script>
 
