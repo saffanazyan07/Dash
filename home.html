@@ -41,7 +41,7 @@
             })
             .then(data => {
                 // Handle the successful response
-                displayResourceInfo(data);
+                displayResourceInfo(data.data); // Modify here to pass the 'data' property
             })
             .catch(error => {
                 // Handle errors
@@ -49,13 +49,13 @@
             });
         }
 
-        function displayResourceInfo(data) {
+        function displayResourceInfo(dataArray) {
             const responseContainer = document.getElementById('responseContainer');
 
-            // Create a detailed HTML representation
-            const detailsHTML = Object.entries(data)
-                .map(([key, value]) => `<p><strong>${key}:</strong> ${value}</p>`)
-                .join('');
+            // Create a detailed HTML representation for each object in the array
+            const detailsHTML = dataArray.map(obj => {
+                return `<div>${Object.entries(obj).map(([key, value]) => `<p><strong>${key}:</strong> ${value}</p>`).join('')}</div>`;
+            }).join('');
 
             // Display the detailed information in the container
             responseContainer.innerHTML = detailsHTML;
