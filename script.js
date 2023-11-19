@@ -2,6 +2,7 @@ const container = document.querySelector(".container"),
       pwShowHide = document.querySelectorAll(".showHidePw"),
       pwFields = document.querySelectorAll(".password"),
       signUp = document.querySelector(".signup-link"),
+      verify = document.querySelector(".verify-link"),
       login = document.querySelector(".login-link");
 
     //   js code to show/hide password and change icon
@@ -32,8 +33,6 @@ const container = document.querySelector(".container"),
     login.addEventListener("click", ( )=>{
         container.classList.remove("active");
     });
-
-
 
 async function loginUser() {
     const username = document.getElementById('username').value;
