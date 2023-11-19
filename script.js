@@ -10,8 +10,7 @@ const container = document.querySelector(".container"),
         eyeIcon.addEventListener("click", ()=>{
             pwFields.forEach(pwField =>{
                 if(pwField.type ==="password"){
-                    pwField.type = "email";
-
+                    pwField.type = "text";
                     pwShowHide.forEach(icon =>{
                         icon.classList.replace("uil-eye-slash", "uil-eye");
                     })
@@ -25,6 +24,17 @@ const container = document.querySelector(".container"),
             }) 
         })
     })
+// js code for visible password
+/*function togglePasswordVisibility() {
+        var passwordField = document.getElementById(".password");
+
+        // Toggle password visibility
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+        } else {
+            passwordField.type = "password";
+        }
+    }*/
 
     // js code to appear signup and login form
     signUp.addEventListener("click", ( )=>{
