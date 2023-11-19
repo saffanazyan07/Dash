@@ -50,9 +50,22 @@
         }
 
         function displayResourceInfo(data) {
-            const responseContainer = document.getElementById('responseContainer');
-            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+    const responseContainer = document.getElementById('responseContainer');
+
+    if (typeof data === 'object' && data !== null) {
+        let htmlContent = '<ul>';
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                htmlContent += `<li><strong>${key}:</strong> ${data[key]}</li>`;
+            }
         }
+        htmlContent += '</ul>';
+        responseContainer.innerHTML = htmlContent;
+    } else {
+        responseContainer.innerHTML = 'Invalid response format.';
+    }
+}
+
     </script>
 
 </body>
