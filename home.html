@@ -18,9 +18,9 @@
         <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
     </form>
 
-    <!-- Container for the line chart -->
+    <!-- Container for the line charts -->
     <div style="width: 80%; margin: 20px auto;">
-        <canvas id="resourceChart"></canvas>
+        <div id="chartsContainer"></div>
     </div>
 
     <script>
@@ -46,7 +46,7 @@
             })
             .then(data => {
                 // Handle the successful response
-                displayResourceChart(data.data); // Modify here to pass the 'data' property
+                displayResourceCharts(data.data); // Modify here to pass the 'data' property
             })
             .catch(error => {
                 // Handle errors
@@ -54,46 +54,54 @@
             });
         }
 
-        function displayResourceChart(dataArray) {
-            // Extract labels and datasets from the array of objects
-            const labels = Object.keys(dataArray[0]);
-            const datasets = dataArray.map((obj, index) => ({
-                label: `Object ${index + 1}`, // Add a label for each object
-                data: Object.values(obj),
-                borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
-                borderWidth: 2,
-                fill: false
-            }));
+        function displayResourceCharts(dataArray) {
+            const chartsContainer = document.getElementById('chartsContainer');
 
-            // Get the canvas element
-            const ctx = document.getElementById('resourceChart').getContext('2d');
+            // Create a line chart for each property in each object
+            dataArray.forEach((obj, objIndex) => {
+                Object.entries(obj).forEach(([property, values]) => {
+                    const chartContainer = document.createElement('div');
+                    chartContainer.style.marginBottom = '20px';
+                    chartContainer.innerHTML = `<canvas id="chart-${objIndex}-${property}"></canvas>`;
+                    chartsContainer.appendChild(chartContainer);
 
-            // Create a line chart
-            const chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: datasets
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            type: 'category',
-                            title: {
-                                display: true,
-                                text: 'Properties'
-                            }
+                    // Get the canvas element
+                    const ctx = document.getElementById(`chart-${objIndex}-${property}`).getContext('2d');
+
+                    // Create a line chart
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: Object.keys(values),
+                            datasets: [{
+                                label: `${property} (Object ${objIndex + 1})`,
+                                data: Object.values(values),
+                                borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
+                                borderWidth: 2,
+                                fill: false
+                            }]
                         },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Values'
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    type: 'category',
+                                    title: {
+                                        display: true,
+                                        text: 'Properties'
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Values'
+                                    }
+                                }
                             }
                         }
-                    }
-                }
+                    });
+                });
             });
         }
     </script>
