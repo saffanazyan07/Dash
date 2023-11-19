@@ -25,7 +25,36 @@
 
     <script>
         function fetchNFSResource() {
-            // ... (unchanged code)
+            const nfInput = document.getElementById('nf');
+            const nfValue = nfInput.value;
+
+            // Replace 'http://140.118.121.85:5000/nfs/resource' with the actual API endpoint
+            const apiUrl = `http://140.118.121.85:5000/nfs/resource?s_nf=${nfValue}`;
+
+            fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
+                }
+            })
+            .then(data => {
+                // Log the entire response for debugging
+                console.log(data);
+
+                // Handle the successful response
+                displayResourceInfo(data); // Display the entire object
+            })
+            .catch(error => {
+                // Handle errors
+                displayResourceInfo(`Error: ${error.message}`);
+            });
         }
 
         function displayResourceInfo(data) {
@@ -50,33 +79,23 @@
 
             const ctx = document.getElementById('myChart').getContext('2d');
             const myChart = new Chart(ctx, {
-                type: 'pie',
+                type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
+                        label: 'NFS Resource Information',
                         data: values,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
                         borderWidth: 1
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
                 }
             });
         }
