@@ -103,56 +103,56 @@
                 }
             });
 
-            // Extract s_attempt values from each object
-            const sAttemptValues = dataArray.map(obj => obj.s_attempt);
-
-            // Create a line chart for s_attempt
-            const sAttemptChartContainer = document.createElement('div');
-            sAttemptChartContainer.style.marginBottom = '20px';
-            sAttemptChartContainer.innerHTML = `<canvas id="sAttemptChart"></canvas>`;
-            chartsContainer.appendChild(sAttemptChartContainer);
-
-            // Get the canvas element for s_attempt
-            const sAttemptCtx = document.getElementById('sAttemptChart').getContext('2d');
-
-            // Create a line chart for s_attempt
-            new Chart(sAttemptCtx, {
-                type: 'line',
-                data: {
-                    labels: Array.from({ length: sAttemptValues[0].length }, (_, i) => i + 1),
-                    datasets: sAttemptValues.map((values, index) => ({
-                        label: `s_attempt (Object ${index + 1})`,
-                        data: values,
-                        borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
-                        borderWidth: 2,
-                        fill: false
-                    }))
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            type: 'category',
-                            title: {
-                                display: true,
-                                text: 'Data Points'
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Values'
-                            }
-                        }
-                    }
-                }
-            });
-
             // Create a line chart for each property in each object
             dataArray.forEach((obj, objIndex) => {
                 Object.entries(obj).forEach(([property, values]) => {
-                    if (property !== 'dt_infotime' && property !== 's_attempt') {
+                    if (property !== 'dt_infotime') {
                         const chartContainer = document.createElement('div');
                         chartContainer.style.marginBottom = '20px';
-                        chartContainer.innerHTML = `<canvas id="chart-${objIndex
+                        chartContainer.innerHTML = `<canvas id="chart-${objIndex}-${property}"></canvas>`;
+                        chartsContainer.appendChild(chartContainer);
+
+                        // Get the canvas element
+                        const ctx = document.getElementById(`chart-${objIndex}-${property}`).getContext('2d');
+
+                        // Create a line chart
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: Array.from({ length: values.length }, (_, i) => i + 1),
+                                datasets: [{
+                                    label: `${property} (Object ${objIndex + 1})`,
+                                    data: values,
+                                    borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
+                                    borderWidth: 2,
+                                    fill: false
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    x: {
+                                        type: 'category',
+                                        title: {
+                                            display: true,
+                                            text: 'Data Points'
+                                        }
+                                    },
+                                    y: {
+                                        title: {
+                                            display: true,
+                                            text: 'Values'
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        }
+    </script>
+
+</body>
+</html>
