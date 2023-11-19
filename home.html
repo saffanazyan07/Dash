@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NFS Resource Form</title>
-    <!-- Include Chart.js and Moment.js -->
+    <!-- Include Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment"></script>
 </head>
 <body>
 
@@ -58,9 +57,6 @@
         function displayResourceCharts(dataArray) {
             const chartsContainer = document.getElementById('chartsContainer');
 
-            // Use dt_infotime values as x-axis labels
-            const dtInfotimeValues = dataArray.map(obj => obj.dt_infotime);
-
             // Group values by property
             const groupedData = {};
             dataArray.forEach(obj => {
@@ -86,7 +82,7 @@
                 new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: dtInfotimeValues, // Use dt_infotime as x-axis labels
+                        labels: valuesArray.map(obj => obj.label),
                         datasets: [{
                             label: `${property}`,
                             data: valuesArray.map(obj => obj.data),
@@ -100,10 +96,10 @@
                         maintainAspectRatio: false,
                         scales: {
                             x: {
-                                type: 'time', // Assuming 'dt_infotime' is a timestamp
+                                type: 'category',
                                 title: {
                                     display: true,
-                                    text: 'Time'
+                                    text: 'Objects'
                                 }
                             },
                             y: {
