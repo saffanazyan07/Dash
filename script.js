@@ -193,7 +193,7 @@ function isValidEmail(email) {
 }
 document.getElementById('signupButton').addEventListener('click', submitsignupForm);
             
-//verify
+/*verify
 async function verifyUser() {
     const email = document.getElementById('s_email').value;
     const verify = document.getElementById('s_verify').value;
@@ -237,4 +237,4 @@ async function verifyUser() {
         alert('An error occurred. Please try again later.');
     }
 }
-document.getElementById('verifyButton').addEventListener('click', verifyUser);
+document.getElementById('verifyButton').addEventListener('click', verifyUser);*/
