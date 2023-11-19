@@ -82,7 +82,7 @@
                 new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: valuesArray.map(obj => obj.data.dt_infotime), // Use dt_infotime as x-axis values
+                        labels: valuesArray.map(obj => obj.label),
                         datasets: [{
                             label: `${property}`,
                             data: valuesArray.map(obj => obj.data),
@@ -96,10 +96,10 @@
                         maintainAspectRatio: false,
                         scales: {
                             x: {
-                                type: 'time', // Use 'time' for datetime x-axis
+                                type: 'category',
                                 title: {
                                     display: true,
-                                    text: 'Time'
+                                    text: 'Objects'
                                 }
                             },
                             y: {
