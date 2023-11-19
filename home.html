@@ -52,11 +52,11 @@
         function displayResourceInfo(nf, data) {
             const responseContainer = document.getElementById('responseContainer');
             
-            // Create a single array containing the Network Function and its resource information
-            const resultArray = [{ nf: nf, data: data }];
+            // Merge the Network Function and its resource information into a single object
+            const resultObject = { nf: nf, data: data };
 
-            // Use JSON.stringify to display the array as a string in the <pre> element
-            responseContainer.innerHTML = `<pre>${JSON.stringify(resultArray, null, 2)}</pre>`;
+            // Use JSON.stringify to display the object as a string in the <pre> element
+            responseContainer.innerHTML = `<pre>${JSON.stringify(resultObject, null, 2)}</pre>`;
         }
     </script>
 
