@@ -163,7 +163,7 @@ function isValidEmail(email) {
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
- //try
+ /*try
       try {
         const response = await fetch('http://140.118.121.85:5000/user/signup', {
             method: 'POST',
