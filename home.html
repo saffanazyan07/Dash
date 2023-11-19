@@ -68,54 +68,6 @@
                 });
             });
 
-            // Check if 'dt_infotime' is present in the data
-            if (groupedData['dt_infotime']) {
-                const dtInfotimeChartContainer = document.createElement('div');
-                dtInfotimeChartContainer.style.marginBottom = '20px';
-                dtInfotimeChartContainer.innerHTML = `<canvas id="dtInfotimeChart"></canvas>`;
-                chartsContainer.appendChild(dtInfotimeChartContainer);
-
-                // Get the canvas element
-                const dtInfotimeCtx = document.getElementById('dtInfotimeChart').getContext('2d');
-
-                // Create a line chart for dt_infotime
-                new Chart(dtInfotimeCtx, {
-                    type: 'line',
-                    data: {
-                        labels: groupedData['dt_infotime'].map(obj => obj.label),
-                        datasets: [{
-                            label: 'dt_infotime',
-                            data: groupedData['dt_infotime'].map(obj => obj.data),
-                            borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
-                            borderWidth: 2,
-                            fill: false
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            x: {
-                                type: 'category',
-                                title: {
-                                    display: true,
-                                    text: 'dt_infotime'
-                                }
-                            },
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Values'
-                                }
-                            }
-                        }
-                    }
-                });
-
-                // Remove 'dt_infotime' from groupedData to prevent duplication
-                delete groupedData['dt_infotime'];
-            }
-
             // Create a line chart for each property
             Object.entries(groupedData).forEach(([property, valuesArray]) => {
                 const chartContainer = document.createElement('div');
