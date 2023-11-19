@@ -20,39 +20,48 @@
 
     <script>
         function fetchNFSResource() {
-            const nfInput = document.getElementById('nf');
-            const nfValue = nfInput.value;
+        const nfInput = document.getElementById('nf');
+        const nfValue = nfInput.value;
 
-            // Replace 'http://140.118.121.85:5000/nfs/resource' with the actual API endpoint
-            const apiUrl = `http://140.118.121.85:5000/nfs/resource?s_nf=${nfValue}`;
+        // Replace 'http://140.118.121.85:5000/nfs/resource' with the actual API endpoint
+        const apiUrl = `http://140.118.121.85:5000/nfs/resource?s_nf=${nfValue}`;
 
-            fetch(apiUrl, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.json();
-                } else {
-                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
-                }
-            })
-            .then(data => {
-                // Handle the successful response
-                displayResourceInfo(data);
-            })
-            .catch(error => {
-                // Handle errors
-                displayResourceInfo(`Error: ${error.message}`);
-            });
+        fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                throw new Error(`Error: ${response.status} - ${response.statusText}`);
+            }
+        })
+        .then(data => {
+            // Handle the successful response
+            displayResourceInfo(data);
+        })
+        .catch(error => {
+            // Handle errors
+            displayResourceInfo(`Error: ${error.message}`);
+        });
+    }
+
+    function displayResourceInfo(data) {
+        const responseContainer = document.getElementById('responseContainer');
+        let htmlContent = '<ul>';
+
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                htmlContent += `<li><strong>${key}:</strong> ${data[key]}</li>`;
+            }
         }
 
-        function displayResourceInfo(data) {
-            const responseContainer = document.getElementById('responseContainer');
-            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
-        }
+        htmlContent += '</ul>';
+        responseContainer.innerHTML = htmlContent;
+    }
     </script>
 
 </body>
