@@ -4,12 +4,12 @@ const container = document.querySelector(".container"),
       signUp = document.querySelector(".signup-link"),
       verify = document.querySelector(".verify-link"),
       login = document.querySelector(".login-link");
-const signUp = document.getElementById("signUp");
+/*const signUp = document.getElementById("signUp");
 const login = document.getElementById("login");
 const verify = document.getElementById("verify");
 const signupForm = document.getElementById("signupForm");
 const loginForm = document.getElementById("loginForm");
-const verifyForm = document.getElementById("verifyForm");
+const verifyForm = document.getElementById("verifyForm");*/
 
     //   js code to show/hide password and change icon
     pwShowHide.forEach(eyeIcon =>{
