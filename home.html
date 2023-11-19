@@ -82,14 +82,14 @@
                 new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: Array.from({ length: valuesArray[0].data.length }, (_, i) => i + 1),
-                        datasets: valuesArray.map((values, index) => ({
-                            label: `${property} (${values.label})`,
-                            data: values.data,
+                        labels: valuesArray.map(obj => obj.label),
+                        datasets: [{
+                            label: `${property}`,
+                            data: valuesArray.map(obj => obj.data),
                             borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
                             borderWidth: 2,
                             fill: false
-                        }))
+                        }]
                     },
                     options: {
                         responsive: true,
@@ -99,7 +99,7 @@
                                 type: 'category',
                                 title: {
                                     display: true,
-                                    text: 'Data Points'
+                                    text: 'Objects'
                                 }
                             },
                             y: {
