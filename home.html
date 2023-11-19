@@ -1,4 +1,60 @@
-function displayResourceCharts(dataArray) {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFS Resource Form</title>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <h2>NFS Resource Information</h2>
+
+    <form id="resourceForm">
+        <label for="nf">Network Function:</label>
+        <input type="text" id="nf" name="s_nf" required>
+
+        <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
+    </form>
+
+    <!-- Container for the line charts -->
+    <div style="width: 80%; margin: 20px auto;">
+        <div id="chartsContainer"></div>
+    </div>
+
+    <script>
+        function fetchNFSResource() {
+            const nfInput = document.getElementById('nf');
+            const nfValue = nfInput.value;
+
+            // Replace 'http://140.118.121.85:5000/nfs/resource' with the actual API endpoint
+            const apiUrl = `http://140.118.121.85:5000/nfs/resource?s_nf=${nfValue}`;
+
+            fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
+                }
+            })
+            .then(data => {
+                // Handle the successful response
+                displayResourceCharts(data.data); // Modify here to pass the 'data' property
+            })
+            .catch(error => {
+                // Handle errors
+                console.error(error.message);
+            });
+        }
+
+        function displayResourceCharts(dataArray) {
     const chartsContainer = document.getElementById('chartsContainer');
 
     // Extract dt_infotime and s_attemp values from each object
@@ -91,3 +147,7 @@ function displayResourceCharts(dataArray) {
         }
     });
 }
+    </script>
+
+</body>
+</html>
