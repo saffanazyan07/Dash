@@ -1,158 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NFS Resource Form</title>
-    <!-- Include Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
+function displayResourceCharts(dataArray) {
+    const chartsContainer = document.getElementById('chartsContainer');
 
-    <h2>NFS Resource Information</h2>
+    // Extract dt_infotime and s_attemp values from each object
+    const dtInfotimeValues = dataArray.map(obj => obj.dt_infotime);
+    const sAttempValues = dataArray.map(obj => obj.s_attemp);
 
-    <form id="resourceForm">
-        <label for="nf">Network Function:</label>
-        <input type="text" id="nf" name="s_nf" required>
+    // Create a line chart for dt_infotime
+    const dtInfotimeChartContainer = document.createElement('div');
+    dtInfotimeChartContainer.style.marginBottom = '20px';
+    dtInfotimeChartContainer.innerHTML = `<canvas id="dtInfotimeChart"></canvas>`;
+    chartsContainer.appendChild(dtInfotimeChartContainer);
 
-        <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
-    </form>
+    // Get the canvas element for dt_infotime
+    const dtInfotimeCtx = document.getElementById('dtInfotimeChart').getContext('2d');
 
-    <!-- Container for the line charts -->
-    <div style="width: 80%; margin: 20px auto;">
-        <div id="chartsContainer"></div>
-    </div>
-
-    <script>
-        function fetchNFSResource() {
-            const nfInput = document.getElementById('nf');
-            const nfValue = nfInput.value;
-
-            // Replace 'http://140.118.121.85:5000/nfs/resource' with the actual API endpoint
-            const apiUrl = `http://140.118.121.85:5000/nfs/resource?s_nf=${nfValue}`;
-
-            fetch(apiUrl, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.json();
-                } else {
-                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
-                }
-            })
-            .then(data => {
-                // Handle the successful response
-                displayResourceCharts(data.data); // Modify here to pass the 'data' property
-            })
-            .catch(error => {
-                // Handle errors
-                console.error(error.message);
-            });
-        }
-
-        function displayResourceCharts(dataArray) {
-            const chartsContainer = document.getElementById('chartsContainer');
-
-            // Extract dt_infotime values from each object
-            const dtInfotimeValues = dataArray.map(obj => obj.dt_infotime);
-
-            // Create a line chart for dt_infotime
-            const dtInfotimeChartContainer = document.createElement('div');
-            dtInfotimeChartContainer.style.marginBottom = '20px';
-            dtInfotimeChartContainer.innerHTML = `<canvas id="dtInfotimeChart"></canvas>`;
-            chartsContainer.appendChild(dtInfotimeChartContainer);
-
-            // Get the canvas element for dt_infotime
-            const dtInfotimeCtx = document.getElementById('dtInfotimeChart').getContext('2d');
-
-            // Create a line chart for dt_infotime
-            new Chart(dtInfotimeCtx, {
-                type: 'line',
-                data: {
-                    labels: Array.from({ length: dtInfotimeValues[0].length }, (_, i) => i + 1),
-                    datasets: dtInfotimeValues.map((values, index) => ({
-                        label: `dt_infotime (Object ${index + 1})`,
-                        data: values,
-                        borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
-                        borderWidth: 2,
-                        fill: false
-                    }))
+    // Create a line chart for dt_infotime
+    new Chart(dtInfotimeCtx, {
+        type: 'line',
+        data: {
+            labels: Array.from({ length: dtInfotimeValues[0].length }, (_, i) => i + 1),
+            datasets: dtInfotimeValues.map((values, index) => ({
+                label: `dt_infotime (Object ${index + 1})`,
+                data: values,
+                borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
+                borderWidth: 2,
+                fill: false
+            }))
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    type: 'category',
+                    title: {
+                        display: true,
+                        text: 'Data Points'
+                    }
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            type: 'category',
-                            title: {
-                                display: true,
-                                text: 'Data Points'
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Values'
-                            }
-                        }
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Values'
                     }
                 }
-            });
-
-            // Create a line chart for each property in each object
-            dataArray.forEach((obj, objIndex) => {
-                Object.entries(obj).forEach(([property, values]) => {
-                    if (property !== 'dt_infotime') {
-                        const chartContainer = document.createElement('div');
-                        chartContainer.style.marginBottom = '20px';
-                        chartContainer.innerHTML = `<canvas id="chart-${objIndex}-${property}"></canvas>`;
-                        chartsContainer.appendChild(chartContainer);
-
-                        // Get the canvas element
-                        const ctx = document.getElementById(`chart-${objIndex}-${property}`).getContext('2d');
-
-                        // Create a line chart
-                        new Chart(ctx, {
-                            type: 'line',
-                            data: {
-                                labels: Array.from({ length: values.length }, (_, i) => i + 1),
-                                datasets: [{
-                                    label: `${property} (Object ${objIndex + 1})`,
-                                    data: values,
-                                    borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
-                                    borderWidth: 2,
-                                    fill: false
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                scales: {
-                                    x: {
-                                        type: 'category',
-                                        title: {
-                                            display: true,
-                                            text: 'Data Points'
-                                        }
-                                    },
-                                    y: {
-                                        title: {
-                                            display: true,
-                                            text: 'Values'
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                    }
-                });
-            });
+            }
         }
-    </script>
+    });
 
-</body>
-</html>
+    // Create a line chart for s_attemp
+    const sAttempChartContainer = document.createElement('div');
+    sAttempChartContainer.style.marginBottom = '20px';
+    sAttempChartContainer.innerHTML = `<canvas id="sAttempChart"></canvas>`;
+    chartsContainer.appendChild(sAttempChartContainer);
+
+    // Get the canvas element for s_attemp
+    const sAttempCtx = document.getElementById('sAttempChart').getContext('2d');
+
+    // Create a line chart for s_attemp
+    new Chart(sAttempCtx, {
+        type: 'line',
+        data: {
+            labels: Array.from({ length: sAttempValues[0].length }, (_, i) => i + 1),
+            datasets: sAttempValues.map((values, index) => ({
+                label: `s_attemp (Object ${index + 1})`,
+                data: values,
+                borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
+                borderWidth: 2,
+                fill: false
+            }))
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    type: 'category',
+                    title: {
+                        display: true,
+                        text: 'Data Points'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Values'
+                    }
+                }
+            }
+        }
+    });
+}
