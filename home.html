@@ -57,50 +57,49 @@
         function displayResourceCharts(dataArray) {
     const chartsContainer = document.getElementById('chartsContainer');
 
-    // Create a line chart for each property in each object
     dataArray.forEach((obj, objIndex) => {
-        Object.entries(obj).forEach(([property, values]) => {
-            const chartContainer = document.createElement('div');
-            chartContainer.style.marginBottom = '20px';
-            chartContainer.innerHTML = `<canvas id="chart-${objIndex}-${property}"></canvas>`;
-            chartsContainer.appendChild(chartContainer);
+        const chartContainer = document.createElement('div');
+        chartContainer.style.marginBottom = '20px';
+        chartContainer.innerHTML = `<canvas id="chart-${objIndex}"></canvas>`;
+        chartsContainer.appendChild(chartContainer);
 
-            // Get the canvas element
-            const ctx = document.getElementById(`chart-${objIndex}-${property}`).getContext('2d');
+        // Get the canvas element
+        const ctx = document.getElementById(`chart-${objIndex}`).getContext('2d');
 
-            // Create a line chart
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: Array.from({ length: values.length }, (_, i) => i + 1),
-                    datasets: [{
-                        label: `${property} (Object ${objIndex + 1})`,
-                        data: values,
-                        borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
-                        borderWidth: 2,
-                        fill: false
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            type: 'category',
-                            title: {
-                                display: true,
-                                text: 'Data Points'
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Values'
-                            }
+        const datasets = Object.entries(obj).map(([property, values]) => ({
+            label: `${property} (Object ${objIndex + 1})`,
+            data: values,
+            borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
+            borderWidth: 2,
+            fill: false
+        }));
+
+        // Create a line chart
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Array.from({ length: Object.values(obj)[0].length }, (_, i) => i + 1),
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        type: 'category',
+                        title: {
+                            display: true,
+                            text: 'Data Points'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Values'
                         }
                     }
                 }
-            });
+            }
         });
     });
 }
