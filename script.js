@@ -108,8 +108,37 @@ function signupForm() {
             s_passwordconfirmation: confirmPassword,
             s_phone: phone
         };
+    try {
+        const response = await fetch('http://140.118.121.85:5000/user/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        });
 
-// Make a POST request to your API
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+//response login-mainpage 
+        const data = await response.json();
+        console.log('Signup response:', data);
+
+        if (data.status_code === 200) {
+            console.log('Form submitted successfully:', data.message);
+            window.location.href = 'verify.html';
+        } else {
+            console.error('signup failed:', data.message);
+            alert('Error submitting the form. Please try again.');
+        }
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        alert('An error occurred. Please try again later.');
+    }
+}
+document.getElementById('signupButton').addEventListener('click', signupForm);          
+
+/* Make a POST request to your API
          
         fetch('http://140.118.121.85:5000/user/signup', {
             method: 'POST',
