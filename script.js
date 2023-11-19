@@ -2,7 +2,6 @@ const container = document.querySelector(".container"),
       pwShowHide = document.querySelectorAll(".showHidePw"),
       pwFields = document.querySelectorAll(".password"),
       signUp = document.querySelector(".signup-link"),
-      verify = document.querySelector(".verify-link"),
       login = document.querySelector(".login-link");
 /*const signUp = document.getElementById("signUp");
 const login = document.getElementById("login");
