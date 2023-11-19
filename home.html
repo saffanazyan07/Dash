@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NFS Resource Form</title>
-    <!-- Include Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -18,10 +16,7 @@
         <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
     </form>
 
-    <!-- Container for the merged line chart -->
-    <div style="width: 80%; margin: 20px auto;">
-        <canvas id="mergedChart"></canvas>
-    </div>
+    <div id="responseContainer"></div>
 
     <script>
         function fetchNFSResource() {
@@ -46,62 +41,17 @@
             })
             .then(data => {
                 // Handle the successful response
-                displayMergedChart(data.data); // Modify here to pass the 'data' property
+                displayResourceInfo(data);
             })
             .catch(error => {
                 // Handle errors
-                console.error(error.message);
+                displayResourceInfo(`Error: ${error.message}`);
             });
         }
 
-        function displayMergedChart(dataArray) {
-            // Combine data from "Object 1" and "Object 2"
-            const combinedData = dataArray.reduce((acc, obj, objIndex) => {
-                Object.entries(obj).forEach(([property, values]) => {
-                    if (!acc[property]) {
-                        acc[property] = {
-                            label: property,
-                            data: [],
-                            borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
-                            borderWidth: 2,
-                            fill: false
-                        };
-                    }
-                    acc[property].data.push(...values);
-                });
-                return acc;
-            }, {});
-
-            // Get the canvas element
-            const ctx = document.getElementById('mergedChart').getContext('2d');
-
-            // Create a line chart for the combined data
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: Array.from({ length: combinedData[Object.keys(combinedData)[0]].data.length }, (_, i) => i + 1),
-                    datasets: Object.values(combinedData)
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            type: 'category',
-                            title: {
-                                display: true,
-                                text: 'Data Points'
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Values'
-                            }
-                        }
-                    }
-                }
-            });
+        function displayResourceInfo(data) {
+            const responseContainer = document.getElementById('responseContainer');
+            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
         }
     </script>
 
