@@ -64,7 +64,7 @@
                     if (!groupedData[property]) {
                         groupedData[property] = [];
                     }
-                    groupedData[property].push({ label: formatDatetime(values[0].dt_infotime), data: values });
+                    groupedData[property].push({ label: `Object ${groupedData[property].length + 1}`, data: values });
                 });
             });
 
@@ -96,19 +96,10 @@
                         maintainAspectRatio: false,
                         scales: {
                             x: {
-                                type: 'time', // Assuming 'dt_infotime' is a timestamp
-                                time: {
-                                    tooltipFormat: 'YYYY-MM-DD HH:mm:ss', // Customize the tooltip format
-                                    displayFormats: {
-                                        second: 'YYYY-MM-DD HH:mm:ss',
-                                        minute: 'YYYY-MM-DD HH:mm:ss',
-                                        hour: 'YYYY-MM-DD HH:mm:ss',
-                                        day: 'YYYY-MM-DD HH:mm:ss',
-                                    },
-                                },
+                                type: 'category',
                                 title: {
                                     display: true,
-                                    text: 'Datetime'
+                                    text: 'Objects'
                                 }
                             },
                             y: {
@@ -121,12 +112,6 @@
                     }
                 });
             });
-        }
-
-        // Function to format datetime
-        function formatDatetime(timestamp) {
-            const date = new Date(timestamp);
-            return date.toISOString(); // You can customize the format as needed
         }
     </script>
 
