@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NFS Resource Form</title>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -16,7 +18,10 @@
         <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
     </form>
 
-    <div id="responseContainer"></div>
+    <!-- Container for the line charts -->
+    <div style="width: 80%; margin: 20px auto;">
+        <div id="chartsContainer"></div>
+    </div>
 
     <script>
         function fetchNFSResource() {
@@ -41,32 +46,64 @@
             })
             .then(data => {
                 // Handle the successful response
-                displayResourceInfo(data);
+                displayResourceCharts(data.data); // Modify here to pass the 'data' property
             })
             .catch(error => {
                 // Handle errors
-                displayResourceInfo(`Error: ${error.message}`);
+                console.error(error.message);
             });
         }
 
-        function displayResourceInfo(data) {
-    const responseContainer = document.getElementById('responseContainer');
+        function displayResourceCharts(dataArray) {
+            const chartsContainer = document.getElementById('chartsContainer');
 
-    if (typeof data === 'object' && data !== null) {
-        let htmlContent = '<ul>';
-        for (const key in data) {
-            if (data.hasOwnProperty(key)) {
-                htmlContent += `<li><strong>${key}:</strong> ${data[key]}</li>`;
-            }
+            // Create a line chart for each property in each object
+            dataArray.forEach((obj, objIndex) => {
+                Object.entries(obj).forEach(([property, values]) => {
+                    const chartContainer = document.createElement('div');
+                    chartContainer.style.marginBottom = '20px';
+                    chartContainer.innerHTML = `<canvas id="chart-${objIndex}-${property}"></canvas>`;
+                    chartsContainer.appendChild(chartContainer);
+
+                    // Get the canvas element
+                    const ctx = document.getElementById(`chart-${objIndex}-${property}`).getContext('2d');
+
+                    // Create a line chart
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: Object.keys(values),
+                            datasets: [{
+                                label: `${property} (Object ${objIndex + 1})`,
+                                data: Object.values(values),
+                                borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
+                                borderWidth: 2,
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    type: 'category',
+                                    title: {
+                                        display: true,
+                                        text: 'Properties'
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Values'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+            });
         }
-        htmlContent += '</ul>';
-        responseContainer.innerHTML = htmlContent;
-    } else {
-        responseContainer.innerHTML = 'Invalid response format.';
-    }
-}
-
-
     </script>
 
 </body>
