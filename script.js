@@ -3,12 +3,7 @@ const container = document.querySelector(".container"),
       pwFields = document.querySelectorAll(".password"),
       signUp = document.querySelector(".signup-link"),
       login = document.querySelector(".login-link");
-/*const signUp = document.getElementById("signUp");
-const login = document.getElementById("login");
-const verify = document.getElementById("verify");
-const signupForm = document.getElementById("signupForm");
-const loginForm = document.getElementById("loginForm");
-const verifyForm = document.getElementById("verifyForm");*/
+
 
     //   js code to show/hide password and change icon
     pwShowHide.forEach(eyeIcon =>{
@@ -28,7 +23,7 @@ const verifyForm = document.getElementById("verifyForm");*/
                 }
             }) 
         })
-
+    })
  // js code to appear signup and login form
     signUp.addEventListener("click", ( )=>{
         container.classList.add("active");
@@ -37,25 +32,6 @@ const verifyForm = document.getElementById("verifyForm");*/
         container.classList.remove("active");
     });
       
-/* js code to appear signup and login form
-        signUp.addEventListener("click", () => {
-            signupForm.classList.add("active");
-            loginForm.classList.remove("active");
-            verifyForm.classList.remove("active");
-        });
-
-        login.addEventListener("click", () => {
-            signupForm.classList.remove("active");
-            loginForm.classList.add("active");
-            verifyForm.classList.remove("active");
-        });
-
-        verify.addEventListener("click", () => {
-            signupForm.classList.remove("active");
-            loginForm.classList.remove("active");
-            verifyForm.classList.add("active");
-        });*/
-
 async function loginUser() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
@@ -102,7 +78,7 @@ async function loginUser() {
 document.getElementById('loginButton').addEventListener('click', loginUser);
 
 //get velue from html "id"
-function submitsignupForm() {
+function signupForm() {
     var name = document.getElementById("s_name").value;
     var email = document.getElementById("s_email").value;
     var password = document.getElementById("s_password").value;
@@ -162,78 +138,3 @@ function isValidEmail(email) {
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
- /*try
-      try {
-        const response = await fetch('http://140.118.121.85:5000/user/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-        });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        } 
-            const data = await response.json();
-        console.log('signup response:', data);
-
-        if (data.status_code === 200) {
-            console.log('signup successfully:', data.message);
-            window.location.href = 'verify';
-        } else {
-            console.error('signup failed:', data.message);
-            alert('varification failed. Please check your email.');
-        }
-    } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-        alert('An error occurred. Please try again later.');
-    }
-}
-document.getElementById('signupButton').addEventListener('click', submitsignupForm);
-            
-/*verify
-async function verifyUser() {
-    const email = document.getElementById('s_email').value;
-    const verify = document.getElementById('s_verify').value;
-
-    // Validate username and password (add additional validation if needed)
-    if (!s_email || !s_verify) {
-        alert('Please enter both email and verify code');
-        return;
-    }
-
-    const requestBody = {
-        s_email: email,
-        s_verify: verify
-    };
-
-    try {
-        const response = await fetch('http://140.118.121.85:5000/user/verify', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-        });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-//response verify-login 
-        const data = await response.json();
-        console.log('verify response:', data);
-
-        if (data.message === "User found" || data.status_code === 200) {
-            console.log('verify successful:', data.message);
-            window.location.href = 'login';
-        } else {
-            console.error('verification failed:', data.message);
-            alert('varification failed. Please check your email.');
-        }
-    } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-        alert('An error occurred. Please try again later.');
-    }
-}
-document.getElementById('verifyButton').addEventListener('click', verifyUser);*/
