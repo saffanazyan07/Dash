@@ -32,7 +32,7 @@ const verifyForm = document.getElementById("verifyForm");*/
 function submitsignupForm() {
  // js code to appear signup and login form
     signUp.addEventListener("click", ( )=>{
-        verify.classList.add("active");
+        container.classList.add("active");
     });
     login.addEventListener("click", ( )=>{
         container.classList.remove("active");
