@@ -3,59 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTTP Route Example</title>
+    <title>NFS Resource Form</title>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<h1>HTTP Route Example</h1>
+    <h2>NFS Resource Information</h2>
 
-<button onclick="getData()">Fetch Data</button>
+    <form id="resourceForm">
+        <label for="nf">Network Function:</label>
+        <input type="text" id="nf" name="s_nf" required>
 
-<p id="response"></p>
+        <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
+    </form>
 
-<script>
-    function getData() {
-        // Define the URL for the GET request
-        var url = "http://140.118.121.85:5000/nfs/resource?s_nf=amf";
+    <!-- Container for the line charts -->
+    <div style="width: 80%; margin: 20px auto;">
+        <div id="chartsContainer"></div>
+    </div>
 
-        // Make the GET request using Fetch API
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
-            // Check if the response status is OK (200)
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Request failed');
-            }
-        })
-        .then(data => {
-            // Handle the response data
-            displayResponse(data);
-        })
-        .catch(error => {
-            // Handle errors
-            console.error('Error:', error);
-            document.getElementById('response').innerText = 'Error fetching data.';
-        });
-    }
+    <script>
+        function fetchNFSResource() {
+            const nfInput = document.getElementById('nf');
+            const nfValue = nfInput.value;
 
-    function displayResponse(data) {
-        // Display response parameters on the webpage
-        var responseText = "Response Status Code: " + data.status + "\n\n";
+            // Replace 'http://140.118.121.85:5000/nfs/resource' with the actual API endpoint
+            const apiUrl = `http://140.118.121.85:5000/nfs/resource?s_nf=${nfValue}`;
 
-        // Loop through the response parameters and display them
-        for (var key in data) {
-            responseText += key + ": " + data[key] + "\n";
+            fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
+                }
+            })
+            .then(data => {
+                // Handle the successful response
+                displayResourceCharts(data.data); // Modify here to pass the 'data' property
+            })
+            .catch(error => {
+                // Handle errors
+                console.error(error.message);
+            });
         }
 
-        document.getElementById('response').innerText = responseText;
-    }
-</script>
+        function displayResourceCharts(dataArray) {
+            const chartsContainer = document.getElementById('chartsContainer');
+
+            // Extract dt_infotime values from each object
+            const dtInfotimeValues = dataArray.map(obj => obj.dt_infotime);
+
+            // Create a line chart for dt_infotime
+            const dtInfotimeChartContainer = document.createElement('div');
+            dtInfotimeChartContainer.style.marginBottom = '20px';
+            dtInfotimeChartContainer.innerHTML = `<canvas id="dtInfotimeChart"></canvas>`;
+            chartsContainer.appendChild(dtInfotimeChartContainer);
+
+            // Get the canvas element for dt_infotime
+            const dtInfotimeCtx = document.getElementById('dtInfotimeChart').getContext('2d');
+
+            // Create a line chart for dt_infotime
+            new Chart(dtInfotimeCtx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({ length: dtInfotimeValues[0].length }, (_, i) => i + 1),
+                    datasets: dtInfotimeValues.map((values, index) => ({
+                        label: `dt_infotime (Object ${index + 1})`,
+                        data: values,
+                        borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
+                        borderWidth: 2,
+                        fill: false
+                    }))
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'category',
+                            title: {
+                                display: true,
+                                text: 'Data Points'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Values'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Create a line chart for each property in each object
+            dataArray.forEach((obj, objIndex) => {
+                Object.entries(obj).forEach(([property, values]) => {
+                    if (property !== 'dt_infotime') {
+                        const chartContainer = document.createElement('div');
+                        chartContainer.style.marginBottom = '20px';
+                        chartContainer.innerHTML = `<canvas id="chart-${objIndex}-${property}"></canvas>`;
+                        chartsContainer.appendChild(chartContainer);
+
+                        // Get the canvas element
+                        const ctx = document.getElementById(`chart-${objIndex}-${property}`).getContext('2d');
+
+                        // Create a line chart
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: Array.from({ length: values.length }, (_, i) => i + 1),
+                                datasets: [{
+                                    label: `${property} (Object ${objIndex + 1})`,
+                                    data: values,
+                                    borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
+                                    borderWidth: 2,
+                                    fill: false
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    x: {
+                                        type: 'category',
+                                        title: {
+                                            display: true,
+                                            text: 'Data Points'
+                                        }
+                                    },
+                                    y: {
+                                        title: {
+                                            display: true,
+                                            text: 'Values'
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        }
+    </script>
 
 </body>
 </html>
