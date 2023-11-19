@@ -57,19 +57,17 @@
         function displayResourceCharts(dataArray) {
             const chartsContainer = document.getElementById('chartsContainer');
 
-            // Extract values of dt_infotime
+            // Use dt_infotime values as x-axis labels
             const dtInfotimeValues = dataArray.map(obj => obj.dt_infotime);
 
             // Group values by property
             const groupedData = {};
             dataArray.forEach(obj => {
                 Object.entries(obj).forEach(([property, values]) => {
-                    if (property !== 'dt_infotime') {
-                        if (!groupedData[property]) {
-                            groupedData[property] = [];
-                        }
-                        groupedData[property].push({ label: `Object ${groupedData[property].length + 1}`, data: values });
+                    if (!groupedData[property]) {
+                        groupedData[property] = [];
                     }
+                    groupedData[property].push({ label: `Object ${groupedData[property].length + 1}`, data: values });
                 });
             });
 
@@ -87,7 +85,7 @@
                 new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: dtInfotimeValues,
+                        labels: dtInfotimeValues, // Use dt_infotime as x-axis labels
                         datasets: [{
                             label: `${property}`,
                             data: valuesArray.map(obj => obj.data),
