@@ -56,12 +56,18 @@
 
         function displayMergedChart(dataArray) {
             // Combine data from "Object 1" and "Object 2"
-            const combinedData = dataArray.reduce((acc, obj) => {
+            const combinedData = dataArray.reduce((acc, obj, objIndex) => {
                 Object.entries(obj).forEach(([property, values]) => {
                     if (!acc[property]) {
-                        acc[property] = {};
+                        acc[property] = {
+                            label: property,
+                            data: [],
+                            borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
+                            borderWidth: 2,
+                            fill: false
+                        };
                     }
-                    acc[property] = { ...acc[property], ...values };
+                    acc[property].data.push(...values);
                 });
                 return acc;
             }, {});
@@ -73,14 +79,8 @@
             new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: Object.keys(combinedData),
-                    datasets: Object.entries(combinedData).map(([property, values]) => ({
-                        label: property,
-                        data: Object.values(values),
-                        borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
-                        borderWidth: 2,
-                        fill: false
-                    }))
+                    labels: Array.from({ length: combinedData[Object.keys(combinedData)[0]].data.length }, (_, i) => i + 1),
+                    datasets: Object.values(combinedData)
                 },
                 options: {
                     responsive: true,
@@ -90,7 +90,7 @@
                             type: 'category',
                             title: {
                                 display: true,
-                                text: 'Properties'
+                                text: 'Data Points'
                             }
                         },
                         y: {
