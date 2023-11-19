@@ -74,14 +74,13 @@
         }
 
         function createOrUpdateChart(data) {
-            const labels = Object.keys(data);
             const values = Object.values(data);
 
             const ctx = document.getElementById('myChart').getContext('2d');
             const myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: labels,
+                    labels: Object.keys(data),
                     datasets: [{
                         label: 'NFS Resource Information',
                         data: values,
