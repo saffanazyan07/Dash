@@ -4,6 +4,12 @@ const container = document.querySelector(".container"),
       signUp = document.querySelector(".signup-link"),
       verify = document.querySelector(".verify-link"),
       login = document.querySelector(".login-link");
+const signUp = document.getElementById("signUp");
+const login = document.getElementById("login");
+const verify = document.getElementById("verify");
+const signupForm = document.getElementById("signupForm");
+const loginForm = document.getElementById("loginForm");
+const verifyForm = document.getElementById("verifyForm");
 
     //   js code to show/hide password and change icon
     pwShowHide.forEach(eyeIcon =>{
@@ -26,13 +32,24 @@ const container = document.querySelector(".container"),
     })
 
 
-    // js code to appear signup and login form
-    signUp.addEventListener("click", ( )=>{
-        container.classList.add("active");
-    });
-    login.addEventListener("click", ( )=>{
-        container.classList.remove("active");
-    });
+// js code to appear signup and login form
+        signUp.addEventListener("click", () => {
+            signupForm.classList.add("active");
+            loginForm.classList.remove("active");
+            verifyForm.classList.remove("active");
+        });
+
+        login.addEventListener("click", () => {
+            signupForm.classList.remove("active");
+            loginForm.classList.add("active");
+            verifyForm.classList.remove("active");
+        });
+
+        verify.addEventListener("click", () => {
+            signupForm.classList.remove("active");
+            loginForm.classList.remove("active");
+            verifyForm.classList.add("active");
+        });
 
 async function loginUser() {
     const username = document.getElementById('username').value;
@@ -61,7 +78,7 @@ async function loginUser() {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-
+//response login-mainpage 
         const data = await response.json();
         console.log('Login response:', data);
 
@@ -79,6 +96,7 @@ async function loginUser() {
 }
 document.getElementById('loginButton').addEventListener('click', loginUser);
 
+//get velue from html "id"
 function submitForm() {
     var name = document.getElementById("s_name").value;
     var email = document.getElementById("s_email").value;
@@ -87,22 +105,21 @@ function submitForm() {
     var phone = document.getElementById("s_phone").value;
     var termsChecked = document.getElementById("termCon").checked;
 
-    // Additional form validation can be added here
-
+// Additional form validation can be added here
     if (termsChecked) {
-        // Validate email field
+      // Validate email field
         if (!isValidEmail(email)) {
             alert("Please enter a valid email address.");
             return;
         }
 
-        // Validate password and confirm password fields
+// Validate password and confirm password fields
         if (password !== confirmPassword) {
             alert("Passwords do not match!");
             return;
         }
 
-        // Create an object with the form data
+// Create an object with the form data
         var formData = {
             s_name: name,
             s_email: email,
@@ -111,7 +128,7 @@ function submitForm() {
             s_phone: phone
         };
 
-        // Make a POST request to your API
+// Make a POST request to your API
         fetch('http://140.118.121.85:5000/user/signup', {
             method: 'POST',
             headers: {
@@ -121,7 +138,7 @@ function submitForm() {
         })
         .then(response => response.json())
         .then(data => {
-      // Handle the API response here
+// Handle the API response here
             console.log(data);
             alert("Form submitted successfully!");
         })
