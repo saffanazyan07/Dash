@@ -18,9 +18,9 @@
         <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
     </form>
 
-    <!-- Container for the line charts -->
+    <!-- Container for the merged line chart -->
     <div style="width: 80%; margin: 20px auto;">
-        <div id="chartsContainer"></div>
+        <canvas id="mergedChart"></canvas>
     </div>
 
     <script>
@@ -46,7 +46,7 @@
             })
             .then(data => {
                 // Handle the successful response
-                displayResourceCharts(data.data); // Modify here to pass the 'data' property
+                displayMergedChart(data.data); // Modify here to pass the 'data' property
             })
             .catch(error => {
                 // Handle errors
@@ -54,54 +54,53 @@
             });
         }
 
-        function displayResourceCharts(dataArray) {
-            const chartsContainer = document.getElementById('chartsContainer');
-
-            // Create a line chart for each property in each object
-            dataArray.forEach((obj, objIndex) => {
+        function displayMergedChart(dataArray) {
+            // Combine data from "Object 1" and "Object 2"
+            const combinedData = dataArray.reduce((acc, obj) => {
                 Object.entries(obj).forEach(([property, values]) => {
-                    const chartContainer = document.createElement('div');
-                    chartContainer.style.marginBottom = '20px';
-                    chartContainer.innerHTML = `<canvas id="chart-${objIndex}-${property}"></canvas>`;
-                    chartsContainer.appendChild(chartContainer);
+                    if (!acc[property]) {
+                        acc[property] = {};
+                    }
+                    acc[property] = { ...acc[property], ...values };
+                });
+                return acc;
+            }, {});
 
-                    // Get the canvas element
-                    const ctx = document.getElementById(`chart-${objIndex}-${property}`).getContext('2d');
+            // Get the canvas element
+            const ctx = document.getElementById('mergedChart').getContext('2d');
 
-                    // Create a line chart
-                    new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: Object.keys(values),
-                            datasets: [{
-                                label: `${property} (Object ${objIndex + 1})`,
-                                data: Object.values(values),
-                                borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
-                                borderWidth: 2,
-                                fill: false
-                            }]
+            // Create a line chart for the combined data
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: Object.keys(combinedData),
+                    datasets: Object.entries(combinedData).map(([property, values]) => ({
+                        label: property,
+                        data: Object.values(values),
+                        borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
+                        borderWidth: 2,
+                        fill: false
+                    }))
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'category',
+                            title: {
+                                display: true,
+                                text: 'Properties'
+                            }
                         },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                x: {
-                                    type: 'category',
-                                    title: {
-                                        display: true,
-                                        text: 'Properties'
-                                    }
-                                },
-                                y: {
-                                    title: {
-                                        display: true,
-                                        text: 'Values'
-                                    }
-                                }
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Values'
                             }
                         }
-                    });
-                });
+                    }
+                }
             });
         }
     </script>
