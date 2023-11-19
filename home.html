@@ -18,7 +18,7 @@
         <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
     </form>
 
-    <!-- Container for the bar chart -->
+    <!-- Container for the line chart -->
     <div style="width: 80%; margin: 20px auto;">
         <canvas id="resourceChart"></canvas>
     </div>
@@ -57,20 +57,20 @@
         function displayResourceChart(dataArray) {
             // Extract labels and datasets from the array of objects
             const labels = Object.keys(dataArray[0]);
-            const datasets = dataArray.map(obj => ({
-                label: obj.label || 'Label', // Modify or use a default label
+            const datasets = dataArray.map((obj, index) => ({
+                label: `Object ${index + 1}`, // Add a label for each object
                 data: Object.values(obj),
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
+                borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
+                borderWidth: 2,
+                fill: false
             }));
 
             // Get the canvas element
             const ctx = document.getElementById('resourceChart').getContext('2d');
 
-            // Create a bar chart
+            // Create a line chart
             const chart = new Chart(ctx, {
-                type: 'bar',
+                type: 'line',
                 data: {
                     labels: labels,
                     datasets: datasets
