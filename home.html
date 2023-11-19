@@ -69,49 +69,52 @@
             });
 
             // Create a line chart for each property
-            Object.entries(groupedData).forEach(([property, valuesArray]) => {
-                const chartContainer = document.createElement('div');
-                chartContainer.style.marginBottom = '20px';
-                chartContainer.innerHTML = `<canvas id="chart-${property}"></canvas>`;
-                chartsContainer.appendChild(chartContainer);
+Object.entries(groupedData).forEach(([property, valuesArray]) => {
+    const chartContainer = document.createElement('div');
+    chartContainer.style.marginBottom = '20px';
+    chartContainer.innerHTML = `<canvas id="chart-${property}"></canvas>`;
+    chartsContainer.appendChild(chartContainer);
 
-                // Get the canvas element
-                const ctx = document.getElementById(`chart-${property}`).getContext('2d');
+    // Get the canvas element
+    const ctx = document.getElementById(`chart-${property}`).getContext('2d');
 
-                // Create a line chart
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: valuesArray.map(obj => obj.label),
-                        datasets: [{
-                            label: `${property}`,
-                            data: valuesArray.map(obj => obj.data),
-                            borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
-                            borderWidth: 2,
-                            fill: false
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            x: {
-                                type: 'category',
-                                title: {
-                                    display: true,
-                                    text: 'Objects'
-                                }
-                            },
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Values'
-                                }
-                            }
-                        }
+    // Use 'dt_infotime' as the x-axis labels
+    const labels = valuesArray.map(obj => obj.data.dt_infotime);
+
+    // Create a line chart
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: `${property}`,
+                data: valuesArray.map(obj => obj.data),
+                borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
+                borderWidth: 2,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    type: 'time', // Assuming 'dt_infotime' is a timestamp
+                    title: {
+                        display: true,
+                        text: 'Time'
                     }
-                });
-            });
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Values'
+                    }
+                }
+            }
+        }
+    });
+});
         }
     </script>
 
