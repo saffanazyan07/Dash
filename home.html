@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NFS Resource Form</title>
-    <!-- Include Chart.js -->
+    <!-- Include Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -18,10 +18,10 @@
         <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
     </form>
 
-    <!-- Container for the line charts -->
-    <div style="width: 80%; margin: 20px auto;">
-        <div id="chartsContainer"></div>
-    </div>
+    <div id="responseContainer"></div>
+
+    <!-- Create a canvas element for the chart -->
+    <canvas id="myChart" width="400" height="200"></canvas>
 
     <script>
         function fetchNFSResource() {
@@ -45,72 +45,57 @@
                 }
             })
             .then(data => {
+                // Log the entire response for debugging
+                console.log(data);
+
                 // Handle the successful response
-                displayResourceCharts(data.data); // Modify here to pass the 'data' property
+                displayResourceInfo(data); // Display the entire object
             })
             .catch(error => {
                 // Handle errors
-                console.error(error.message);
+                displayResourceInfo(`Error: ${error.message}`);
             });
         }
 
-        function displayResourceCharts(dataArray) {
-            const chartsContainer = document.getElementById('chartsContainer');
+        function displayResourceInfo(data) {
+            const responseContainer = document.getElementById('responseContainer');
+            let htmlContent = '<ul>';
 
-            // Group values by property
-            const groupedData = {};
-            dataArray.forEach(obj => {
-                Object.entries(obj).forEach(([property, values]) => {
-                    if (!groupedData[property]) {
-                        groupedData[property] = [];
-                    }
-                    groupedData[property].push({ label: `Object ${groupedData[property].length + 1}`, data: values });
-                });
-            });
+            // Iterate over object values and create list items
+            for (const [key, value] of Object.entries(data)) {
+                htmlContent += `<li>${key}: ${value}</li>`;
+            }
 
-            // Create a line chart for each property
-            Object.entries(groupedData).forEach(([property, valuesArray]) => {
-                const chartContainer = document.createElement('div');
-                chartContainer.style.marginBottom = '20px';
-                chartContainer.innerHTML = `<canvas id="chart-${property}"></canvas>`;
-                chartsContainer.appendChild(chartContainer);
+            htmlContent += '</ul>';
+            responseContainer.innerHTML = htmlContent;
 
-                // Get the canvas element
-                const ctx = document.getElementById(`chart-${property}`).getContext('2d');
+            // Call a function to create or update the chart
+            createOrUpdateChart(data);
+        }
 
-                // Create a line chart
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: valuesArray.map(obj => obj.label),
-                        datasets: [{
-                            label: `${property}`,
-                            data: valuesArray.map(obj => obj.data),
-                            borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
-                            borderWidth: 2,
-                            fill: false
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            x: {
-                                type: 'category',
-                                title: {
-                                    display: true,
-                                    text: 'Objects'
-                                }
-                            },
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Values'
-                                }
-                            }
+        function createOrUpdateChart(data) {
+            const values = Object.values(data);
+
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        label: 'NFS Resource Information',
+                        data: values,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
                     }
-                });
+                }
             });
         }
     </script>
