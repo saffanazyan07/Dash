@@ -51,7 +51,14 @@
 
         function displayResourceInfo(data) {
             const responseContainer = document.getElementById('responseContainer');
-            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+
+            // Create a detailed HTML representation
+            const detailsHTML = Object.entries(data)
+                .map(([key, value]) => `<p><strong>${key}:</strong> ${value}</p>`)
+                .join('');
+
+            // Display the detailed information in the container
+            responseContainer.innerHTML = detailsHTML;
         }
     </script>
 
