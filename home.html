@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NFS Resource Form</title>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -16,7 +18,10 @@
         <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
     </form>
 
-    <div id="responseContainer"></div>
+    <!-- Container for the bar chart -->
+    <div style="width: 80%; margin: 20px auto;">
+        <canvas id="resourceChart"></canvas>
+    </div>
 
     <script>
         function fetchNFSResource() {
@@ -41,17 +46,55 @@
             })
             .then(data => {
                 // Handle the successful response
-                displayResourceInfo(data);
+                displayResourceChart(data);
             })
             .catch(error => {
                 // Handle errors
-                displayResourceInfo(`Error: ${error.message}`);
+                console.error(error.message);
             });
         }
 
-        function displayResourceInfo(data) {
-            const responseContainer = document.getElementById('responseContainer');
-            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        function displayResourceChart(data) {
+            // Extract data for the chart (modify this based on your data structure)
+            const labels = Object.keys(data);
+            const values = Object.values(data);
+
+            // Get the canvas element
+            const ctx = document.getElementById('resourceChart').getContext('2d');
+
+            // Create a bar chart
+            const chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Resource Information',
+                        data: values,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'category',
+                            title: {
+                                display: true,
+                                text: 'Network Functions'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Values'
+                            }
+                        }
+                    }
+                }
+            });
         }
     </script>
 
