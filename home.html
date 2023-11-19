@@ -70,52 +70,48 @@
 
             // Create a line chart for each property
             Object.entries(groupedData).forEach(([property, valuesArray]) => {
-    const chartContainer = document.createElement('div');
-    chartContainer.style.marginBottom = '20px';
-    chartContainer.innerHTML = `<canvas id="chart-${property}"></canvas>`;
-    chartsContainer.appendChild(chartContainer);
+                const chartContainer = document.createElement('div');
+                chartContainer.style.marginBottom = '20px';
+                chartContainer.innerHTML = `<canvas id="chart-${property}"></canvas>`;
+                chartsContainer.appendChild(chartContainer);
 
-    // Get the canvas element
-    const ctx = document.getElementById(`chart-${property}`).getContext('2d');
+                // Get the canvas element
+                const ctx = document.getElementById(`chart-${property}`).getContext('2d');
 
-    // Use a different property from your database as the label
-    const labelProperty = 'dt_infotime'; // Change this to the actual property name
-    const labels = valuesArray.map(obj => obj.data[labelProperty]);
-
-    // Create a line chart
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: `${property}`,
-                data: valuesArray.map(obj => obj.data),
-                borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
-                borderWidth: 2,
-                fill: false
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                x: {
-                    type: 'category',
-                    title: {
-                        display: true,
-                        text: 'Objects'
+                // Create a line chart
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: valuesArray.map(obj => obj.label),
+                        datasets: [{
+                            label: `${property}`,
+                            data: valuesArray.map(obj => obj.data),
+                            borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
+                            borderWidth: 2,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                type: 'category',
+                                title: {
+                                    display: true,
+                                    text: 'Objects'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Values'
+                                }
+                            }
+                        }
                     }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Values'
-                    }
-                }
-            }
-        }
-    });
-});
+                });
+            });
         }
     </script>
 
