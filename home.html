@@ -40,8 +40,11 @@
             }
         })
         .then(data => {
+            // Log the entire response for debugging
+            console.log(data);
+
             // Handle the successful response
-            displayResourceInfo(data);
+            displayResourceInfo(data.data); // Access the 'data' property
         })
         .catch(error => {
             // Handle errors
