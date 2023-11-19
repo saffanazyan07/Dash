@@ -31,8 +31,14 @@ const verifyForm = document.getElementById("verifyForm");
         })
     })
 
-
-// js code to appear signup and login form
+ // js code to appear signup and login form
+    signUp.addEventListener("click", ( )=>{
+        container.classList.add("active");
+    });
+    login.addEventListener("click", ( )=>{
+        container.classList.remove("active");
+    });
+/* js code to appear signup and login form
         signUp.addEventListener("click", () => {
             signupForm.classList.add("active");
             loginForm.classList.remove("active");
@@ -49,7 +55,7 @@ const verifyForm = document.getElementById("verifyForm");
             signupForm.classList.remove("active");
             loginForm.classList.remove("active");
             verifyForm.classList.add("active");
-        });
+        });*/
 
 async function loginUser() {
     const username = document.getElementById('username').value;
