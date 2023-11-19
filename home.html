@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NFS Resource Form</title>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -16,7 +18,10 @@
         <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
     </form>
 
-    <div id="responseContainer"></div>
+    <!-- Container for the bar chart -->
+    <div style="width: 80%; margin: 20px auto;">
+        <canvas id="resourceChart"></canvas>
+    </div>
 
     <script>
         function fetchNFSResource() {
@@ -41,24 +46,55 @@
             })
             .then(data => {
                 // Handle the successful response
-                displayResourceInfo(data.data); // Modify here to pass the 'data' property
+                displayResourceChart(data.data); // Modify here to pass the 'data' property
             })
             .catch(error => {
                 // Handle errors
-                displayResourceInfo(`Error: ${error.message}`);
+                console.error(error.message);
             });
         }
 
-        function displayResourceInfo(dataArray) {
-            const responseContainer = document.getElementById('responseContainer');
+        function displayResourceChart(dataArray) {
+            // Extract labels and datasets from the array of objects
+            const labels = Object.keys(dataArray[0]);
+            const datasets = dataArray.map(obj => ({
+                label: obj.label || 'Label', // Modify or use a default label
+                data: Object.values(obj),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }));
 
-            // Create a detailed HTML representation for each object in the array
-            const detailsHTML = dataArray.map(obj => {
-                return `<div>${Object.entries(obj).map(([key, value]) => `<p><strong>${key}:</strong> ${value}</p>`).join('')}</div>`;
-            }).join('');
+            // Get the canvas element
+            const ctx = document.getElementById('resourceChart').getContext('2d');
 
-            // Display the detailed information in the container
-            responseContainer.innerHTML = detailsHTML;
+            // Create a bar chart
+            const chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'category',
+                            title: {
+                                display: true,
+                                text: 'Properties'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Values'
+                            }
+                        }
+                    }
+                }
+            });
         }
     </script>
 
