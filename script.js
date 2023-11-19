@@ -65,7 +65,7 @@ async function loginUser() {
 
         if (data.message === "User found" || data.status_code === 200) {
             console.log('Login successful:', data.message);
-            window.location.href = 'home.html';
+            window.location.href = 'USER/index.html';
         } else {
             console.error('Login failed:', data.message);
             alert('Login failed. Please check your credentials.');
