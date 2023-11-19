@@ -79,7 +79,7 @@
     const ctx = document.getElementById(`chart-${property}`).getContext('2d');
 
     // Use a different property from your database as the label
-    const labelProperty = 'newLabelProperty'; // Change this to the actual property name
+    const labelProperty = 'dt_infotime'; // Change this to the actual property name
     const labels = valuesArray.map(obj => obj.data[labelProperty]);
 
     // Create a line chart
