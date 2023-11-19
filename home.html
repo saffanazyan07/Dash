@@ -78,14 +78,11 @@
                 // Get the canvas element
                 const ctx = document.getElementById(`chart-${property}`).getContext('2d');
 
-                // Use 'dt_infotime' as the x-axis labels
-                const labels = valuesArray.map(obj => obj.data.dt_infotime);
-
                 // Create a line chart
                 new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: labels,
+                        labels: valuesArray.map(obj => obj.label),
                         datasets: [{
                             label: `${property}`,
                             data: valuesArray.map(obj => obj.data),
@@ -99,10 +96,10 @@
                         maintainAspectRatio: false,
                         scales: {
                             x: {
-                                type: 'time', // Assuming 'dt_infotime' is a timestamp
+                                type: 'category',
                                 title: {
                                     display: true,
-                                    text: 'Time'
+                                    text: 'Objects'
                                 }
                             },
                             y: {
