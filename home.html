@@ -41,17 +41,22 @@
             })
             .then(data => {
                 // Handle the successful response
-                displayResourceInfo(data);
+                displayResourceInfo(nfValue, data);
             })
             .catch(error => {
                 // Handle errors
-                displayResourceInfo(`Error: ${error.message}`);
+                displayResourceInfo(nfValue, `Error: ${error.message}`);
             });
         }
 
-        function displayResourceInfo(data) {
+        function displayResourceInfo(nf, data) {
             const responseContainer = document.getElementById('responseContainer');
-            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            
+            // Create a single array containing the Network Function and its resource information
+            const resultArray = [{ nf: nf, data: data }];
+
+            // Use JSON.stringify to display the array as a string in the <pre> element
+            responseContainer.innerHTML = `<pre>${JSON.stringify(resultArray, null, 2)}</pre>`;
         }
     </script>
 
