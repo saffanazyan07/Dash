@@ -108,7 +108,7 @@ function signupForm() {
             s_passwordconfirmation: confirmPassword,
             s_phone: phone
         };
-    try {
+    /*try {
         const response = await fetch('http://140.118.121.85:5000/user/signup', {
             method: 'POST',
             headers: {
@@ -138,7 +138,7 @@ function signupForm() {
 }
 document.getElementById('signupButton').addEventListener('click', signupForm);          
 
-/* Make a POST request to your API
+*/ Make a POST request to your API
          
         fetch('http://140.118.121.85:5000/user/signup', {
             method: 'POST',
