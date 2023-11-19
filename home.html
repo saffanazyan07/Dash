@@ -56,6 +56,7 @@
         const responseContainer = document.getElementById('responseContainer');
         let htmlContent = '<ul>';
 
+        // Iterate over object properties and create list items
         for (const key in data) {
             if (data.hasOwnProperty(key)) {
                 htmlContent += `<li><strong>${key}:</strong> ${data[key]}</li>`;
