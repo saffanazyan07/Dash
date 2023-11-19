@@ -24,17 +24,7 @@ const container = document.querySelector(".container"),
             }) 
         })
     })
-// js code for visible password
-/*function togglePasswordVisibility() {
-        var passwordField = document.getElementById(".password");
 
-        // Toggle password visibility
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-        } else {
-            passwordField.type = "password";
-        }
-    }*/
 
     // js code to appear signup and login form
     signUp.addEventListener("click", ( )=>{
