@@ -44,7 +44,7 @@
             console.log(data);
 
             // Handle the successful response
-            displayResourceInfo(data.data); // Access the 'data' property
+            displayResourceInfo(data); // Display the entire object
         })
         .catch(error => {
             // Handle errors
@@ -56,11 +56,9 @@
         const responseContainer = document.getElementById('responseContainer');
         let htmlContent = '<ul>';
 
-        // Iterate over object properties and create list items
-        for (const key in data) {
-            if (data.hasOwnProperty(key)) {
-                htmlContent += `<li><strong>${key}:</strong> ${data[key]}</li>`;
-            }
+        // Iterate over object values and create list items
+        for (const value of Object.values(data)) {
+            htmlContent += `<li>${value}</li>`;
         }
 
         htmlContent += '</ul>';
