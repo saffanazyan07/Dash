@@ -153,6 +153,7 @@ Make a POST request to your API*/
               
             console.log(data);
             alert("Form submitted successfully!");
+            window.location.href = 'verify.html';
         })
         .catch(error => {
             console.error('Error:', error);
