@@ -23,7 +23,7 @@
       <div class="form verify">
     <span class="title">verification</span>
 
-    <form id="verifyForm" action="#" method="POST">
+    <form id="verifyForm" action="#" method="PUT">
         <!-- ... other input fields ... -->
 
         <div class="input-field">
@@ -56,7 +56,7 @@
 
     try {
         const response = await fetch('https://140.118.121.85:5000/user/verify', {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
