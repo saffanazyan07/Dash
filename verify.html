@@ -45,18 +45,18 @@
 </div>
 <script>
     async function verifyUser() {
-    const verificationCode = document.getElementById('verifyCodeButton').value;
+    const verify = document.getElementById('verificationCode').value;
     const email = document.getElementById('s_email').value;
 
     // Validate verification code (add additional validation if needed)
-    if (!verificationCode || !email ) {
+    if (!verify || !email ) {
         alert('Please enter eamil & verification code');
         return;
     }
 
     const requestBody = {
         s_email: email,
-        s_verify: verificationCode,
+        s_verify: verify
     };
 
     try {
