@@ -42,20 +42,20 @@
 </div>
 <script>
     async function verifyUser() {
-    const verify = document.getElementById('verificationCode').value;
+    const verificationCode = document.getElementById('verificationCode').value;
 
-    // Validate username and password (add additional validation if needed)
-    if (!verify) {
+    // Validate verification code (add additional validation if needed)
+    if (!verificationCode) {
         alert('Please enter verification code');
         return;
     }
 
     const requestBody = {
-        s_verify: verify,
+        s_verify: verificationCode,
     };
 
     try {
-        const response = await fetch('http://140.118.121.85:5000/user/verify', {
+        const response = await fetch('https://140.118.121.85:5000/user/verify', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -64,25 +64,27 @@
         });
 
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
-//response login-mainpage 
+
         const data = await response.json();
         console.log('verify response:', data);
 
-        if (data.message === "User found" || data.status_code === 200) {
-            console.log('verify successfull:', data.message);
+        if (data.message === 'User found' || data.status_code === 200) {
+            console.log('Verification successful:', data.message);
             window.location.href = 'index.html';
         } else {
-            console.error('verification failed:', data.message);
+            console.error('Verification failed:', data.message);
             alert('Verification failed. Please check your email!');
         }
     } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-        alert('An error occurred. Please try again later.');
+        console.error('Error during fetch operation:', error);
+        alert('An error occurred during verification. Please try again later.');
     }
 }
+
 document.getElementById('verifyCodeButton').addEventListener('click', verifyUser);
+
 </script>    
 <!--script>
   /*document.addEventListener("DOMContentLoaded", () => {
