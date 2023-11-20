@@ -30,12 +30,12 @@
             <i class="uil uil-envelope icon"></i>
         </div>
         <div class="input-field">
-            <input id="verificationCode" type="text" placeholder="Enter verification code" required>
+            <input id="s_verify" type="text" placeholder="Enter verification code" required>
             <i class="uil uil-key icon"></i>
         </div>
 
         <div class="input-field button">
-            <input type="button" value="Verify Code" id="verifyCodeButton">
+            <input type="button" value="Verify Code" id="verifyButton">
         </div>
         
         <!-- Add a hidden field to store the email during the registration process -->
@@ -45,12 +45,12 @@
 </div>
 <script>
     async function verifyUser() {
-    const verify = document.getElementById('verificationCode').value;
     const email = document.getElementById('s_email').value;
+    const verify = document.getElementById('s_verify').value;
 
-    // Validate verification code (add additional validation if needed)
-    if (!verify || !email ) {
-        alert('Please enter eamil & verification code');
+    // Validate username and password (add additional validation if needed)
+    if (!email || !verify) {
+        alert('Please enter both email and code');
         return;
     }
 
@@ -60,7 +60,7 @@
     };
 
     try {
-        const response = await fetch('https://140.118.121.85:5000/user/verify', {
+        const response = await fetch('http://140.118.121.85:5000/user/verify', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -69,29 +69,25 @@
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error('Network response was not ok');
         }
-
+//response login-mainpage 
         const data = await response.json();
-        console.log('verify response:', data);
+        console.log('Login response:', data);
 
-        if (data.message === 'User found' || data.status_code === 200) {
-            console.log('Verification successful:', data.message);
+        if (data.message === "User found" || data.status_code === 200) {
+            console.log('Verification successfull:', data.message);
             window.location.href = 'index.html';
         } else {
             console.error('Verification failed:', data.message);
-            alert('Verification failed. Please check your email!');
+            alert('verification failed. Please check your email');
         }
     } catch (error) {
-        console.error('Error during fetch operation:', error);
-        alert('An error occurred during verification. Please try again later.');
+        console.error('There was a problem with the fetch operation:', error);
+        alert('An error occurred. Please try again later.');
     }
 }
-
-document.getElementById('verifyCodeButton').addEventListener('click', verifyUser);
-
-
-
+document.getElementById('verifyButton').addEventListener('click', verifyUser);
 </script>    
 <!--script>
   /*document.addEventListener("DOMContentLoaded", () => {
