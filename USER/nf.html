@@ -46,13 +46,14 @@
                 const data = await response.json();
 
                 // Check if data is present and has the expected structure
-                if (data && Array.isArray(data.data)) {
+                if (data && data.data !== undefined) {
+                    console.log('Received data:', data);
                     displayResourceCharts(data.data);
                 } else {
-                    console.error('Invalid data structure received');
+                    console.error('Invalid data structure received:', data);
                 }
             } catch (error) {
-                console.error(error.message);
+                console.error('Error during fetch operation:', error);
             }
         }
 
@@ -60,7 +61,7 @@
             const chartsContainer = document.getElementById('chartsContainer');
 
             if (!Array.isArray(dataArray) || dataArray.length === 0) {
-                console.error('Invalid data array');
+                console.error('Invalid data array:', dataArray);
                 return;
             }
 
