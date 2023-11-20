@@ -25,7 +25,10 @@
 
     <form id="verifyForm" action="#" method="POST">
         <!-- ... other input fields ... -->
-
+        <div class="input-field">
+            <input id="s_email" type="text" placeholder="Enter your email" required>
+            <i class="uil uil-envelope icon"></i>
+        </div>
         <div class="input-field">
             <input id="verificationCode" type="text" placeholder="Enter verification code" required>
             <i class="uil uil-key icon"></i>
@@ -43,20 +46,21 @@
 <script>
     async function verifyUser() {
     const verificationCode = document.getElementById('verifyCodeButton').value;
-const username = document.getElementById('s_email').value;
+    const email = document.getElementById('s_email').value;
 
     // Validate verification code (add additional validation if needed)
-    if (!verificationCode) {
-        alert('Please enter verification code');
+    if (!verificationCode || !email ) {
+        alert('Please enter eamil & verification code');
         return;
     }
 
     const requestBody = {
+        s_email: email,
         s_verify: verificationCode,
     };
 
     try {
-        const response = await fetch('https://140.118.121.85:5000/user/verify', {
+        const response = await fetch('https://140.118.121.85:5001/user/verify', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
