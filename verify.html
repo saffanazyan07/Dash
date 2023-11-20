@@ -41,7 +41,51 @@
     </div>
 </div>
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+    async function verifyUser() {
+    const verify = document.getElementById('verificationCode').value;
+
+    // Validate username and password (add additional validation if needed)
+    if (!verify) {
+        alert('Please enter verification code');
+        return;
+    }
+
+    const requestBody = {
+        s_verify: verify,
+    };
+
+    try {
+        const response = await fetch('http://140.118.121.85:5000/user/verify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+//response login-mainpage 
+        const data = await response.json();
+        console.log('verify response:', data);
+
+        if (data.message === "User found" || data.status_code === 200) {
+            console.log('verify successfull:', data.message);
+            window.location.href = 'index.html';
+        } else {
+            console.error('verification failed:', data.message);
+            alert('Verification failed. Please check your email!');
+        }
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        alert('An error occurred. Please try again later.');
+    }
+}
+document.getElementById('verifyCodeButton').addEventListener('click', verifyUser);
+</script>    
+<!--script>
+  /*document.addEventListener("DOMContentLoaded", () => {
     //const signUp = document.getElementById("signUp");
     //const login = document.getElementById("login");
     const verifyCodeButton = document.getElementById("verifyCodeButton");
@@ -89,7 +133,7 @@
     });
 });
 
-</script> 
+</script--> 
 </body>
 </html>
       
