@@ -24,103 +24,105 @@
     </div>
 
     <script>
-        async function fetchNFSResource() {
-            const nfInput = document.getElementById('nf');
-            const nfValue = nfInput.value;
+        function fetchNFSResource() {
+    const nfInput = document.getElementById('nf');
+    const nfValue = nfInput.value;
 
-            // Replace 'http://140.118.121.85:5000/nfs/resource' with the actual API endpoint
-            const apiUrl = `http://140.118.121.85:5000/nfs/resource?s_nf=${nfValue}`;
+    // Replace 'http://140.118.121.85:5000/nfs/resource' with the actual API endpoint
+    const apiUrl = `http://140.118.121.85:5000/nfs/resource?s_nf=${nfValue}`;
 
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
-                }
-
-                const data = await response.json();
-
-                // Check if data is present and has the expected structure
-                if (data && data.data !== undefined) {
-                    console.log('Received data:', data);
-                    displayResourceCharts(data.data);
-                } else {
-                    console.error('Invalid data structure received:', data);
-                }
-            } catch (error) {
-                console.error('Error during fetch operation:', error);
-            }
+    fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
         }
+    })
+    .then(response => {
+        if (response.status === 200) {
+            return response.json();
+        } else {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+    })
+    .then(data => {
+        // Handle the successful response
+        if (Array.isArray(data)) {
+            displayResourceCharts(data);
+        } else {
+            console.error('Invalid data format received from the API.');
+        }
+    })
+    .catch(error => {
+        // Handle errors
+        console.error('Error during API request:', error);
+    });
+}
 
-        function displayResourceCharts(dataArray) {
-            const chartsContainer = document.getElementById('chartsContainer');
+function displayResourceCharts(dataArray) {
+    if (!Array.isArray(dataArray)) {
+        console.error('Data array is not defined or not an array.');
+        return;
+    }
 
-            if (!Array.isArray(dataArray) || dataArray.length === 0) {
-                console.error('Invalid data array:', dataArray);
-                return;
+    const chartsContainer = document.getElementById('chartsContainer');
+
+    // Group values by property
+    const groupedData = {};
+    dataArray.forEach(obj => {
+        Object.entries(obj).forEach(([property, values]) => {
+            if (!groupedData[property]) {
+                groupedData[property] = [];
             }
+            groupedData[property].push({ label: `Object ${groupedData[property].length + 1}`, data: values });
+        });
+    });
 
-            // Group values by property
-            const groupedData = {};
-            dataArray.forEach(obj => {
-                Object.entries(obj).forEach(([property, values]) => {
-                    if (!groupedData[property]) {
-                        groupedData[property] = [];
-                    }
-                    groupedData[property].push({ label: `Object ${groupedData[property].length + 1}`, data: values });
-                });
-            });
+    // Create a line chart for each property
+    Object.entries(groupedData).forEach(([property, valuesArray]) => {
+        const chartContainer = document.createElement('div');
+        chartContainer.style.marginBottom = '20px';
+        chartContainer.innerHTML = `<canvas id="chart-${property}"></canvas>`;
+        chartsContainer.appendChild(chartContainer);
 
-            // Create a line chart for each property
-            Object.entries(groupedData).forEach(([property, valuesArray]) => {
-                const chartContainer = document.createElement('div');
-                chartContainer.style.marginBottom = '20px';
-                chartContainer.innerHTML = `<canvas id="chart-${property}"></canvas>`;
-                chartsContainer.appendChild(chartContainer);
+        // Get the canvas element
+        const ctx = document.getElementById(`chart-${property}`).getContext('2d');
 
-                // Get the canvas element
-                const ctx = document.getElementById(`chart-${property}`).getContext('2d');
-
-                // Create a line chart
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: valuesArray.map(obj => obj.label),
-                        datasets: [{
-                            label: `${property}`,
-                            data: valuesArray.map(obj => obj.data),
-                            borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
-                            borderWidth: 2,
-                            fill: false
-                        }]
+        // Create a line chart
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: valuesArray.map(obj => obj.label),
+                datasets: [{
+                    label: `${property}`,
+                    data: valuesArray.map(obj => obj.data),
+                    borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        type: 'category',
+                        title: {
+                            display: true,
+                            text: 'Objects'
+                        }
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            x: {
-                                type: 'category',
-                                title: {
-                                    display: true,
-                                    text: 'Objects'
-                                }
-                            },
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Values'
-                                }
-                            }
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Values'
                         }
                     }
-                });
-            });
-        }
+                }
+            }
+        });
+    });
+}
+
     </script>
 
 </body>
