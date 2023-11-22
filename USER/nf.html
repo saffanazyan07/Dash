@@ -49,16 +49,19 @@
         }
 
         function displayResourceInfo(data) {
-            const responseContainer = document.getElementById('responseContainer');
+    const responseContainer = document.getElementById('responseContainer');
+    
+    // Log the entire response to the console
+    console.log(data);
 
-            // Extract specific fields from the response
-            const dtInfotime = data.dt_infotime;
-            const packetLoss = data.s_loss;
+    // Extract specific fields from the response
+    const dtInfotime = data.dt_infotime;
+    const packetLoss = data.s_loss;
 
-            // Display the extracted data
-            responseContainer.innerHTML = `<p>Packet Sending Time: ${dtInfotime}</p>
-                                          <p>Packet Loss Rate: ${packetLoss}</p>`;
-        }
+    // Display the extracted data
+    responseContainer.innerHTML = `<p>Packet Sending Time: ${dtInfotime}</p>
+                                  <p>Packet Loss Rate: ${packetLoss}</p>`;
+}
     </script>
 
 </body>
