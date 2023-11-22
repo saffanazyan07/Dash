@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NFS Resource Form</title>
-    <!-- Include Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -18,111 +16,43 @@
         <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
     </form>
 
-    <!-- Container for the line charts -->
-    <div style="width: 80%; margin: 20px auto;">
-        <div id="chartsContainer"></div>
-    </div>
+    <div id="responseContainer"></div>
 
     <script>
         function fetchNFSResource() {
-    const nfInput = document.getElementById('nf');
-    const nfValue = nfInput.value;
+            const nfInput = document.getElementById('nf');
+            const nfValue = nfInput.value;
 
-    // Replace 'http://140.118.121.85:5000/nfs/resource' with the actual API endpoint
-    const apiUrl = `http://140.118.121.85:5000/nfs/resource?s_nf=${nfValue}`;
+            // Replace 'http://140.118.121.85:5000/nfs/resource' with the actual API endpoint
+            const apiUrl = `http://140.118.121.85:5000/nfs/resource?s_nf=${nfValue}`;
 
-    fetch(apiUrl, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (response.status === 200) {
-            return response.json();
-        } else {
-            throw new Error(`Error: ${response.status} - ${response.statusText}`);
-        }
-    })
-    .then(data => {
-        // Handle the successful response
-        if (Array.isArray(data)) {
-            displayResourceCharts(data);
-        } else {
-            console.error('Invalid data format received from the API.');
-        }
-    })
-    .catch(error => {
-        // Handle errors
-        console.error('Error during API request:', error);
-    });
-}
-
-function displayResourceCharts(dataArray) {
-    if (!Array.isArray(dataArray)) {
-        console.error('Data array is not defined or not an array.');
-        return;
-    }
-
-    const chartsContainer = document.getElementById('chartsContainer');
-
-    // Group values by property
-    const groupedData = {};
-    dataArray.forEach(obj => {
-        Object.entries(obj).forEach(([property, values]) => {
-            if (!groupedData[property]) {
-                groupedData[property] = [];
-            }
-            groupedData[property].push({ label: `Object ${groupedData[property].length + 1}`, data: values });
-        });
-    });
-
-    // Create a line chart for each property
-    Object.entries(groupedData).forEach(([property, valuesArray]) => {
-        const chartContainer = document.createElement('div');
-        chartContainer.style.marginBottom = '20px';
-        chartContainer.innerHTML = `<canvas id="chart-${property}"></canvas>`;
-        chartsContainer.appendChild(chartContainer);
-
-        // Get the canvas element
-        const ctx = document.getElementById(`chart-${property}`).getContext('2d');
-
-        // Create a line chart
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: valuesArray.map(obj => obj.label),
-                datasets: [{
-                    label: `${property}`,
-                    data: valuesArray.map(obj => obj.data),
-                    borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
-                    borderWidth: 2,
-                    fill: false
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        type: 'category',
-                        title: {
-                            display: true,
-                            text: 'Objects'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Values'
-                        }
-                    }
+            fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
                 }
-            }
-        });
-    });
-}
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
+                }
+            })
+            .then(data => {
+                // Handle the successful response
+                displayResourceInfo(data);
+            })
+            .catch(error => {
+                // Handle errors
+                displayResourceInfo(`Error: ${error.message}`);
+            });
+        }
 
+        function displayResourceInfo(data) {
+            const responseContainer = document.getElementById('responseContainer');
+            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        }
     </script>
 
 </body>
