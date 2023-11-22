@@ -51,17 +51,7 @@
 
         function displayResourceInfo(data) {
             const responseContainer = document.getElementById('responseContainer');
-
-            // Assuming dt_infotime is a property in the response data
-            const dtInfotimeString = data.dt_infotime;
-
-            // Convert the string to a Date object
-            const dtInfotime = new formattedDatetime(dtInfotimeString);
-
-            // Display the datetime in a readable format
-            const formattedDatetime = dtInfotime.toLocaleString();
-
-            responseContainer.innerHTML = `<pre>${JSON.stringify({ ...data, dt_infotime: formattedDatetime }, null, 2)}</pre>`;
+            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
         }
     </script>
 
