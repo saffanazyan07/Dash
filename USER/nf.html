@@ -50,7 +50,14 @@
 
         function displayResourceInfo(data) {
             const responseContainer = document.getElementById('responseContainer');
-            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+
+            // Extract specific fields from the response
+            const dtInfotime = data.dt_infotime;
+            const packetLoss = data.s_loss;
+
+            // Display the extracted data
+            responseContainer.innerHTML = `<p>Packet Sending Time: ${dtInfotime}</p>
+                                          <p>Packet Loss Rate: ${packetLoss}</p>`;
         }
     </script>
 
