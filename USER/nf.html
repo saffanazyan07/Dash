@@ -56,7 +56,7 @@
             responseContainer.innerHTML = '';
 
             // Display specific data
-            if (data && data.hasOwnProperty('property1')) {
+            if (data && data.hasOwnProperty('dt_infotime')) {
                 const property1Value = data.property1;
                 const paragraph1 = document.createElement('p');
                 paragraph1.textContent = `Property 1: ${property1Value}`;
