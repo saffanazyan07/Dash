@@ -56,7 +56,7 @@
             const dtInfotimeString = data.dt_infotime;
 
             // Convert the string to a Date object
-            const dtInfotime = new DateTime(dtInfotimeString);
+            const dtInfotime = new formattedDatetime(dtInfotimeString);
 
             // Display the datetime in a readable format
             const formattedDatetime = dtInfotime.toLocaleString();
