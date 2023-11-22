@@ -12,6 +12,7 @@
     <form id="resourceForm">
         <label for="nf">Network Function:</label>
         <input type="text" id="nf" name="s_nf" required>
+
         <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
     </form>
 
@@ -49,28 +50,8 @@
         }
 
         function displayResourceInfo(data) {
-        const responseContainer = document.getElementById('responseContainer');
-    
-        // Log the entire response to the console
-        console.log(data);
-
-        // Extract specific fields from the response
-        const dtInfotimeString = data.dt_infotime;
-        const packetLoss = data.s_loss;
-        
-        const dtInfotime = new Date(dtInfotimeString);
-
-        const formattedDatetime = `${dtInfotime.getFullYear()}-${padZero(dtInfotime.getMonth() + 1)}-${padZero(dtInfotime.getDate())} ${padZero(dtInfotime.getHours())}:${padZero(dtInfotime.getMinutes())}:${padZero(dtInfotime.getSeconds())}`;
-
-        // Display the extracted data
-        responseContainer.innerHTML = `<p>Packet Sending Time: ${dtInfotime}</p>
-                                    <p>Packet Loss Rate: ${packetLoss}</p>`;
-            
-        responseContainer.innerHTML = (data.dt_infotime);
-        }
-
-        function padZero(num) {
-        return num < 10 ? `0${num}` : num;
+            const responseContainer = document.getElementById('responseContainer');
+            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
         }
     </script>
 
