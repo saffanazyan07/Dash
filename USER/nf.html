@@ -49,19 +49,23 @@
         }
 
         function displayResourceInfo(data) {
-    const responseContainer = document.getElementById('responseContainer');
+        const responseContainer = document.getElementById('responseContainer');
     
-    // Log the entire response to the console
-    console.log(data);
+        // Log the entire response to the console
+        console.log(data);
 
-    // Extract specific fields from the response
-    const dtInfotime = data.dt_infotime;
-    const packetLoss = data.s_loss;
+        // Extract specific fields from the response
+        const dtInfotimeString = data.dt_infotime;
+        const packetLoss = data.s_loss;
+        
+        const dtInfotime = new Date(dtInfotimeString);
 
-    // Display the extracted data
-    responseContainer.innerHTML = `<p>Packet Sending Time: ${dtInfotime}</p>
-                                  <p>Packet Loss Rate: ${packetLoss}</p>`;
-}
+        const formattedDatetime = `${dtInfotime.getFullYear()}-${padZero(dtInfotime.getMonth() + 1)}-${padZero(dtInfotime.getDate())} ${padZero(dtInfotime.getHours())}:${padZero(dtInfotime.getMinutes())}:${padZero(dtInfotime.getSeconds())}`;
+
+        // Display the extracted data
+        responseContainer.innerHTML = `<p>Packet Sending Time: ${dtInfotime}</p>
+                                    <p>Packet Loss Rate: ${packetLoss}</p>`;
+        }
     </script>
 
 </body>
