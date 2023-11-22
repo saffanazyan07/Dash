@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NFS Resource Form</title>
-    <!-- Include Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -18,19 +16,9 @@
         <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
     </form>
 
-    <!-- Container for the line charts -->
-    <div style="width: 80%; margin: 20px auto;">
-        <div>
-            <label for="timeStampSelector">Select Time Stamp:</label>
-            <select id="timeStampSelector" onchange="switchTimeStamp()">
-            </select>
-        </div>
-        <div id="chartsContainer"></div>
-    </div>
+    <div id="responseContainer"></div>
 
     <script>
-        let currentTimestamp = ''; // Variable to store the selected time stamp
-
         function fetchNFSResource() {
             const nfInput = document.getElementById('nf');
             const nfValue = nfInput.value;
@@ -53,102 +41,17 @@
             })
             .then(data => {
                 // Handle the successful response
-                displayResourceCharts(data.data);
+                displayResourceInfo(data);
             })
             .catch(error => {
                 // Handle errors
-                console.error(error.message);
+                displayResourceInfo(`Error: ${error.message}`);
             });
         }
 
-        function displayResourceCharts(dataArray) {
-            const chartsContainer = document.getElementById('chartsContainer');
-            const timeStampSelector = document.getElementById('timeStampSelector');
-
-            // Clear previous options
-            timeStampSelector.innerHTML = '<option value="">Select Time Stamp</option>';
-
-            // Group values by property
-            const groupedData = {};
-            dataArray.forEach(obj => {
-                Object.entries(obj).forEach(([property, values]) => {
-                    if (!groupedData[property]) {
-                        groupedData[property] = [];
-                    }
-                    groupedData[property].push({ label: `Object ${groupedData[property].length + 1}`, data: values });
-                });
-            });
-
-            // Extract unique timestamps
-            const timestamps = [...new Set(dataArray.map(obj => obj.timestamp))];
-
-            // Populate the dropdown menu with timestamps
-            timestamps.forEach(timestamp => {
-                const option = document.createElement('option');
-                option.value = timestamp;
-                option.text = timestamp;
-                timeStampSelector.add(option);
-            });
-
-            // Set the default timestamp to the first one
-            if (timestamps.length > 0) {
-                currentTimestamp = timestamps[0];
-                timeStampSelector.value = currentTimestamp;
-            }
-
-            // Create a line chart for each property
-            Object.entries(groupedData).forEach(([property, valuesArray]) => {
-                const chartContainer = document.createElement('div');
-                chartContainer.style.marginBottom = '20px';
-                chartContainer.innerHTML = `<canvas id="chart-${property}"></canvas>`;
-                chartsContainer.appendChild(chartContainer);
-
-                // Get the canvas element
-                const ctx = document.getElementById(`chart-${property}`).getContext('2d');
-
-                // Filter values based on the selected timestamp
-                const filteredValues = valuesArray.filter(obj => obj.data.timestamp === currentTimestamp);
-
-                // Create a line chart
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: filteredValues.map(obj => obj.label),
-                        datasets: [{
-                            label: `${property}`,
-                            data: filteredValues.map(obj => obj.data),
-                            borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
-                            borderWidth: 2,
-                            fill: false
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            x: {
-                                type: 'category',
-                                title: {
-                                    display: true,
-                                    text: 'Objects'
-                                }
-                            },
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Values'
-                                }
-                            }
-                        }
-                    }
-                });
-            });
-        }
-
-        function switchTimeStamp() {
-            const timeStampSelector = document.getElementById('timeStampSelector');
-            currentTimestamp = timeStampSelector.value;
-            fetchNFSResource(); // Fetch and display charts with the selected timestamp
+        function displayResourceInfo(data) {
+            const responseContainer = document.getElementById('responseContainer');
+            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
         }
     </script>
 
