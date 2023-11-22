@@ -1,83 +1,154 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Editing</title>
+    <title>NFS Resource Form</title>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-    <h1>User Editing Form</h1>
+    <h2>NFS Resource Information</h2>
 
-    <form id="userEditForm">
-        <label for="email">Email:</label>
-        <input type="email" id="email" required><br>
+    <form id="resourceForm">
+        <label for="nf">Network Function:</label>
+        <input type="text" id="nf" name="s_nf" required>
 
-        <label for="name">Name:</label>
-        <input type="text" id="name" required><br>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" required><br>
-
-        <label for="confirmPassword">Confirm Password:</label>
-        <input type="password" id="confirmPassword" required><br>
-
-        <label for="phone">Phone:</label>
-        <input type="tel" id="phone" required><br>
-
-        <button type="button" onclick="getUserData()">Get User Data (GET)</button>
-        <button type="button" onclick="editUserData()">Edit User Data (PUT)</button>
+        <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
     </form>
 
+    <!-- Container for the line charts -->
+    <div style="width: 80%; margin: 20px auto;">
+        <div>
+            <label for="timeStampSelector">Select Time Stamp:</label>
+            <select id="timeStampSelector" onchange="switchTimeStamp()">
+            </select>
+        </div>
+        <div id="chartsContainer"></div>
+    </div>
+
     <script>
-        const apiUrl = 'http://140.118.121.85:5000/user/edit';
+        let currentTimestamp = ''; // Variable to store the selected time stamp
 
-        function getUserData() {
-            const email = document.getElementById('email').value;
+        function fetchNFSResource() {
+            const nfInput = document.getElementById('nf');
+            const nfValue = nfInput.value;
 
-            fetch(`${apiUrl}?s_email=${email}`, {
+            // Replace 'http://140.118.121.85:5000/nfs/resource' with the actual API endpoint
+            const apiUrl = `http://140.118.121.85:5000/nfs/resource?s_nf=${nfValue}`;
+
+            fetch(apiUrl, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the response data
-                console.log('GET Response:', data);
-            })
-            .catch(error => console.error('Error:', error));
-        }
-
-        function editUserData() {
-            const email = document.getElementById('email').value;
-            const name = document.getElementById('name').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const phone = document.getElementById('phone').value;
-
-            fetch(apiUrl, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    s_email: email,
-                    s_name: name,
-                    s_password: password,
-                    s_password_confirm: confirmPassword,
-                    s_phone: phone
-                })
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('PUT Success');
-                } else {
-                    throw new Error(`PUT Request Failed with status: ${response.status}`);
                 }
             })
-            .catch(error => console.error('Error:', error));
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
+                }
+            })
+            .then(data => {
+                // Handle the successful response
+                displayResourceCharts(data.data);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error(error.message);
+            });
+        }
+
+        function displayResourceCharts(dataArray) {
+            const chartsContainer = document.getElementById('chartsContainer');
+            const timeStampSelector = document.getElementById('timeStampSelector');
+
+            // Clear previous options
+            timeStampSelector.innerHTML = '<option value="">Select Time Stamp</option>';
+
+            // Group values by property
+            const groupedData = {};
+            dataArray.forEach(obj => {
+                Object.entries(obj).forEach(([property, values]) => {
+                    if (!groupedData[property]) {
+                        groupedData[property] = [];
+                    }
+                    groupedData[property].push({ label: `Object ${groupedData[property].length + 1}`, data: values });
+                });
+            });
+
+            // Extract unique timestamps
+            const timestamps = [...new Set(dataArray.map(obj => obj.timestamp))];
+
+            // Populate the dropdown menu with timestamps
+            timestamps.forEach(timestamp => {
+                const option = document.createElement('option');
+                option.value = timestamp;
+                option.text = timestamp;
+                timeStampSelector.add(option);
+            });
+
+            // Set the default timestamp to the first one
+            if (timestamps.length > 0) {
+                currentTimestamp = timestamps[0];
+                timeStampSelector.value = currentTimestamp;
+            }
+
+            // Create a line chart for each property
+            Object.entries(groupedData).forEach(([property, valuesArray]) => {
+                const chartContainer = document.createElement('div');
+                chartContainer.style.marginBottom = '20px';
+                chartContainer.innerHTML = `<canvas id="chart-${property}"></canvas>`;
+                chartsContainer.appendChild(chartContainer);
+
+                // Get the canvas element
+                const ctx = document.getElementById(`chart-${property}`).getContext('2d');
+
+                // Filter values based on the selected timestamp
+                const filteredValues = valuesArray.filter(obj => obj.data.timestamp === currentTimestamp);
+
+                // Create a line chart
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: filteredValues.map(obj => obj.label),
+                        datasets: [{
+                            label: `${property}`,
+                            data: filteredValues.map(obj => obj.data),
+                            borderColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`,
+                            borderWidth: 2,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                type: 'category',
+                                title: {
+                                    display: true,
+                                    text: 'Objects'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Values'
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
+        function switchTimeStamp() {
+            const timeStampSelector = document.getElementById('timeStampSelector');
+            currentTimestamp = timeStampSelector.value;
+            fetchNFSResource(); // Fetch and display charts with the selected timestamp
         }
     </script>
 
