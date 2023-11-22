@@ -66,6 +66,10 @@
         responseContainer.innerHTML = `<p>Packet Sending Time: ${dtInfotime}</p>
                                     <p>Packet Loss Rate: ${packetLoss}</p>`;
         }
+
+        function padZero(num) {
+        return num < 10 ? `0${num}` : num;
+        }
     </script>
 
 </body>
