@@ -12,7 +12,6 @@
     <form id="resourceForm">
         <label for="nf">Network Function:</label>
         <input type="text" id="nf" name="s_nf" required>
-
         <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
     </form>
 
@@ -51,7 +50,7 @@
 
         function displayResourceInfo(data) {
             const responseContainer = document.getElementById('responseContainer');
-            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 4)}</pre>`;
+            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
         }
     </script>
 
