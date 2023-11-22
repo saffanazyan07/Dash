@@ -51,7 +51,24 @@
 
         function displayResourceInfo(data) {
             const responseContainer = document.getElementById('responseContainer');
-            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 100)}</pre>`;
+
+            // Clear previous content
+            responseContainer.innerHTML = '';
+
+            // Display specific data
+            if (data && data.hasOwnProperty('property1')) {
+                const property1Value = data.property1;
+                const paragraph1 = document.createElement('p');
+                paragraph1.textContent = `Property 1: ${property1Value}`;
+                responseContainer.appendChild(paragraph1);
+            }
+
+            if (data && data.hasOwnProperty('property2')) {
+                const property2Value = data.property2;
+                const paragraph2 = document.createElement('p');
+                paragraph2.textContent = `Property 2: ${property2Value}`;
+                responseContainer.appendChild(paragraph2);
+            }
         }
     </script>
 
