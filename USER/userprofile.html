@@ -1,57 +1,83 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NFS Resource Form</title>
+    <title>User Editing</title>
 </head>
 <body>
 
-    <h2>NFS Resource Information</h2>
+    <h1>User Editing Form</h1>
 
-    <form id="resourceForm">
-        <label for="nf">Network Function:</label>
-        <input type="text" id="nf" name="s_nf" required>
+    <form id="userEditForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required><br>
 
-        <button type="button" onclick="fetchNFSResource()">Get Resource Information</button>
+        <label for="name">Name:</label>
+        <input type="text" id="name" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" required><br>
+
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" required><br>
+
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" required><br>
+
+        <button type="button" onclick="getUserData()">Get User Data</button>
+        <button type="button" onclick="editUserData()">Submit</button>
     </form>
 
-    <div id="responseContainer"></div>
-
     <script>
-        function fetchNFSResource() {
-            const nfInput = document.getElementById('nf');
-            const nfValue = nfInput.value;
+        const apiUrl = 'http://140.118.121.85:5000/user/edit';
 
-            // Replace 'http://140.118.121.85:5000/nfs/resource' with the actual API endpoint
-            const apiUrl = `http://140.118.121.85:5000/nfs/resource?s_nf=${nfValue}`;
+        function getUserData() {
+            const email = document.getElementById('email').value;
 
-            fetch(apiUrl, {
+            fetch(`${apiUrl}?s_email=${email}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
             })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.json();
-                } else {
-                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
-                }
-            })
+            .then(response => response.json())
             .then(data => {
-                // Handle the successful response
-                displayResourceInfo(data);
+                // Handle the response data
+                console.log('GET Response:', data);
             })
-            .catch(error => {
-                // Handle errors
-                displayResourceInfo(`Error: ${error.message}`);
-            });
+            .catch(error => console.error('Error:', error));
         }
 
-        function displayResourceInfo(data) {
-            const responseContainer = document.getElementById('responseContainer');
-            responseContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        function editUserData() {
+            const email = document.getElementById('email').value;
+            const name = document.getElementById('name').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const phone = document.getElementById('phone').value;
+
+            fetch(apiUrl, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    s_email: email,
+                    s_name: name,
+                    s_password: password,
+                    s_password_confirm: confirmPassword,
+                    s_phone: phone
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('PUT Success');
+                } else {
+                    throw new Error(`PUT Request Failed with status: ${response.status}`);
+                }
+            })
+            .catch(error => console.error('Error:', error));
         }
     </script>
 
