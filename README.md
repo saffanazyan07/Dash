@@ -18,7 +18,15 @@ sudo systemctl start apache2
 ```
 sudo systemctl enable apache2
 ``` 
-you can run this file in the ```cd /var/www/```
+## RUN the code 
+1. Type the code in the terminal, open directory ```cd /var/www/```
+2. git clone
+```sudo git clone ```
+4. change the name from Dash to html
+```
+sudo mv Dash html 
+```
+ 
 
 
 # Screenshot
