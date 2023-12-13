@@ -54,28 +54,23 @@ toggler.addEventListener('change', function () {
         document.body.classList.remove('dark');
     }
 });
-
 async function logout() {
-    const logout = document.getElementById('logout').value;
-
     try {
-        fetch('http://140.118.121.85:5001/logout', {
+        const response = await fetch('http://140.118.121.85:5001/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(requestBody),
-        });
-
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-//response login-mainpage 
-        const data = await response.json();
-        console.log('Login response:', data);
 
-        if (data.message === "User found" || data.status_code === 200) {
-            console.log('Logout', data.message);
+        // Response from the logout endpoint
+        const data = await response.json();
+        console.log('Logout response:', data);
+
+        if (data.message === "Logout successful" || data.status_code === 200) {
+            console.log('Logout successful:', data.message);
             window.location.href = 'http://140.118.121.85:5001';
         } 
     } catch (error) {
@@ -83,4 +78,6 @@ async function logout() {
         alert('An error occurred. Please try again later.');
     }
 }
-document.getElementById('logout').addEventListener('logout', logout);
+
+// Add an event listener to the element with the ID 'logout'
+document.getElementById('logout').addEventListener('click', logout);
