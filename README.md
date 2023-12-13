@@ -21,14 +21,13 @@ sudo systemctl enable apache2
 ## RUN the code 
 1. Type the code in the terminal, open directory ```cd /var/www/```
 2. git clone
-```sudo git clone ```
-4. change the name from Dash to html
+```
+sudo git clone https://github.com/saffanazyan/Dash.git
+```
+3. change the name from Dash to html
 ```
 sudo mv Dash html 
 ```
- 
-
-
 # Screenshot
 Here we have project screenshot :
 
