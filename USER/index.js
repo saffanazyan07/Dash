@@ -54,30 +54,33 @@ toggler.addEventListener('change', function () {
         document.body.classList.remove('dark');
     }
 });
-async function logout() {
-    try {
-        const response = await fetch('http://140.118.121.85:5001/logout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+document.getElementById('logoutButton').addEventListener('click', function() {
+    logout();
+});
+
+function logout() {
+    fetch('http://140.118.121.85:5001/logout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        // If the endpoint requires a request body, you can include it here
+        // body: JSON.stringify({ key: 'value' }),
+    })
+    .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-
-        // Response from the logout endpoint
-        const data = await response.json();
+        // If the request was successful, you can redirect the user or perform other actions
+        return response.json();
+    })
+    .then(data => {
         console.log('Logout response:', data);
-
-        if (data.message === "Logout successful" || data.status_code === 200) {
-            console.log('Logout successful:', data.message);
-            window.location.href = 'http://140.118.121.85:5001';
-        } 
-    } catch (error) {
+        // Assuming the logout was successful, redirect the user to the specified page
+        window.location.href = 'http://140.118.121.85:5001';
+    })
+    .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
         alert('An error occurred. Please try again later.');
-    }
+    });
 }
-
-// Add an event listener to the element with the ID 'logout'
-document.getElementById('logout').addEventListener('click', logout);
