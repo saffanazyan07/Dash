@@ -63,12 +63,12 @@ body{
 }
 
 .container.active .forms{
-    height: 950px;
+    height: 730px;
 }
 .container .form .title{
     position: relative;
     font-size: 27px;
-    font-weight: 900;
+    font-weight: 600;
 }
 
 .form .title::before{
