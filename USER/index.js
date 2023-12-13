@@ -54,3 +54,33 @@ toggler.addEventListener('change', function () {
         document.body.classList.remove('dark');
     }
 });
+
+async function logout() {
+    const logout = document.getElementById('logout').value;
+
+    try {
+        fetch('http://140.118.121.85:5001/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+//response login-mainpage 
+        const data = await response.json();
+        console.log('Login response:', data);
+
+        if (data.message === "User found" || data.status_code === 200) {
+            console.log('Logout', data.message);
+            window.location.href = '/index.html';
+        } 
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        alert('An error occurred. Please try again later.');
+    }
+}
+document.getElementById('logout').addEventListener('logout', logout);
