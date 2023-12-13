@@ -20,7 +20,7 @@ sudo systemctl enable apache2
 ``` 
 ## RUN the code 
 1. Type the code in the terminal, open directory ```cd /var/www/```
-2. git clone
+2. Clone this github code
 ```
 sudo git clone https://github.com/saffanazyan/Dash.git
 ```
