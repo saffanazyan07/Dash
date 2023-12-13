@@ -4,8 +4,8 @@ In this tutorial ([Open in Youtube]()),  I'm going to show you how to use modern
 first you need install Apache2:
 ```
 sudo apt update
-'''
-```python
+
+
 you can run this file in the var/www/
 
 
