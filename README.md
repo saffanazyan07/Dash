@@ -7,7 +7,9 @@ open terminal, update ubuntu:
 open terminal
 
 you can run this file in the 
-```cd /var/www/```
+```
+cd /var/www/
+```
 
 
 # Screenshot
