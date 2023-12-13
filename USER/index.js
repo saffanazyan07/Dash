@@ -76,7 +76,7 @@ async function logout() {
 
         if (data.message === "User found" || data.status_code === 200) {
             console.log('Logout', data.message);
-            window.location.href = '/index.html';
+            window.location.href = 'http://140.118.121.85:5001';
         } 
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
