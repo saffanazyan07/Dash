@@ -68,7 +68,7 @@ body{
 .container .form .title{
     position: relative;
     font-size: 27px;
-    font-weight: 600;
+    font-weight: 900;
 }
 
 .form .title::before{
