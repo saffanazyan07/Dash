@@ -57,10 +57,6 @@ body{
     opacity: 1;
     transition: opacity 0.2s ease;
 }
-.container .verify{
-    opacity: 2;
-    transition: opacity 0.2s ease;
-}
 
 .container.active .forms{
     height: 730px;
