@@ -10,6 +10,25 @@ sideLinks.forEach(item => {
     })
 });
 
+/*accordion function*/
+document.addEventListener('DOMContentLoaded', function () {
+    const accordions = document.querySelectorAll('.accordion');
+
+    accordions.forEach(function (accordion) {
+        accordion.addEventListener('click', function () {
+            this.classList.toggle('active');
+            const panel = this.nextElementSibling;
+
+            // Toggle the display using a class instead of directly manipulating the style
+            if (panel.classList.contains('show')) {
+                panel.classList.remove('show');
+            } else {
+                panel.classList.add('show');
+            }
+        });
+    });
+});
+
 const menuBar = document.querySelector('.content nav .bx.bx-menu');
 const sideBar = document.querySelector('.sidebar');
 
@@ -85,22 +104,4 @@ function logout() {
         alert('An error occurred. Please try again later.');
     });
 }
-
-/*accordion function*/
-document.addEventListener('DOMContentLoaded', function () {
-    const accordions = document.querySelectorAll('.accordion');
-
-    accordions.forEach(function (accordion) {
-        accordion.addEventListener('click', function () {
-            this.classList.toggle('active');
-            const panel = this.nextElementSibling;
-            
-            if (panel.style.display === 'block') {
-                panel.style.display = 'none';
-            } else {
-                panel.style.display = 'block';
-            }
-        });
-    });
-});
 
