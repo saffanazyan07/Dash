@@ -168,6 +168,7 @@ body{
 .sidebar .side-menu li a.logout{
     color: var(--danger);
 }
+/*accordion*/
 .sidebar .accordion {
     background-color: #eee;
     color: #444;
