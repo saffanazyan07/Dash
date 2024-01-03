@@ -1,35 +1,115 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Editing</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <title>Dashboard User Console | RTDash</title>
+
+<!-- Icon Page bar -->
+  <link rel="icon" sizes="192x192" href="images/logo.png" type="image/x-icon"/>
+  <link rel="shortcut icon" href="images/logo.png" type="image/x-icon"/>
+  <link rel="apple-touch-icon" href="images/logo.png" type="image/x-icon"/>
+
 </head>
+
 <body>
+    
+<!-- Sidebar -->
+ <div class="sidebar">
+        <a href="" class="logo">
+            <i class='bx bx-code-alt'></i>
+            <div class="logo-name"><span>RT</span>Dash</div>
+        </a>
+        <ul class="side-menu">
+            <li><a href="index.html"><i class='bx bxs-dashboard'></i>Dashboard</a></li>
+            <li><a href="UE.html"><i class='bx bx-phone'></i>UE</a></li>
+            <li><a href="Perform.html"><i class='bx bx-analyse'></i>Analytics</a></li>
+            <li id="NF"><a href=""><i class='bx bx-message-square-dots'></i>NF</a>
+                <ul class="#NF">
+                    <li><a href="AMF.html"><i class='bx bx-message-dots'></i>AMF</a></li>
+                    <li><a href="SMF.html"><i class='bx bx-message-dots'></i>SMF</a></li>
+                    <li><a href="UPF.html"><i class='bx bx-message-dots'></i>UPF</a></li>
+                </ul>
+            </li>
+            <li class="accordion"><a href="userprofile.html"><i class='bx bx-group'></i>Users</a></li>
+            <li class="accordion"><a href=""><i class='bx bx-cog'></i>Settings</a></li>
+        </ul>
+        <ul class="side-menu">
+           <li>
+        <input type="button" value="Logout" id="logoutButton"></li>
+        </ul>
+    </div>
+    <!-- End of Sidebar -->
+    
+     <!-- Main Content -->
+    <div class="content">
+        <!-- Navbar -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+            <a href="#" class="notif">
+                <i class='bx bx-bell'></i>
+                <span class="count">12</span>
+            </a>
+            <a href="#" class="profile">
+                <img src="images/logo.png">
+            </a>
+        </nav>
 
-    <h1>User Editing Form</h1>
+        <!-- End of Navbar -->
 
-    <form id="userEditForm">
-        <label for="email">Email:</label>
-        <input type="email" id="email" required><br>
+         <!-- Insights -->
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1><a href="#">User Editing Form</a></h1>
+                    <ul class="breadcrumb">
+                        <li>Subscriber</li>
+                    </ul>
+                </div>
+            </div>
 
-        <label for="name">Name:</label>
-        <input type="text" id="name" required><br>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" required><br>
-
-        <label for="confirmPassword">Confirm Password:</label>
-        <input type="password" id="confirmPassword" required><br>
-
-        <label for="phone">Phone:</label>
-        <input type="tel" id="phone" required><br>
-
+            <!-- End Insights -->
+<!-- User Form -->
+    <table>
+    <tbody>
+           <tr>
+              <td><form id="userEditForm"><label for="email">Email:</label></td>
+              <td><input type="email" id="email" required></td>
+            </tr>
+            <tr>
+        <td><label for="name">Name:</label></td>
+        <td><input type="text" id="name" required></td>
+        </tr>
+        <tr>
+        <td><label for="password">Password:</label></td>
+        <td><input type="password" id="password" required></td>
+        </tr>
+        <tr>
+        <td><label for="confirmPassword">Confirm Password:</label></td>
+        <td><input type="password" id="confirmPassword" required></td>
+        </tr>
+        <tr>
+        <td><label for="phone">Phone:</label></td>
+        <td><input type="tel" id="phone" required></td>
+        </tr>
         <button type="button" onclick="getUserData()">Get User Data</button>
         <button type="button" onclick="editUserData()">Submit</button>
     </form>
-
+        </tbody>
+    </table>
+        
+<!-- End User Form -->
     <script>
         const apiUrl = 'http://140.118.121.85:5000/user/edit';
 
