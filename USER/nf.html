@@ -24,7 +24,7 @@
             const nfValue = nfInput.value;
 
             // Replace 'http://140.118.121.85:5000/nfs/resource' with the actual API endpoint
-            const apiUrl = `http://140.118.121.85:5000/nfs/resource?s_nf=${nfValue}`;
+            const apiUrl = `http://192.168.1.213:5001/nfs/warnlogs?s_nf=${nfValue}`;
 
             fetch(apiUrl, {
                 method: 'GET',
