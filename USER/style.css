@@ -158,84 +158,27 @@ body{
     transition: all 0.3s ease;
 }
 /*accordion*/
-.sidebar .side-menu .dropdown-btn li{
-    height: 48px;
-    background: transparent;
-    margin-left: 6px;
-    border-radius: 48px 0 0 48px;
-    padding: 4px;
-}
-
-.sidebar .side-menu .dropdown-btn li.active{
-    background: var(--grey);
+.dropdown-btn {
     position: relative;
 }
 
-.sidebar .side-menu .dropdown-btn li.active::before{
-    content: "";
+.dropdown-container {
+    display: none;
     position: absolute;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    top: -40px;
-    right: 0;
-    box-shadow: 20px 20px 0 var(--grey);
-    z-index: -1;
+    top: 0;
+    left: 100%;
+    background-color: #444;
 }
 
-.sidebar .side-menu .dropdown-btn li.active::after{
-    content: "";
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    bottom: -40px;
-    right: 0;
-    box-shadow: 20px -20px 0 var(--grey);
-    z-index: -1;
+.dropdown-btn:hover .dropdown-container {
+    display: block;
 }
 
-.sidebar .side-menu .dropdown-btn li a{
-    width: 100%;
-    height: 100%;
-    background: var(--light);
-    display: flex;
-    align-items: center;
-    border-radius: 48px;
-    font-size: 16px;
-    color: var(--dark);
-    white-space: nowrap;
-    overflow-x: hidden;
-    transition: all 0.3s ease;
+.dropdown-container li {
+    padding: 15px;
 }
 
-.sidebar .side-menu .dropdown-btn li.active a{
-    color: var(--success);
-}
-/*end of accordion* 
-
-.sidebar .side-menu li a .bx{
-    min-width: calc(60px - ((4px + 6px) * 2));
-    display: flex;
-    font-size: 1.6rem;
-    justify-content: center;
-}
-
-.sidebar .side-menu a.logout{
-    color: var(--danger);
-}
-
-.content{
-    position: relative;
-    width: calc(100% - 230px);
-    left: 230px;
-    transition: all 0.3s ease;
-}
-
-.sidebar.close~.content{
-    width: calc(100% - 60px);
-    left: 60px;
-}
+/*end of accordion*/ 
 /*accordian nf*/
 .sidebar .accordion {
     background-color: #eee;
@@ -263,6 +206,29 @@ body{
 
 .sidebar .active .panel {
     display: block;
+}
+/*accordian nf*/
+.sidebar .side-menu li a .bx{
+    min-width: calc(60px - ((4px + 6px) * 2));
+    display: flex;
+    font-size: 1.6rem;
+    justify-content: center;
+}
+
+.sidebar .side-menu a.logout{
+    color: var(--danger);
+}
+
+.content{
+    position: relative;
+    width: calc(100% - 230px);
+    left: 230px;
+    transition: all 0.3s ease;
+}
+
+.sidebar.close~.content{
+    width: calc(100% - 60px);
+    left: 60px;
 }
 
 .content nav{
