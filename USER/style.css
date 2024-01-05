@@ -158,25 +158,6 @@ body{
     transition: all 0.3s ease;
 }
 /*accordion*/
-.dropdown-btn {
-    position: relative;
-}
-
-.dropdown-container {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 100%;
-    background-color: #444;
-}
-
-.dropdown-btn:hover .dropdown-container {
-    display: block;
-}
-
-.dropdown-container li {
-    padding: 15px;
-}
 
 /*end of accordion*/ 
 /*accordian nf*/
