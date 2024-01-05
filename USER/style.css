@@ -48,7 +48,7 @@ body{
     background: var(--grey);
     overflow-x: hidden;
 }
-
+*/sidebar*/
 .sidebar{
     position: fixed;
     top: 0;
@@ -157,6 +157,62 @@ body{
     width: calc(48px - (4px * 2));
     transition: all 0.3s ease;
 }
+/*accordion*/
+.sidebar .side-menu .dropdown-btn li{
+    height: 48px;
+    background: transparent;
+    margin-left: 6px;
+    border-radius: 48px 0 0 48px;
+    padding: 4px;
+}
+
+.sidebar .side-menu .dropdown-btn li.active{
+    background: var(--grey);
+    position: relative;
+}
+
+.sidebar .side-menu .dropdown-btn li.active::before{
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    top: -40px;
+    right: 0;
+    box-shadow: 20px 20px 0 var(--grey);
+    z-index: -1;
+}
+
+.sidebar .side-menu .dropdown-btn li.active::after{
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    bottom: -40px;
+    right: 0;
+    box-shadow: 20px -20px 0 var(--grey);
+    z-index: -1;
+}
+
+.sidebar .side-menu .dropdown-btn li a{
+    width: 100%;
+    height: 100%;
+    background: var(--light);
+    display: flex;
+    align-items: center;
+    border-radius: 48px;
+    font-size: 16px;
+    color: var(--dark);
+    white-space: nowrap;
+    overflow-x: hidden;
+    transition: all 0.3s ease;
+}
+
+.sidebar .side-menu .dropdown-btn li.active a{
+    color: var(--success);
+}
+/*end of accordion* 
 
 .sidebar .side-menu li a .bx{
     min-width: calc(60px - ((4px + 6px) * 2));
@@ -165,7 +221,7 @@ body{
     justify-content: center;
 }
 
-.sidebar .side-menu li a.logout{
+.sidebar .side-menu a.logout{
     color: var(--danger);
 }
 
