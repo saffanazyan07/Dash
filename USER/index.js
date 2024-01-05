@@ -10,37 +10,40 @@ sideLinks.forEach(item => {
     })
 });
 /*dropdown*/
-function hoverTabs(evt, cityName) {
-  var i, tabcontent, sidemenulinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  sidemenulinks = document.getElementsByClassName("sidemenulinks");
-  for (i = 0; i < tablinks.length; i++) {
-    sidemenulinks[i].className = sidemenulinks[i].className.replace(" active", "");
-  }
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
+// JavaScript for Dropdown Styling
+document.addEventListener("DOMContentLoaded", function () {
+    // Get all elements with class 'dropdown-btn'
+    var dropdownBtns = document.querySelectorAll('.dropdown-btn');
 
-/*accordion function*/
-document.addEventListener('DOMContentLoaded', function () {
-    const accordions = document.querySelectorAll('.accordion');
-
-    accordions.forEach(function (accordion) {
-        accordion.addEventListener('click', function () {
+    // Attach click event listener to each dropdown button
+    dropdownBtns.forEach(function (dropdownBtn) {
+        dropdownBtn.addEventListener('click', function () {
+            // Toggle the 'active' class to show/hide the dropdown content
             this.classList.toggle('active');
-            const panel = this.nextElementSibling;
 
-            // Toggle the display using a class instead of directly manipulating the style
-            if (panel.classList.contains('show')) {
-                panel.classList.remove('show');
-            } else {
-                panel.classList.add('show');
-            }
+            // Get the associated dropdown container
+            var dropdownContainer = this.nextElementSibling;
+
+            // Toggle the 'show' class to display/hide the dropdown content
+            dropdownContainer.classList.toggle('show');
         });
     });
+
+    // Close the dropdown when the user clicks outside of it
+    window.addEventListener('click', function (event) {
+        if (!event.target.matches('.dropdown-btn')) {
+            var dropdowns = document.querySelectorAll('.dropdown-container');
+            dropdowns.forEach(function (dropdown) {
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                    // Remove 'active' class from dropdown button
+                    dropdown.previousElementSibling.classList.remove('active');
+                }
+            });
+        }
+    });
 });
+
 
 const menuBar = document.querySelector('.content nav .bx.bx-menu');
 const sideBar = document.querySelector('.sidebar');
