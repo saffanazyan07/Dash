@@ -21,21 +21,21 @@
 <div class="container">
     <div class="forms">
       <div class="form verify">
-    <span class="title">verification</span>
+    <span class="title">Forget Password</span>
 
     <form id="verifyForm" action="#" method="POST">
         <!-- ... other input fields ... -->
         <div class="input-field">
-            <input id="s_email" type="text" placeholder="Enter your email" required>
-            <i class="uil uil-envelope icon"></i>
+            <input id="s_password" type="text" placeholder="Enter your password" required>
+            <i class="uil uil-key-skeleton-alt"></i>
         </div>
         <div class="input-field">
             <input id="s_verify" type="text" placeholder="Enter verification code" required>
-            <i class="uil uil-key icon"></i>
+            <i class="uil uil-lock"></i>
         </div>
 
         <div class="input-field button">
-            <input type="button" value="Verify Code" id="verifyButton">
+            <input type="button" value="Update Password Code" id="verifyButton">
         </div>
         
         <!-- Add a hidden field to store the email during the registration process -->
@@ -45,22 +45,22 @@
 </div>
 <script>
     async function verifyUser() {
-    const email = document.getElementById('s_email').value;
+    const password = document.getElementById('s_password').value;
     const verify = document.getElementById('s_verify').value;
 
     // Validate username and password (add additional validation if needed)
-    if (!email || !verify) {
+    if (!password || !verify) {
         alert('Please enter both email and code');
         return;
     }
 
     const requestBody = {
-        s_email: email,
+        s_password: password,
         s_verify: verify
     };
 
     try {
-        const response = await fetch('http://140.118.121.85:5000/user/verify', {
+        const response = await fetch('http://192.168.1.213:5001/user/forgot/info', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -77,11 +77,11 @@
 
         if (data.message === "User found" || data.status_code === 200) {
             console.log('Verification successfull:', data.message);
-            alert("Verification successfull!");
+            alert("Password Update successfull!");
             window.location.href = 'index.html';
         } else {
             console.error('Verification failed:', data.message);
-            alert('verification failed. Please check your email');
+            alert('Password Update failed. Please check your email');
         }
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
