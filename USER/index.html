@@ -23,22 +23,22 @@
             <div class="logo-name"><span>RT</span>Dash</div>
         </a>
         <ul class="side-menu">
-            <li class="sidemenulinks" onclick="hoverTabs(event, 'dashboard')"><a href="#dashboard"><i class='bx bxs-dashboard'></i>Dashboard</a></li>
-            <li class="sidemenulinks" onclick="hoverTabs(event, 'UE')"><a href="#UE"><i class='bx bx-phone'></i>UE</a></li>
-            <li class="sidemenulinks" onclick="hoverTabs(event, 'analyse')"><a href="#analytic"><i class='bx bx-analyse'></i>Analytics</a></li>
-            <li class="dropdown-btn"><i class='bx bx-message-square-dots'></i>NF<i class="fa fa-caret-down"></i>
-                    <ul class="dropdown-container">
-                        <li class="sidemenulinks" onclick="hoverTabs(event, 'AMF')"><a href="#"><i class='bx bx-message-dots'></i>AMF</a></li>
-                        <li class="sidemenulinks" onclick="hoverTabs(event, 'SMF')"><a href="#"><i class='bx bx-message-dots'></i>SMF</a></li>
-                        <li class="sidemenulinks" onclick="hoverTabs(event, 'UPF')"><a href="#"><i class='bx bx-message-dots'></i>UPF</a></li>
-                    </ul>  
-            </li>
-            <li class="sidemenulinks" onclick="hoverTabs(event, 'user')"><a href="#user"><i class='bx bx-group'></i>Users</a></li>
-            <li class="sidemenulinks" onclick="hoverTabs(event, 'setting')"><a href=""><i class='bx bx-cog'></i>Settings</a></li>
+            <li class="sidemenulinks" onclick="hoverTabs(event, 'dashboard')"><a href="#"><i class='bx bxs-dashboard'></i>Dashboard</a></li>
+            <li class="sidemenulinks" onclick="hoverTabs(event, 'UE')"><a href="#"><i class='bx bx-phone'></i>UE</a></li>
+            <li class="sidemenulinks" onclick="hoverTabs(event, 'analyse')"><a href="#"><i class='bx bx-analyse'></i>Analytics</a></li>
+            <li class="sidemenulinks"><a href="#"><i class='bx bx-message-square-dots'></i>NF<i class='bx bx-caret-down'></i>
+            <select id="NF" class="select">
+                <option class="sidemenulinks" onclick="hoverTabs(event, 'AMF')"><a href="#"><i class='bx bx-message-dots'></i>AMF</a></option>
+                <option class="sidemenulinks" onclick="hoverTabs(event, 'SMF')"><a href="#"><i class='bx bx-message-dots'></i>SMF</a></option>
+                <option class="sidemenulinks" onclick="hoverTabs(event, 'UPF')"><a href="#"><i class='bx bx-message-dots'></i>UPF</a></option>
+            </select><i class='bx bx-caret-down'></i></a></li>
+            <li class="sidemenulinks" onclick="hoverTabs(event, 'user')"><a href="#"><i class='bx bx-group'></i>Users</a></li>
+            <li class="sidemenulinks" onclick="hoverTabs(event, 'setting')"><a href="#"><i class='bx bx-cog'></i>Settings</a></li>
         </ul>
         <ul class="side-menu">
            <li>
-        <input class="logout" type="button" value="Logout" id="logoutButton"></li>
+            <a href="#" class="logout" value="Logout" id="logoutButton"><i class='bx bx-exit'></i>Logout</a>
+        </li>
         </ul>
     </div>
     <!-- End of Sidebar -->
@@ -374,6 +374,8 @@
     </div>
  
     <script src="index.js"></script>
+
+</script>
 </body>
 
 </html>
