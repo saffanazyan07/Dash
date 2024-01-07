@@ -33,17 +33,17 @@ const container = document.querySelector(".container"),
     });
       
 async function loginUser() {
-    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
     // Validate username and password (add additional validation if needed)
-    if (!username || !password) {
-        alert('Please enter both username and password.');
+    if (!email || !password) {
+        alert('Please enter both email and password.');
         return;
     }
 
     const requestBody = {
-        s_name: username,
+        s_email: email,
         s_password: password
     };
 
