@@ -21,7 +21,7 @@
 <div class="container">
     <div class="forms">
       <div class="form verify">
-    <span class="title">verification</span>
+    <span class="title">Update Email</span>
 
     <form id="verifyForm" action="#" method="POST">
         <!-- ... other input fields ... -->
@@ -29,11 +29,6 @@
             <input id="s_email" type="text" placeholder="Enter your email" required>
             <i class="uil uil-envelope icon"></i>
         </div>
-        <div class="input-field">
-            <input id="s_verify" type="text" placeholder="Enter verification code" required>
-            <i class="uil uil-key icon"></i>
-        </div>
-
         <div class="input-field button">
             <input type="button" value="Verify Code" id="verifyButton">
         </div>
@@ -46,21 +41,19 @@
 <script>
     async function verifyUser() {
     const email = document.getElementById('s_email').value;
-    const verify = document.getElementById('s_verify').value;
 
     // Validate username and password (add additional validation if needed)
-    if (!email || !verify) {
-        alert('Please enter both email and code');
+    if (!email) {
+        alert('Please enter email');
         return;
     }
 
     const requestBody = {
         s_email: email,
-        s_verify: verify
     };
 
     try {
-        const response = await fetch('http://140.118.121.85:5000/user/verify', {
+        const response = await fetch('http://192.168.1.213:5001/user/forgot/email ', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
