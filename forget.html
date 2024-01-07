@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Icon Page bar -->
+  <link rel="icon" sizes="192x192" href="images/logo.png" type="image/x-icon"/>
+  <link rel="shortcut icon" href="images/logo.png" type="image/x-icon"/>
+  <link rel="apple-touch-icon" href="images/logo.png" type="image/x-icon"/>
+    
+    <!-- ===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="style.css">
+  <title>verify RT RedCap </title> 
+</head>
+<body>
+<div class="container">
+    <div class="forms">
+      <div class="form verify">
+    <span class="title">verification</span>
+
+    <form id="verifyForm" action="#" method="POST">
+        <!-- ... other input fields ... -->
+        <div class="input-field">
+            <input id="s_email" type="text" placeholder="Enter your email" required>
+            <i class="uil uil-envelope icon"></i>
+        </div>
+        <div class="input-field">
+            <input id="s_verify" type="text" placeholder="Enter verification code" required>
+            <i class="uil uil-key icon"></i>
+        </div>
+
+        <div class="input-field button">
+            <input type="button" value="Verify Code" id="verifyButton">
+        </div>
+        
+        <!-- Add a hidden field to store the email during the registration process -->
+        <input type="hidden" id="hiddenEmail" name="hiddenEmail" value="">
+    </form>
+    </div>
+</div>
+<script>
+    async function verifyUser() {
+    const email = document.getElementById('s_email').value;
+    const verify = document.getElementById('s_verify').value;
+
+    // Validate username and password (add additional validation if needed)
+    if (!email || !verify) {
+        alert('Please enter both email and code');
+        return;
+    }
+
+    const requestBody = {
+        s_email: email,
+        s_verify: verify
+    };
+
+    try {
+        const response = await fetch('http://140.118.121.85:5000/user/verify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+//response login-mainpage 
+        const data = await response.json();
+        console.log('Login response:', data);
+
+        if (data.message === "User found" || data.status_code === 200) {
+            console.log('Verification successfull:', data.message);
+            alert("Verification successfull!");
+            window.location.href = 'index.html';
+        } else {
+            console.error('Verification failed:', data.message);
+            alert('verification failed. Please check your email');
+        }
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        alert('An error occurred. Please try again later.');
+    }
+}
+document.getElementById('verifyButton').addEventListener('click', verifyUser);
+</script>    
+<!--script>
+  /*document.addEventListener("DOMContentLoaded", () => {
+    //const signUp = document.getElementById("signUp");
+    //const login = document.getElementById("login");
+    const verifyCodeButton = document.getElementById("verifyCodeButton");
+    const container = document.querySelector(".container");
+
+    /*signUp.addEventListener("click", () => {
+        container.classList.add("active");
+    });
+
+    login.addEventListener("click", () => {
+        container.classList.remove("active");
+    });*/
+
+    // Handle the click event on the "Verify Code" button
+    verifyCodeButton.addEventListener("click", () => {
+        // Assuming you have the user's email stored somewhere
+        const userEmail = document.getElementById("hiddenEmail").value;
+        
+        // Get the verification code from the input field
+        const verificationCode = document.getElementById("verificationCode").value;
+
+        // Perform verification on the server-side
+        // Send the userEmail and verificationCode to your server for validation
+
+        // Example using fetch:
+        fetch("http://140.118.121.85:5000/user/verify", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: userEmail, code: verificationCode }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Verification successful. You can now complete the registration.");
+                // Redirect or perform additional actions as needed
+            } else {
+                alert("Verification failed. Please check your code and try again.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    });
+});
+
+</script--> 
+</body>
+</html>
+      
