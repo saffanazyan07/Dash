@@ -48,7 +48,7 @@ async function loginUser() {
     };
 
     try {
-        const response = await fetch('http://140.118.121.85:5000/user/login', {
+        const response = await fetch('http://192.168.1.213:5001/user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ function signupForm() {
             s_phone: phone
         };
     /*try {
-        const response = await fetch('http://140.118.121.85:5000/user/signup', {
+        const response = await fetch('http://192.168.1.213:5001/user/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ document.getElementById('signupButton').addEventListener('click', signupForm);
 
 Make a POST request to your API*/ 
          
-        fetch('http://140.118.121.85:5000/user/signup', {
+        fetch('http://192.168.1.213:5001/user/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
