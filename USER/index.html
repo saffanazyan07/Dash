@@ -223,6 +223,11 @@
                                 <button class="search-btn" type="submit">
                                     <i class='bx bx-search'></i>
                                 </button>
+                            </div>
+                        </form>
+                      <form action="#" method="POST" id="subscriberForm">
+                            <div class="form-input">
+                                <input type="search" placeholder="Enter your imsi" id="imsiInput">
                                 <button class="search-btn" type="button" id="deleteimsi">
                                     <i class='bx bx-trash'></i>
                                 </button>
@@ -346,45 +351,17 @@
 </div>
           <!-- AMF -->
 <div class="bottom-data">
-    <div class="orders">
+<div class="orders">
     <div class="header">
         <div class="sidemenulinks"><a href="#"><i class='bx bx-message-square-dots'></i>NF
             <select id="NF" class="select">
                 <option class="sidemenulinks" onclick="hoverTabs(event, 'AMF')"><a href="#"><i class='bx bx-message-dots'></i>AMF</a></option>
                 <option class="sidemenulinks" onclick="hoverTabs(event, 'SMF')"><a href="#"><i class='bx bx-message-dots'></i>SMF</a></option>
                 <option class="sidemenulinks" onclick="hoverTabs(event, 'UPF')"><a href="#"><i class='bx bx-message-dots'></i>UPF</a></option>
-            </select></a></div>
-    <table>
-    <tbody>
-           <tr>
-              <td><form id="userEditForm"><label for="email">Email:</label></td>
-              <td><input type="email" id="email" required></td>
-            </tr>
-            <tr>
-        <td><label for="name">Name:</label></td>
-        <td><input type="text" id="name" required></td>
-        </tr>
-        <tr>
-        <td><label for="password">Password:</label></td>
-        <td><input type="password" id="password" required></td>
-        </tr>
-        <tr>
-        <td><label for="confirmPassword">Confirm Password:</label></td>
-        <td><input type="password" id="confirmPassword" required></td>
-        </tr>
-        <tr>
-        <td><label for="phone">Phone:</label></td>
-        <td><input type="tel" id="phone" required></td>
-        </tr>
+            </select></a>
+        </div>
     </div>
-        <div>
-        <button type="button" onclick="getUserData()">Get User Data</button>
-        <button type="button" onclick="editUserData()">Submit</button>
-     </div>       
-    </form> 
-        </tbody>
-    </table>
-    </div>
+    <div style="width: 800px;"><canvas id="acquisitions"></canvas></div>
    </div> 
 </div>
 </div>   
@@ -393,6 +370,7 @@
     </div>
  
     <script src="index.js"></script>
+    <script type="module" src="acquisitions.js"></script>
 
 </script>
 </body>
