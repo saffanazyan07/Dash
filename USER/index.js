@@ -47,20 +47,23 @@ window.addEventListener('resize', () => {
 });
 /*imsi*/
 async function imsi() {
-    const imsi = document.getElementById('searchimsi').value;
+    const imsiInput = document.getElementById('searchimsi');
+    const imsi = imsiInput.value.trim();
 
-    // Validate username and password (add additional validation if needed)
     if (!imsi) {
         alert('Please enter your imsi.');
         return;
     }
+
+    const baseUrl = 'http://192.168.1.213:5001';
+    const endpoint = '/user/subscriber/detail';
 
     const requestBody = {
         s_imsi: imsi,
     };
 
     try {
-        const response = await fetch('http://192.168.1.213:5001/user/subscriber/detail ', {
+        const response = await fetch(`${baseUrl}${endpoint}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -71,12 +74,12 @@ async function imsi() {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-//response login-mainpage 
+
         const data = await response.json();
         console.log('imsi response:', data);
 
-        if (data.message === "User found" || data.status_code === 200) {
-            console.log('Get detail', data.message);
+        if (data.message === 'User found' || data.status_code === 200) {
+            displayData(data); // Call function to display data
         } else {
             console.error('not found', data.message);
             alert('imsi not found.');
@@ -86,7 +89,24 @@ async function imsi() {
         alert('An error occurred. Please try again later.');
     }
 }
+
+function displayData(data) {
+    // Update the content of the HTML elements with the fetched data
+    document.getElementById('plmnID').textContent = data.s_plmn  || '-';
+    document.getElementById('imsi').textContent = data.s_imsi || '-';
+    document.getElementById('Auth').textContent = data.s_authmethod || '-';
+    document.getElementById('opct').textContent = data.s_opctype || '-';
+    document.getElementById('opc').textContent = data.s_opc || '-';
+    document.getElementById('sqn').textContent = data.s_sqn || '-';
+    document.getElementById('sst').textContent = data.s_sst || '-';
+    document.getElementById('sd').textContent = data.s_sd || '-';
+    document.getElementById('dnn').textContent = data.s_dnn   || '-';
+    document.getElementById('k').textContent = data.s_k  || '-';
+    document.getElementById('msisdn').textContent = data.s_msisdn || '-';
+}
+
 document.getElementById('searchimsi').addEventListener('click', imsi);
+
 /*end*/
 /*deleteimsi*/
 async function deleteimsi() {
