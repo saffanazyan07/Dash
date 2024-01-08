@@ -217,7 +217,55 @@ toggler.addEventListener('change', function () {
 document.getElementById('logoutButton').addEventListener('click', function() {
     logout();
 });
+/*logout function*/
+ const apiUrl = 'http://192.168.1.213:5001/user/editing';
 
+        function getUserData() {
+            const email = document.getElementById('email').value;
+
+            fetch(`${apiUrl}?s_email=${email}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response data
+                console.log('GET Response:', data);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function editUserData() {
+            const email = document.getElementById('email').value;
+            const name = document.getElementById('name').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const phone = document.getElementById('phone').value;
+
+            fetch(apiUrl, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    s_email: email,
+                    s_name: name,
+                    s_password: password,
+                    s_password_confirm: confirmPassword,
+                    s_phone: phone
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('PUT Success');
+                } else {
+                    throw new Error(`PUT Request Failed with status: ${response.status}`);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
 /*logout function*/
 function logout() {
     fetch('http://140.118.121.85:5001/logout', {
