@@ -45,6 +45,59 @@ window.addEventListener('resize', () => {
         searchForm.classList.remove('show');
     }
 });
+/*imsiinput*/
+async function imsi() {
+    const imsiInput = document.getElementById('imsiInput');
+    const imsi = imsiInput.value.trim();
+
+    if (!imsi) {
+        // You might want to display this error on the page instead of an alert
+        alert('Please enter your imsi.');
+        return;
+    }
+
+    const baseUrl = 'http://192.168.1.213:5001';
+    const endpoint = '/user/subscriber/detail';
+
+    const requestBody = {
+        s_imsi: imsi,
+    };
+
+    try {
+        const response = await fetch(`${baseUrl}${endpoint}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        console.log('imsi response:', data);
+
+        if (data.message === 'User found' || data.status_code === 200) {
+            displayData(data);
+        } else {
+            console.error('Not found', data.message);
+            // You might want to display this error on the page instead of an alert
+            alert('imsi not found.');
+        }
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        // You might want to display this error on the page instead of an alert
+        alert('An error occurred. Please try again later.');
+    }
+}
+
+document.getElementById('subscriberForm').addEventListener('submit', async function (event) {
+    event.preventDefault(); // Prevents the default form submission
+    await imsi(); // Use 'await' to make sure the imsi function completes before moving on
+});
+
 /*imsi*/
 async function imsi() {
     const imsiInput = document.getElementById('searchimsi');
