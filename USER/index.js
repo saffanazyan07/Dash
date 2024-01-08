@@ -47,7 +47,7 @@ window.addEventListener('resize', () => {
 });
 /*imsi*/
 async function imsi() {
-    const imsi = document.getElementById('imsi').value;
+    const imsi = document.getElementById('searchimsi').value;
 
     // Validate username and password (add additional validation if needed)
     if (!imsi) {
@@ -86,7 +86,50 @@ async function imsi() {
         alert('An error occurred. Please try again later.');
     }
 }
-document.getElementById('imsi').addEventListener('click', imsi);
+document.getElementById('searchimsi').addEventListener('click', imsi);
+/*end*/
+/*deleteimsi*/
+async function deleteimsi() {
+    const imsi = document.getElementById('deleteimsi').value;
+
+    // Validate username and password (add additional validation if needed)
+    if (!imsi) {
+        alert('Please enter your imsi.');
+        return;
+    }
+
+    const requestBody = {
+        s_imsi: imsi,
+    };
+
+    try {
+        const response = await fetch('http://192.168.1.213:5001/user/subscriber/delete ', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+//response login-mainpage 
+        const data = await response.json();
+        console.log('imsi response:', data);
+
+        if (data.message === "User found" || data.status_code === 200) {
+            console.log('Get detail', data.message);
+        } else {
+            console.error('not found', data.message);
+            alert('imsi not found.');
+        }
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        alert('An error occurred. Please try again later.');
+    }
+}
+document.getElementById('deleteimsi').addEventListener('click', deleteimsi);
 /*end*/
 
 const toggler = document.getElementById('theme-toggle');
