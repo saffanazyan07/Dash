@@ -47,7 +47,7 @@ window.addEventListener('resize', () => {
 });
 /*imsi*/
 async function imsi() {
-    const imsi = document.getElementById('s_imsi').value;
+    const imsi = document.getElementById('imsi').value;
 
     // Validate username and password (add additional validation if needed)
     if (!imsi) {
