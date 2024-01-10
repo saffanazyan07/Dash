@@ -52,6 +52,7 @@ body{
   display: in-line flex;
   flex-wrap: wrap;
   gap: 0px;
+  background-color: DodgerBlue;
 }
 .flex-container > div{
   margin: 1px;
@@ -68,6 +69,7 @@ body{
     overflow-x: hidden;
     scrollbar-width: none;
     transition: all 0.3s ease;
+    background-color: red;
 }
 
 .sidebar::-webkit-scrollbar{
@@ -250,6 +252,7 @@ body{
     left: 230px;
     transition: all 0.3s ease;
     margin: 0;
+    background-color: red;
 }
 
 .sidebar.close~.content{
