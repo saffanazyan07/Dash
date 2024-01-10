@@ -52,6 +52,9 @@ body{
   display: flex;
   flex-wrap: nowrap;
 }
+.flex-container > div{
+  margin: 1px;
+}
 */sidebar*/
 .sidebar{
     position: relative;
