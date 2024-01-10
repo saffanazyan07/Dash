@@ -52,7 +52,6 @@ body{
   display: in-line flex;
   flex-wrap: wrap;
   gap: 0px;
-  background-color: DodgerBlue;
 }
 .flex-container > div{
   margin: 1px;
