@@ -49,7 +49,7 @@ body{
     overflow-x: hidden;
 }
 .flex-container {
-  display: flex;
+  display: in-line flex;
   flex-wrap: wrap;
   gap: 0px;
 }
