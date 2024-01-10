@@ -63,7 +63,7 @@ body{
     top: 0;
     left: 0;
     background: var(--light);
-    width: 100%;
+    width: 230px;
     height: 100%;
     z-index: 2000;
     overflow-x: hidden;
