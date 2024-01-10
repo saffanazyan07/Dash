@@ -69,7 +69,6 @@ body{
     overflow-x: hidden;
     scrollbar-width: none;
     transition: all 0.3s ease;
-    background-color: red;
 }
 
 .sidebar::-webkit-scrollbar{
