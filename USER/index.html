@@ -363,21 +363,24 @@
             </select>
         </div>
     </div>
+    
+ <button onclick="toggleTableDisplay()">Toggle Table Display</button>
+<div id="json-data-container" style="display: none;"></div>
 
 <div><h3>AMF</h3>
-    <div class="chart" style="width: 800px;"><canvas id="AMF"></canvas></div>
+    <div class="chart" style="width: 1000px;"><canvas id="AMF"></canvas></div>
 </div>
 <div><h3>Performace per Day</h3>
-    <div class="chart" style="width: 800px;"><canvas id="AMFperday"></canvas></div>
+    <div class="chart" style="width: 1000px;"><canvas id="AMFperday"></canvas></div>
 </div>
 <div><h3>Performace per Week</h3>
-    <div class="chart" style="width: 800px;"><canvas id="AMFperweek"></canvas></div>
+    <div class="chart" style="width: 1000px;"><canvas id="AMFperweek"></canvas></div>
 </div>
     <div><h3>SMF</h3>
-    <div class="chart" style="width: 800px;"><canvas id="SMF"></canvas></div>
+    <div class="chart" style="width: 1000px;"><canvas id="SMF"></canvas></div>
 </div>
 <div><h3>UPF</h3>
-    <div class="chart" style="width: 800px;" ><canvas id="UPF"></canvas></div>
+    <div class="chart" style="width: 1000px;" ><canvas id="UPF"></canvas></div>
 </div>
    </div> 
 </div>
@@ -563,9 +566,66 @@ new Chart(ctx2, {
     }
   }
 });  
+//try new script
+  // Function to display JSON data in a table
+  function displayJsonDataInTable(data) {
+    const table = document.createElement('table');
+    table.classList.add('json-table');
 
+    const headerRow = document.createElement('tr');
+    for (let i = 0; i < 11; i++) {
+      const th = document.createElement('th');
+      th.textContent = i;
+      headerRow.appendChild(th);
+    }
+    table.appendChild(headerRow);
 
-</script>
+    data.forEach((item) => {
+      const tr = document.createElement('tr');
+      for (let i = 0; i < 11; i++) {
+        const td = document.createElement('td');
+        td.textContent = item[i];
+        tr.appendChild(td);
+      }
+      table.appendChild(tr);
+    });
+
+    document.getElementById('json-data-container').innerHTML = '';
+    document.getElementById('json-data-container').appendChild(table);
+  }
+
+  // Function to toggle table display
+  function toggleTableDisplay() {
+    const jsonDataContainer = document.getElementById('json-data-container');
+    if (jsonDataContainer.style.display === 'none' || jsonDataContainer.style.display === '') {
+      jsonDataContainer.style.display = 'block';
+    } else {
+      jsonDataContainer.style.display = 'none';
+    }
+  }
+
+  // Sample JSON data
+  const jsonData = [
+    [
+      null,
+      "44.81224980021334",
+      "0.0810520729642476",
+      "5.25",
+      "5.0",
+      "0.5",
+      "112.89999999999999",
+      "0.0",
+      "0.0",
+      "31.197265624999996",
+      "6.8050781250000005",
+      // ... rest of the JSON data
+    ],
+    // ... rest of the JSON data
+  ];
+
+  // Call the function to display JSON data in a table
+  displayJsonDataInTable(jsonData);
+
 </script>
 </body>
 
