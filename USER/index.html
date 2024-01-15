@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <title>Dashboard User Console | RTDash</title>
+
+<!-- Icon Page bar -->
+  <link rel="icon" sizes="192x192" href="images/logo.png" type="image/x-icon"/>
+  <link rel="shortcut icon" href="images/logo.png" type="image/x-icon"/>
+  <link rel="apple-touch-icon" href="images/logo.png" type="image/x-icon"/>
+
+</head>
+    
+<body>
+<div class="flex-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a href="#" class="logo">
+            <i class='bx bx-code-alt'></i>
+            <div class="logo-name"><span>RT</span>Dash</div>
+        </a>
+        <ul class="side-menu">
+            <li class="sidemenulinks" onclick="hoverTabs(event, 'dashboard')"><a href="#dashboard"><i class='bx bxs-dashboard'></i>Dashboard</a></li>
+            <li class="sidemenulinks" onclick="hoverTabs(event, 'UE')"><a href="#UE"><i class='bx bx-phone'></i>UE</a></li>
+            <!-- li class="sidemenulinks" onclick="hoverTabs(event, 'analyse')"><a href="#"><i class='bx bx-analyse'></i>Analytics</a></li -->
+            <li class="sidemenulinks"><a href="#NF"><i class='bx bx-message-square-dots'></i>NF<div id="allNF"><i class='bx bx-caret-down'></div></a></i></li>
+                <ul id="NF">
+                    <li class="sidemenulinks" onclick="hoverTabs(event, 'AMF')"><a href="#AMF"><i class='bx bx-message-dots'></i>AMF</a></li>
+                    <li class="sidemenulinks" onclick="hoverTabs(event, 'SMF')"><a href="#SMF"><i class='bx bx-message-dots'></i>SMF</a></li>
+                    <li class="sidemenulinks" onclick="hoverTabs(event, 'UPF')"><a href="#UPF"><i class='bx bx-message-dots'></i>UPF</a></li>
+                </ul>
+            <li class="sidemenulinks" onclick="hoverTabs(event, 'user')"><a href="#user"><i class='bx bx-group'></i>Users</a></li>
+            <li class="sidemenulinks" onclick="hoverTabs(event, 'setting')"><a href="#Setting"><i class='bx bx-cog'></i>Settings</a></li>
+        </ul>
+        <ul class="side-menu">
+           <li>
+            <a href="#" class="logout" value="Logout" id="logoutButton"><i class='bx bx-exit'></i>Logout</a>
+        </li>
+        </ul>
+    </div>
+    <!-- End of Sidebar -->
+
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Navbar -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+            <a href="#" class="notif">
+                <i class='bx bx-bell'></i>
+                <span class="count">12</span>
+            </a>
+            <a href="#" class="profile">
+                <img src="images/logo.png">
+            </a>
+        </nav>
+
+        <!-- End of Navbar -->
+
+    <main>
+    <!-- dashboard --> 
+        <div id="dashboard" class="tabcontent">
+            <div class="header">
+                <div class="left">
+                    <h1>Dashboard</h1>
+                </div>
+            </div>
+
+            <!-- Insights -->
+            <ul class="insights">
+                <li>
+                    <i class='bx bx-calendar-check'></i>
+                    <span class="info">
+                        <h3>
+                            1,074
+                        </h3>
+                        <p>Average Packet Sending Time</p>
+                    </span>
+                </li>
+                <li><i class='bx bx-show-alt'></i>
+                    <span class="info">
+                        <h3>
+                            3,944
+                        </h3>
+                        <p>Warning Status</p>
+                    </span>
+                </li>
+                <li><i class='bx bx-line-chart'></i>
+                    <span class="info">
+                        <h3>
+                            14,721
+                        </h3>
+                        <p>Success Status</p>
+                    </span>
+                </li>
+                <li><i class='bx bx-dollar-circle'></i>
+                    <span class="info">
+                        <h3>
+                            6,742
+                        </h3>
+                        <p>Error Status</p>
+                    </span>
+                </li>
+            </ul>
+            <!-- End of Insights -->
+
+            <div class="bottom-data">
+                <div class="orders">
+                    <div class="header">
+                        <i class='bx bx-receipt'></i>
+                        <h3>NFs Logs</h3>
+                        <i class='bx bx-filter'></i>
+                        <i class='bx bx-search'></i>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Network Function</th>
+                                <th>Packet Sending Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>AMF</p>
+                                </td>
+                                <td>2023/11/20 20:11:50</td>
+                                <td><span class="status completed">Success</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>SMF</p>
+                                </td>
+                                <td>2023/11/20 20:11:50</td>
+                                <td><span class="status pending">Pending</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>UPF</p>
+                                </td>
+                                <td>2023/11/20 20:11:50</td>
+                                <td><span class="status process">Processing</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Reminders -->
+                <div class="reminders">
+                    <div class="header">
+                        <i class='bx bx-note'></i>
+                        <h3>Reminders</h3>
+                        <i class='bx bx-filter'></i>
+                        <i class='bx bx-plus'></i>
+                    </div>
+                    <ul class="task-list">
+                        <li class="completed">
+                            <div class="task-title">
+                                <i class='bx bx-check-circle'></i>
+                                <p>CPU Usage</p>
+                            </div>
+                            <i class='bx bx-dots-vertical-rounded'></i>
+                        </li>
+                        <li class="completed">
+                            <div class="task-title">
+                                <i class='bx bx-check-circle'></i>
+                                <p>Network Traffic</p>
+                            </div>
+                            <i class='bx bx-dots-vertical-rounded'></i>
+                        </li>
+                        <li class="not-completed">
+                            <div class="task-title">
+                                <i class='bx bx-x-circle'></i>
+                                <p>Packet Loss Rate</p>
+                            </div>
+                            <i class='bx bx-dots-vertical-rounded'></i>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <!-- End of Reminders-->
+            </div>
+        </div>
+    <!-- End of Dashboard-->
+    <!-- UE-->
+    <div id="UE" class="tabcontent">
+        <div class="header">
+                <div class="left">
+                    <h1><a href="#">UE</a></h1>
+                    <ul class="breadcrumb">
+                        <li>Subscriber</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Insights -->
+            
+                        
+            <!-- End of Insights -->
+
+            <div class="bottom-data">
+                <div class="orders">
+                        <div class="header">
+                            <i class='bx bx-note'></i>
+                            <h3>Subscriber</h3>
+                            <i class='bx bx-filter'></i>
+                            <i class='bx bx-plus'></i>
+                        </div>
+                        <form action="#" method="POST" id="subscriberForm">
+                            <div class="form-input">
+                                <input type="search" placeholder="Enter your imsi" id="searchimsi">
+                                <button class="search-btn" id="imsi" type="submit">
+                                    <i class='bx bx-search'></i>
+                                </button>
+                            </div>
+                        </form>
+                      <form action="#" method="DELETE" id="subscriberForm">
+                            <div class="form-input">
+                                <input type="search" placeholder="Enter your imsi" id="deleteimsi">
+                                <button class="search-btn" type="button" id="deleteimsi">
+                                    <i class='bx bx-trash'></i>
+                                </button>
+                            </div>
+                        </form>
+                        <pre id="responseContainer">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td><p>PLMN ID</p></td>
+                                        <td id="plmnID"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>SUPI (IMSI)</p></td>
+                                        <td id="imsi"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>Auth Method</p></td>
+                                        <td id=Auth ></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>OPC type</p></td>
+                                        <td id="opct"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>OPC</p></td>
+                                        <td id="opc"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>SQN</p></td>
+                                        <td id="sqn"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>SST</p></td>
+                                        <td id="sst"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>SD</p></td>
+                                        <td id="sd"></td>
+                                    </tr>
+                                     <tr>
+                                        <td><p>DNN</p></td>
+                                        <td id="dnn"></td>
+                                    </tr>
+                                     <tr>
+                                        <td><p>Key</p></td>
+                                        <td id="k"></td>
+                                    </tr>
+                                     <tr>
+                                        <td><p>msisdn</p></td>
+                                        <td id="msisdn"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </pre>
+                    </div>
+                <!-- Reminders -->
+                </div>
+                <!-- End of Reminders-->
+            </div>
+    <!-- End of UE-->
+
+    <!-- user -->  
+         <div id="user" class="tabcontent">
+            <div class="header">
+                <div class="left">
+                    <h1><a href="#">User Editing Form</a></h1>
+                    <ul class="breadcrumb">
+                        <li>Subscriber</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- End Insights -->
+<!-- User Form -->
+<div class="bottom-data">
+    <div class="orders">
+    <div class="header">
+    <table>
+    <tbody>
+           <tr>
+              <td><form id="userEditForm"><label for="email">Email:</label></td>
+              <td><input type="email" id="email" required></td>
+            </tr>
+            <tr>
+                <td><label for="name">Name:</label></td>
+                <td><input type="text" id="name" required></td>
+            </tr>
+            <tr>
+                <td><label for="password">Password:</label></td>
+                <td><input type="password" id="password" required></td>
+            </tr>
+            <tr>
+                <td><label for="confirmPassword">Confirm Password:</label></td>
+                <td><input type="password" id="confirmPassword" required></td>
+            </tr>
+            <tr>
+                <td><label for="phone">Phone:</label></td>
+                <td><input type="tel" id="phone" required></td>
+            </tr>
+    </div>
+        <div>
+        <button type="button" onclick="getUserData()">Get User Data</button>
+        <button type="button" onclick="editUserData()">Submit</button>
+     </div>       
+    </form> 
+        </tbody>
+    </table>
+    </div>
+   </div> 
+</div>
+          <!-- AMF -->
+          <div id="NF" class="tabcontent">
+            <div class="header">
+                <div class="left">
+                    <h1><a href="#">Network Function Performance</a></h1>
+                    <ul class="breadcrumb">
+                        <li>Graphic</li>
+                    </ul>
+                </div>
+            </div>
+
+<div class="bottom-data">
+<div class="orders">
+    <div class="header">
+        <div class="sidemenulinks"><a href="#"><i class='bx bx-message-square-dots'></i>NF</a>
+            <select id="NF" class="select">
+                <option class="sidemenulinks" onclick="hoverTabs(event, 'AMF')"><a href="#AMF"><i class='bx bx-message-dots'></i>AMF</a></option>
+                <option class="sidemenulinks" onclick="hoverTabs(event, 'SMF')"><a href="#SMF"><i class='bx bx-message-dots'></i>SMF</a></option>
+                <option class="sidemenulinks" onclick="hoverTabs(event, 'UPF')"><a href="#UPF"><i class='bx bx-message-dots'></i>UPF</a></option>
+            </select>
+        </div>
+    </div>
+
+<div><h3>AMF</h3>
+    <div class="chart" style="width: 800px;"><canvas id="AMF"></canvas></div>
+</div>
+<div><h3>Performace per Day</h3>
+    <div class="chart" style="width: 800px;"><canvas id="AMFperday"></canvas></div>
+</div>
+<div><h3>Performace per Week</h3>
+    <div class="chart" style="width: 800px;"><canvas id="AMFperweek"></canvas></div>
+</div>
+    <div><h3>SMF</h3>
+    <div class="chart" style="width: 800px;"><canvas id="SMF"></canvas></div>
+</div>
+<div><h3>UPF</h3>
+    <div class="chart" style="width: 800px;" ><canvas id="UPF"></canvas></div>
+</div>
+   </div> 
+</div>
+</div>   
+     <!-- End of Tabcontent-->
+        </main>
+    </div>
+</div>
+    <script src="index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    //amf
+  async function fetchJsonFile(filePath) {
+  const response = await fetch(filePath);
+  const jsonData = await response.json();
+  return jsonData;
+}
+
+const jsonFile1 = 'http://192.168.1.213:5001/nfs/performance?s_nf=amf'; // Replace with your JSON file path 'http://192.168.1.213:5001/nfs/performance/day?s_nf=free5gc'
+
+fetchJsonFile(jsonFile1)
+  .then((jsonData) => {
+    const values = jsonData.map((item) => item.value); // Assuming your JSON has a 'value' property
+    displayValuesGraphically(values);
+  })
+  .catch((error) => {
+    console.error('Error fetching JSON file:', error);
+  });
+
+  function displayValuesGraphically(values) {
+  const ctx = document.getElementById('AMF').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [], // Leave it empty since we don't need labels
+      datasets: [
+        {
+          label: '',
+          data: values,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+}
+//amf per day
+async function fetchJsonFile(filePath) {
+  const response = await fetch(filePath);
+  const jsonData = await response.json();
+  return jsonData;
+}
+
+const jsonFile2 = 'http://192.168.1.213:5001/nfs/performance/day?s_nf=free5gc'; // Replace with your JSON file path 'http://192.168.1.213:5001/nfs/performance/day?s_nf=free5gc'
+
+fetchJsonFile(jsonFile2)
+  .then((jsonData) => {
+    const values = jsonData.map((item) => item.value); // Assuming your JSON has a 'value' property
+    displayValuesGraphically(values);
+  })
+  .catch((error) => {
+    console.error('Error fetching JSON file:', error);
+  });
+
+  function displayValuesGraphically(values) {
+  const ctx4 = document.getElementById('AMFperday').getContext('2d');
+  const chart = new Chart(ctx4, {
+    type: 'line',
+    data: {
+      labels: [], // Leave it empty since we don't need labels
+      datasets: [
+        {
+          label: '',
+          data: values,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+}
+//amf per week
+async function fetchJsonFile(filePath) {
+  const response = await fetch(filePath);
+  const jsonData = await response.json();
+  return jsonData;
+}
+
+const jsonFile = 'http://192.168.1.213:5001/nfs/performance/week?s_nf=free5gc'; // Replace with your JSON file path 'http://192.168.1.213:5001/nfs/performance/day?s_nf=free5gc'
+
+fetchJsonFile(jsonFile)
+  .then((jsonData) => {
+    const values = jsonData.map((item) => item.value); // Assuming your JSON has a 'value' property
+    displayValuesGraphically(values);
+  })
+  .catch((error) => {
+    console.error('Error fetching JSON file:', error);
+  });
+
+  function displayValuesGraphically(values) {
+  const ctx5 = document.getElementById('AMFperweek').getContext('2d');
+  const chart = new Chart(ctx5, {
+    type: 'line',
+    data: {
+      labels: ['1', '2', '3', '4'], // Leave it empty since we don't need labels
+      datasets: [
+        {
+          label: labels,
+          data: values,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+}
+  const ctx1 = document.getElementById('UPF');
+
+  new Chart(ctx1, {
+    type: 'line',
+    data: {
+      labels: ['1', '2', '3', '4', '5', '6'],
+      datasets: [{
+        label: '# of Votes',
+        data: [13, 1, 3, 15, 8, 6],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+//smf
+const ctx2 = document.getElementById('SMF');
+
+new Chart(ctx2, {
+  type: 'line',
+  data: {
+    labels: ['1', '2', '3', '4', '5', '6'],
+    datasets: [{
+      label: '# of Votes',
+      data: [12, 19, 3, 5, 2, 3],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});  
+
+
+</script>
+</script>
+</body>
+
+</html>
