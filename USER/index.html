@@ -431,35 +431,7 @@
         }
       });
 
- 
-
-//amf per week
-
-  function displayValuesGraphically(values) {
-  const ctx5 = document.getElementById('AMFperweek').getContext('2d');
-  const chart = new Chart(ctx5, {
-    type: 'line',
-    data: {
-      labels: ['1', '2', '3', '4'], // Leave it empty since we don't need labels
-      datasets: [
-        {
-          label: labels,
-          data: values,
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-    },
-  });
-}
+//amf per week 
   const ctx1 = document.getElementById('UPF');
 
   new Chart(ctx1, {
