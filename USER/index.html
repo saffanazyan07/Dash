@@ -364,17 +364,9 @@
         </div>
     </div>
     
- <button onclick="toggleTableDisplay()">Toggle Table Display</button>
-<div id="json-data-container" style="display: none;"></div>
-<p>haihai</p>
-<div><h3>AMF</h3>
-    <div class="chart" style="width: 1000px;"><canvas id="AMF"></canvas></div>
-</div>
+<canvas id="performanceChart" width="800" height="400"></canvas>
 <div><h3>Performace per Day</h3>
     <div class="chart" style="width: 1000px;"><canvas id="AMFperday"></canvas></div>
-</div>
-<div><h3>Performace per Week</h3>
-    <div class="chart" style="width: 1000px;"><canvas id="AMFperweek"></canvas></div>
 </div>
     <div><h3>SMF</h3>
     <div class="chart" style="width: 1000px;"><canvas id="SMF"></canvas></div>
@@ -393,52 +385,55 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    //amf
-  /*amf*/
-async function fetchJsonFile(filePath, params) {
-  const queryString = new URLSearchParams(params).toString();
-  const response = await fetch(`${filePath}?${queryString}`, { method: 'GET' });
-  const jsonData = await response.json();
-  return jsonData;
-}
+// Fetch data from the API URL
+    fetch('http://192.168.1.213:5001/nfs/performance/day?s_nf=free5gc', {
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Extract data for the chart
+      const labels = data.map(entry => entry[0]);
+      const values = data.map(entry => parseFloat(entry[1]));
 
-const jsonFile1 = 'http://192.168.1.213:5001/nfs/performance';
-
-fetchJsonFile(jsonFile1, { s_nf: 'free5gc' })
-  .then((jsonData) => {
-    const values = jsonData.map((item) => item.value); // Assuming your JSON has a 'value' property
-    displayValuesGraphically(values);
-  })
-  .catch((error) => {
-    console.error('Error fetching JSON file:', error);
-  });
-
-function displayValuesGraphically(values) {
-  const ctx = document.getElementById('AMF').getContext('2d');
-  const chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: [], // Leave it empty since we don't need labels
-      datasets: [
-        {
-          label: '',
-          data: values,
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1,
+      // Create a line chart
+      const ctx = document.getElementById('performanceChart').getContext('2d');
+      const performanceChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Performance Data',
+            data: values,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 2,
+            fill: false
+          }]
         },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-    },
-  });
-}
-/*end*/
+        options: {
+          scales: {
+            x: {
+              type: 'time',
+              time: {
+                unit: 'minute'
+              },
+              title: {
+                display: true,
+                text: 'Time'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Value'
+              }
+            }
+          }
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
 //amf per day
 async function fetchJsonFile(filePath) {
   const response = await fetch(filePath);
@@ -568,63 +563,7 @@ new Chart(ctx2, {
 });  
 //try new script
   // Function to display JSON data in a table
-  function displayJsonDataInTable(data) {
-    const table = document.createElement('table');
-    table.classList.add('json-table');
 
-    const headerRow = document.createElement('tr');
-    for (let i = 0; i < 11; i++) {
-      const th = document.createElement('th');
-      th.textContent = i;
-      headerRow.appendChild(th);
-    }
-    table.appendChild(headerRow);
-
-    data.forEach((item) => {
-      const tr = document.createElement('tr');
-      for (let i = 0; i < 11; i++) {
-        const td = document.createElement('td');
-        td.textContent = item[i];
-        tr.appendChild(td);
-      }
-      table.appendChild(tr);
-    });
-
-    document.getElementById('json-data-container').innerHTML = '';
-    document.getElementById('json-data-container').appendChild(table);
-  }
-
-  // Function to toggle table display
-  function toggleTableDisplay() {
-    const jsonDataContainer = document.getElementById('json-data-container');
-    if (jsonDataContainer.style.display === 'none' || jsonDataContainer.style.display === '') {
-      jsonDataContainer.style.display = 'block';
-    } else {
-      jsonDataContainer.style.display = 'none';
-    }
-  }
-
-  // Sample JSON data
-  const jsonData = [
-    [
-      null,
-      "44.81224980021334",
-      "0.0810520729642476",
-      "5.25",
-      "5.0",
-      "0.5",
-      "112.89999999999999",
-      "0.0",
-      "0.0",
-      "31.197265624999996",
-      "6.8050781250000005",
-      // ... rest of the JSON data
-    ],
-    // ... rest of the JSON data
-  ];
-
-  // Call the function to display JSON data in a table
-  displayJsonDataInTable(jsonData);
 
 </script>
 </body>
