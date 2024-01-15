@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
+    <!-- Add this to the head of your HTML file -->
+    <script src="https://cdn.jsdelivr.net/npm/moment"></script>
+
     <title>Dashboard User Console | RTDash</title>
 
 <!-- Icon Page bar -->
@@ -399,41 +402,46 @@ fetch('http://192.168.1.213:5001/nfs/performance/day?s_nf=free5gc', {
     const labels = data.map(entry => entry[0]);
     const values = data.map(entry => parseFloat(entry[1]));
 
-    // Create a line chart
-    const ctx = document.getElementById('performanceChart').getContext('2d');
-    const performanceChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: 'Performance Data',
-          data: values,
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 2,
-          fill: false
-        }]
-      },
-      options: {
-        scales: {
-          x: {
-            type: 'time',
-            time: {
-              unit: 'minute'
-            },
-            title: {
-              display: true,
-              text: 'Time'
-            }
-          },
-          y: {
-            title: {
-              display: true,
-              text: 'Value'
-            }
+
+// Create a line chart
+const ctx = document.getElementById('performanceChart').getContext('2d');
+const performanceChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: labels,
+    datasets: [{
+      label: 'Performance Data',
+      data: values,
+      borderColor: 'rgba(75, 192, 192, 1)',
+      borderWidth: 2,
+      fill: false
+    }]
+  },
+  options: {
+    scales: {
+      x: {
+        type: 'time',
+        time: {
+          parser: 'MM/DD/YYYY HH:mm:ss', // Adjust the date format based on your data
+          unit: 'minute',
+          displayFormats: {
+            minute: 'MM/DD/YYYY HH:mm:ss', // Adjust the date format based on your data
           }
+        },
+        title: {
+          display: true,
+          text: 'Time'
+        }
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Value'
         }
       }
-    });
+    }
+  }
+});
 
     // amf per week 
     const ctx1 = document.getElementById('UPF').getContext('2d'); // Corrected
