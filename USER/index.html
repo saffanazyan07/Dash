@@ -219,21 +219,25 @@
                             <i class='bx bx-filter'></i>
                             <i class='bx bx-plus'></i>
                         </div>
-                        <form action="#" method="POST" id="subscriberForm">
-                            <div class="form-input">
-                                <input type="search" placeholder="Enter your imsi" id="searchimsi">
-                                <button class="search-btn" id="submitimsi" type="submit">
-                                    <i class='bx bx-search'></i>
-                                </button>
-                            </div>
+                      <!-- Update the first form with a unique id -->
+                        <form action="#" method="POST" id="searchSubscriberForm">
+                          <div class="form-input">
+                            <input type="search" placeholder="Enter your imsi" id="searchimsi">
+                            <button class="search-btn" id="submitimsi" type="submit">
+                              <i class="bx bx-search"></i>
+                            </button>
+                          </div>
                         </form>
-                      <form action="#" method="DELETE" id="subscriberForm">
-                            <div class="form-input">
-                                <input type="search" placeholder="Enter your imsi" id="deleteimsi">
-                                <button class="search-btn" type="button" id="deleteimsi">
-                                    <i class='bx bx-trash'></i>
-                                </button>
-                            </div>
+                        
+                        <!-- Update the second form with a unique id -->
+                        <form action="#" method="DELETE" id="deleteSubscriberForm">
+                          <div class="form-input">
+                            <input type="search" placeholder="Enter your imsi" id="deleteimsi">
+                            <button class="search-btn" type="button" id="deleteButton">
+                              <!-- Update the button id to be unique -->
+                              <i class="bx bx-search"></i>
+                            </button>
+                          </div>
                         </form>
                         <pre id="responseContainer">
                             <table>
