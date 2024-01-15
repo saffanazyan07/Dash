@@ -434,66 +434,8 @@
     .catch(error => {
       console.error('Error fetching data:', error);
     });
-//amf per day
-async function fetchJsonFile(filePath) {
-  const response = await fetch(filePath);
-  const jsonData = await response.json();
-  return jsonData;
-}
 
-const jsonFile2 = 'http://192.168.1.213:5001/nfs/performance/day?s_nf=free5gc'; // Replace with your JSON file path 'http://192.168.1.213:5001/nfs/performance/day?s_nf=free5gc'
-
-fetchJsonFile(jsonFile2)
-  .then((jsonData) => {
-    const values = jsonData.map((item) => item.value); // Assuming your JSON has a 'value' property
-    displayValuesGraphically(values);
-  })
-  .catch((error) => {
-    console.error('Error fetching JSON file:', error);
-  });
-
-  function displayValuesGraphically(values) {
-  const ctx4 = document.getElementById('AMFperday').getContext('2d');
-  const chart = new Chart(ctx4, {
-    type: 'line',
-    data: {
-      labels: [], // Leave it empty since we don't need labels
-      datasets: [
-        {
-          label: '',
-          data: values,
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-    },
-  });
-}
 //amf per week
-async function fetchJsonFile(filePath) {
-  const response = await fetch(filePath);
-  const jsonData = await response.json();
-  return jsonData;
-}
-
-const jsonFile = 'http://192.168.1.213:5001/nfs/performance/week?s_nf=free5gc'; // Replace with your JSON file path 'http://192.168.1.213:5001/nfs/performance/day?s_nf=free5gc'
-
-fetchJsonFile(jsonFile)
-  .then((jsonData) => {
-    const values = jsonData.map((item) => item.value); // Assuming your JSON has a 'value' property
-    displayValuesGraphically(values);
-  })
-  .catch((error) => {
-    console.error('Error fetching JSON file:', error);
-  });
 
   function displayValuesGraphically(values) {
   const ctx5 = document.getElementById('AMFperweek').getContext('2d');
