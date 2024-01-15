@@ -158,7 +158,7 @@ function displayData(data) {
     document.getElementById('msisdn').textContent = data.s_msisdn || '-';
 }
 
-document.getElementById('searchimsi').addEventListener('click', imsi);
+document.getElementById('searchimsi').addEventListener('click', submitimsi);
 
 /*end*/
 /*deleteimsi*/
