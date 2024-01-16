@@ -294,6 +294,8 @@
                         </pre>
                       <button onclick="fetchData()">Fetch Reminders</button>
                         <pre id="response"></pre>
+                    <button onclick="fetchPerformanceData()">Fetch Performance Data</button>
+                        <pre id="performanceData"></pre>
                     </div>
                 <!-- Reminders -->
                 </div>
@@ -414,80 +416,23 @@ async function fetchData() {
   }
 }
 //end
-
-// Fetch data from the API URL
-fetch('http://192.168.1.213:5001/nfs/performance/day?s_nf=free5gc', {
-  method: 'GET',
-})
-  .then(response => response.json())
-  .then(data => {
-    // Extract data for the chart
-    const labels = data.map(entry => entry[0]);
-    const values = data.map(entry => parseFloat(entry[1]));
-
-
-// Create a line chart
-const ctx = document.getElementById('performanceChart').getContext('2d');
-const performanceChart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: labels,
-    datasets: [{
-      label: 'Performance Data',
-      data: values,
-      borderColor: 'rgba(75, 192, 192, 1)',
-      borderWidth: 2,
-      fill: false
-    }]
-  },
-  options: {
-    scales: {
-      x: {
-        type: 'time',
-        time: {
-          parser: 'MM/DD/YYYY HH:mm:ss', // Adjust the date format based on your data
-          unit: 'minute',
-          displayFormats: {
-            minute: 'MM/DD/YYYY HH:mm:ss', // Adjust the date format based on your data
-          }
-        },
-        title: {
-          display: true,
-          text: 'Time'
-        }
-      },
-      y: {
-        title: {
-          display: true,
-          text: 'Value'
-        }
-      }
-    }
-  }
-});
-
-    // amf per week 
-    const ctx1 = document.getElementById('UPF').getContext('2d'); // Corrected
-
-    new Chart(ctx1, {
-      type: 'line',
-      data: {
-        labels: ['1', '2', '3', '4', '5', '6'],
-        datasets: [{
-          label: '# of Votes',
-          data: [13, 1, 3, 15, 8, 6],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
+async function fetchPerformanceData() {
+  try {
+    const response = await fetch('http://192.168.1.213:5001/nfs/performance?s_nf=free5gc', {
+      method: 'GET',
     });
 
+    if (!response.ok) {
+      throw new Error('API request failed with status: ' + response.status);
+    }
+
+    const data = await response.json();
+    document.getElementById('performanceData').textContent = JSON.stringify(data, null, 2);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    // Display an error message to the user if desired
+  }
+}
     // smf
     const ctx2 = document.getElementById('SMF').getContext('2d'); // Corrected
 
