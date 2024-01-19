@@ -417,7 +417,8 @@ async function fetchData() {
 }
 
 //end
-async function fetchPerformanceData() {
+
+    async function fetchPerformanceData() {
   try {
     const response = await fetch('http://192.168.1.213:5001/nfs/performance?s_nf=free5gc', {
       method: 'GET',
@@ -428,12 +429,29 @@ async function fetchPerformanceData() {
     }
 
     const data = await response.json();
-    document.getElementById('performanceData').textContent = JSON.stringify(data, null, 2);
+
+    // Create table headers
+    const tableHeaders = Object.keys(data.items[0]); // Assuming items have consistent keys
+
+    // Create table content
+    const tableBody = document.querySelector('#performanceTableBody'); // Assuming a table body with ID 'performanceTableBody'
+    tableBody.innerHTML = ''; // Clear any existing content
+
+    data.items.forEach(item => {
+      const row = document.createElement('tr');
+      tableHeaders.forEach(key => {
+        const cell = document.createElement('td');
+        cell.textContent = item[key];
+        row.appendChild(cell);
+      });
+      tableBody.appendChild(row);
+    });
   } catch (error) {
     console.error('Error fetching data:', error);
     // Display an error message to the user if desired
   }
 }
+
  
 </script>
 
