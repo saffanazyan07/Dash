@@ -394,9 +394,24 @@ async function fetchData() {
 
     const data = await response.json(); // Assuming JSON response
     document.getElementById('response').textContent = JSON.stringify(data, null, 3);
+    displayData(data);
   } catch (error) {
     console.error('Error fetching data:', error);
   }
+}
+    function displayData(data) {
+    // Update the content of the HTML elements with the fetched data
+    document.getElementById('plmnID').textContent = data.s_plmn  || '-';
+    document.getElementById('imsi').textContent = data.s_imsi || '-';
+    document.getElementById('Auth').textContent = data.s_authmethod || '-';
+    document.getElementById('opct').textContent = data.s_opctype || '-';
+    document.getElementById('opc').textContent = data.s_opc || '-';
+    document.getElementById('sqn').textContent = data.s_sqn || '-';
+    document.getElementById('sst').textContent = data.s_sst || '-';
+    document.getElementById('sd').textContent = data.s_sd || '-';
+    document.getElementById('dnn').textContent = data.s_dnn   || '-';
+    document.getElementById('k').textContent = data.s_k  || '-';
+    document.getElementById('msisdn').textContent = data.s_msisdn || '-';
 }
 
 //end
