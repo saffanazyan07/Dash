@@ -401,9 +401,9 @@ async function fetchData() {
 }
     function displayData(data) {
     // Update the content of the HTML elements with the fetched data
-    document.getElementById('plmnID').textContent = data.s_plmn  || '-';
-    document.getElementById('imsi').textContent = data.s_imsi || '-';
-    document.getElementById('Auth').textContent = data.s_authmethod || '-';
+    document.getElementById('bandwidthin').textContent = data.bandwidth_in  || '-';
+    document.getElementById('bandwidthout').textContent = data.bandwidth_out || '-';
+    document.getElementById('Auth').textContent = data.dt_infotime || '-';
     document.getElementById('opct').textContent = data.s_opctype || '-';
     document.getElementById('opc').textContent = data.s_opc || '-';
     document.getElementById('sqn').textContent = data.s_sqn || '-';
