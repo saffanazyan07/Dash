@@ -85,7 +85,7 @@
                 <li>
                     <i class='bx bx-calendar-check'></i>
                     <span class="info">
-                        <h3>
+                        <h3 id="info">
                             1,074
                         </h3>
                         <p>Average Packet Sending Time</p>
@@ -93,7 +93,7 @@
                 </li>
                 <li><i class='bx bx-show-alt'></i>
                     <span class="info">
-                        <h3>
+                        <h3 id="warning">
                             3,944
                         </h3>
                         <p>Warning Status</p>
@@ -109,7 +109,7 @@
                 </li>
                 <li><i class='bx bx-dollar-circle'></i>
                     <span class="info">
-                        <h3>
+                        <h3 id="error">
                             6,742
                         </h3>
                         <p>Error Status</p>
@@ -432,8 +432,9 @@ async function fetchData() {
     }
 
     const data = await response.json();
-    document.getElementById('Totallog').textContent = JSON.stringify(data.error, null, 2);
-      
+    document.getElementById('info').textContent = JSON.stringify(data.info, null, 2);
+    document.getElementById('warning').textContent = JSON.stringify(data.warning, null, 2);
+    document.getElementById('error').textContent = JSON.stringify(data.error, null, 2);
   } catch (error) {
     console.error('Error fetching data:', error);
     // Display an error message to the user if desired
