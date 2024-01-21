@@ -283,6 +283,9 @@
                 
                     <button onclick="fetchPerformanceData()">Fetch Performance Data</button>
                     <pre id="performanceData"></pre>
+                     <button onclick="alert()">Fetch Performance Data</button>
+                    <pre id="alert"></pre>
+                    
                     </div>
                 <!-- Reminders -->
                 </div>
@@ -454,6 +457,25 @@ async function fetchData() {
     // Display an error message to the user if desired
   }
 }
+//alert    
+     async function alert() {
+  try {
+    const response = await fetch('http://192.168.1.213:5001/user/alert', {
+      method: 'POST',
+    });
+
+    if (!response.ok) {
+      throw new Error('API request failed with status: ' + response.status);
+    }
+
+    const data = await response.json();
+    document.getElementById('alert').textContent = JSON.stringify(data, null, 2);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    // Display an error message to the user if desired
+  }
+}
+ 
  
 </script>
 
