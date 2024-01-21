@@ -424,7 +424,7 @@ async function fetchData() {
     async function Totallog() {
   try {
     const response = await fetch('http://192.168.1.213:5001/nfs/totallogs', {
-      method: 'GET',
+      method: 'POST',
     });
 
     if (!response.ok) {
