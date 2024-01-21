@@ -236,39 +236,43 @@
                                         <td id="bandwidthout"></td>
                                     </tr>
                                     <tr>
-                                        <td><p>Auth Method</p></td>
-                                        <td id="Auth"></td>
+                                        <td><p>Time</p></td>
+                                        <td id="time"></td>
                                     </tr>
                                     <tr>
-                                        <td><p>OPC type</p></td>
-                                        <td id="opct"></td>
+                                        <td><p>CPU</p></td>
+                                        <td id="cpu"></td>
                                     </tr>
                                     <tr>
-                                        <td><p>OPC</p></td>
-                                        <td id="opc"></td>
+                                        <td><p>Loss In</p></td>
+                                        <td id="lossin"></td>
                                     </tr>
                                     <tr>
-                                        <td><p>SQN</p></td>
-                                        <td id="sqn"></td>
+                                        <td><p>Loss Out</p></td>
+                                        <td id="lossout"></td>
                                     </tr>
                                     <tr>
-                                        <td><p>SST</p></td>
-                                        <td id="sst"></td>
+                                        <td><p>NF</p></td>
+                                        <td id="nf"></td>
                                     </tr>
                                     <tr>
-                                        <td><p>SD</p></td>
-                                        <td id="sd"></td>
+                                        <td><p>Read</p></td>
+                                        <td id="read"></td>
                                     </tr>
                                      <tr>
-                                        <td><p>DNN</p></td>
-                                        <td id="dnn"></td>
+                                        <td><p>Write</p></td>
+                                        <td id="write"></td>
                                     </tr>
                                      <tr>
-                                        <td><p>Key</p></td>
-                                        <td id="k"></td>
+                                        <td><p>Source IP</p></td>
+                                        <td id="source"></td>
                                     </tr>
                                      <tr>
-                                        <td><p>msisdn</p></td>
+                                        <td><p>Rate In</p></td>
+                                        <td id="msisdn"></td>
+                                    </tr>
+                                     <tr>
+                                        <td><p>Rate Out</p></td>
                                         <td id="msisdn"></td>
                                     </tr>
                                 </tbody>
@@ -279,9 +283,6 @@
                     <pre id="response"></pre>
                     <button onclick="fetchPerformanceData()">Fetch Performance Data</button>
                     <pre id="performanceData"></pre>
-                    <button onclick="Totallog()">Fetch Performance Data</button>
-                    <pre id="Totallog"></pre>
-                    
                     </div>
                 <!-- Reminders -->
                 </div>
@@ -394,14 +395,25 @@ async function fetchData() {
     });
 
     const data = await response.json(); // Assuming JSON response
-    document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+    document.getElementById('bandwidthin').textContent = JSON.stringify(data.bandwidth_in, null, 2);
+    document.getElementById('bandwidthout').textContent = JSON.stringify(data.bandwidth_out, null, 2);
+    document.getElementById('time').textContent = JSON.stringify(data.dt_infotime, null, 2);
+    document.getElementById('cpu').textContent = JSON.stringify(data.s_cpu, null, 2);
+    document.getElementById('lossin').textContent = JSON.stringify(data.s_loss_in, null, 2);
+    document.getElementById('lossout').textContent = JSON.stringify(data.s_loss_out, null, 2);
+    document.getElementById('nf').textContent = JSON.stringify(data.s_nf, null, 2);
+    document.getElementById('read').textContent = JSON.stringify(data.s_read, null, 2);
+    document.getElementById('write').textContent = JSON.stringify(data.s_write, null, 2);
+    document.getElementById('source').textContent = JSON.stringify(data.source_ip, null, 2);
+    document.getElementById('ratein').textContent = JSON.stringify(data.transmission_rate_in, null, 2);
+    document.getElementById('rateout').textContent = JSON.stringify(data.transmission_rate_out, null, 2);
   } catch (error) {
     console.error('Error fetching data:', error);
   }
 }
     
    
-//end
+//Free 5G Core perform
 
  async function fetchPerformanceData() {
   try {
@@ -421,6 +433,8 @@ async function fetchData() {
     // Display an error message to the user if desired
   }
 }
+    
+// Dashboard Total Log
     async function Totallog() {
   try {
     const response = await fetch('http://192.168.1.213:5001/nfs/totallogs', {
