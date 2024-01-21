@@ -283,9 +283,10 @@
                 
                     <button onclick="fetchPerformanceData()">Fetch Performance Data</button>
                     <pre id="performanceData"></pre>
-                     <button onclick="alert()">Fetch Performance Data</button>
-                    <pre id="alert"></pre>
-                    
+                     <button onclick="warnlog()">Fetch Performance Data</button>
+                    <pre id="warnlog"></pre>
+                    <button onclick="log()">Fetch Performance Data</button>
+                    <pre id="log"></pre>
                     </div>
                 <!-- Reminders -->
                 </div>
@@ -457,8 +458,8 @@ async function fetchData() {
     // Display an error message to the user if desired
   }
 }
-//alert    
-     async function alert() {
+//warnlog    
+     async function warnlog() {
   try {
     const response = await fetch('http://192.168.1.213:5001/nfs/warnlogs', {
       method: 'GET',
@@ -469,12 +470,30 @@ async function fetchData() {
     }
 
     const data = await response.json();
-    document.getElementById('alert').textContent = JSON.stringify(data, null, 2);
+    document.getElementById('warnlog').textContent = JSON.stringify(data, null, 2);
   } catch (error) {
     console.error('Error fetching data:', error);
     // Display an error message to the user if desired
   }
 }
+//    
+     async function log() {
+  try {
+    const response = await fetch('http://192.168.1.213:5001/nfs/log', {
+      method: 'GET',
+    });
+
+    if (!response.ok) {
+      throw new Error('API request failed with status: ' + response.status);
+    }
+
+    const data = await response.json();
+    document.getElementById('log').textContent = JSON.stringify(data, null, 2);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    // Display an error message to the user if desired
+  }
+}    
  
  
 </script>
