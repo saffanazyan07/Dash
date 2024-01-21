@@ -393,8 +393,8 @@ async function fetchData() {
     });
 
     const data = await response.json(); // Assuming JSON response
-    document.getElementById('response').textContent = JSON.parse(data.bandwidth_in, null, 3);
-    //displayData(data);
+    document.getElementById('response').textContent = JSON.parse(data, null, 3);
+    displayData(data);
   } catch (error) {
     console.error('Error fetching data:', error);
   }
