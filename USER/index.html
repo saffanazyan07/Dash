@@ -207,8 +207,6 @@
                         <li>Subscriber</li>
                     </ul>
                 </div>
-            <button onclick="fetchPerformanceData()">Fetch Performance Data</button>
-                <pre id="performanceData"></pre>
             </div>
 
             <!-- Insights -->
@@ -226,8 +224,7 @@
                         </div>
                       <!-- Update the first form with a unique id -->
                         <!-- Update the second form with a unique id -->  
-                  <button onclick="fetchData()">Fetch Reminders</button>
-                        <pre id="response">
+                        <pre id="res">
                             <table>
                                 <tbody>
                                     <tr>
@@ -277,7 +274,11 @@
                                 </tbody>
                             </table>
                         </pre>
-                   <!-- Table Perform --> 
+                   <!-- Table Perform -->
+                    <button onclick="fetchData()">Fetch Reminders</button>
+                    <pre id="response"></pre>
+                    <button onclick="fetchPerformanceData()">Fetch Performance Data</button>
+                    <pre id="performanceData"></pre>
                     </div>
                 <!-- Reminders -->
                 </div>
@@ -376,8 +377,6 @@
 </div>
     <script src="index.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
 <script>
 async function fetchData() {
   try {
@@ -386,34 +385,18 @@ async function fetchData() {
       headers: {
         // Add any necessary headers
       },
-      body: JSON.parse({
+      body: JSON.stringify({
         // Add any necessary request body data
       }),
     });
 
     const data = await response.json(); // Assuming JSON response
-    document.getElementById('response').textContent = JSON.parse(data, null, 3);
-      
-    //displayData(data);
+    document.getElementById('response').textContent = JSON.stringify(data, null, 2);
   } catch (error) {
     console.error('Error fetching data:', error);
   }
 }
-    //function displayData(data) {
-    // Update the content of the HTML elements with the fetched data
-    document.getElementById('bandwidthin').textContent = data.bandwidth_in  || '-';
-    document.getElementById('bandwidthout').textContent = data.bandwidth_out || '-';
-    document.getElementById('Auth').textContent = data.dt_infotime || '-';
-    document.getElementById('opct').textContent = data.s_opctype || '-';
-    document.getElementById('opc').textContent = data.s_opc || '-';
-    document.getElementById('sqn').textContent = data.s_sqn || '-';
-    document.getElementById('sst').textContent = data.s_sst || '-';
-    document.getElementById('sd').textContent = data.s_sd || '-';
-    document.getElementById('dnn').textContent = data.s_dnn   || '-';
-    document.getElementById('k').textContent = data.s_k  || '-';
-    document.getElementById('msisdn').textContent = data.s_msisdn || '-';
-}
-    }
+   
 //end
 
  async function fetchPerformanceData() {
