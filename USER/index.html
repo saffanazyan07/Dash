@@ -283,10 +283,12 @@
                 
                     <button onclick="fetchPerformanceData()">Fetch Performance Data</button>
                     <pre id="performanceData"></pre>
-                     <button onclick="warnlog()">Fetch Performance Data</button>
+                     <button onclick="warnlog()">Warning Log</button>
                     <pre id="warnlog"></pre>
-                    <button onclick="log()">Fetch Performance Data</button>
+                    <button onclick="log()">Log</button>
                     <pre id="log"></pre>
+                    <button onclick="Performday()">Fetch Performance Data</button>
+                    <pre id="Performday"></pre>
                     </div>
                 <!-- Reminders -->
                 </div>
@@ -546,7 +548,50 @@ async function fetchData() {
     // Display an error message to the user if desired
   }
 }
+    //nfs Perform
+async function Performday() {
+  try {
+    const response = await fetch('http://192.168.1.213:5001/nfs/performance/day?s_nfs=free5gc', {
+      method: 'GET',
+    });
 
+    if (!response.ok) {
+      throw new Error('API request failed with status: ' + response.status);
+    }
+
+    const data = await response.json();
+
+    // Create a table element
+    const table = document.createElement("table");
+
+    // Create a header row
+    const headerRow = table.createTHead().insertRow(0);
+    for (const key of Object.keys(data[0])) {
+      const th = document.createElement("th");
+      th.textContent = key;
+      headerRow.appendChild(th);
+    }
+
+    // Create a table body
+    const body = table.createTBody();
+    for (const item of data) {
+      const row = body.insertRow();
+      for (const key of Object.keys(item)) {
+        const cell = row.insertCell();
+        cell.textContent = item[key];
+      }
+    }
+
+    // Append the table to the element with the ID 'log'
+    const logElement = document.getElementById('Performday');
+    logElement.innerHTML = ''; // Clear existing content
+    logElement.appendChild(table);
+
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    // Display an error message to the user if desired
+  }
+}
  
  
 </script>
