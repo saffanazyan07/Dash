@@ -410,7 +410,7 @@ async function fetchData() {
    
 //Free 5G Core perform
 //Chart nfs Perform
-async function fetchPerformanceData() {
+async function fetchPerformanceChart() {
   try {
     const response = await fetch('http://192.168.1.213:5001/nfs/performance?s_nf=free5gc', {
       method: 'GET',
@@ -421,36 +421,25 @@ async function fetchPerformanceData() {
     }
 
     const data = await response.json();
+    const requiredProperties = ['dt_infotime','s_disk', 's_memory', 's_load1', 's_load5', 's_load15', 
+                            's_write', 's_read', 's_cpu', 'transmission_rate_in', 'transmission_rate_out', 
+                            'bandwidth_in', 'bandwidth_out', 's_loss_in', 's_loss_out', ' s_nf', 'source_ip', 's_time'];
 
-    // Log the fetched data to the console
-    console.log('Fetched Data:', data);
-
-    // Call the function to create the chart based on the fetched data
-    createPerformanceChart(data);
-
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    // Display an error message to the user if desired
-  }
-}
-
-function createPerformanceChart(data) {
-  try {
-    const requiredProperties = ['bandwidth_in', 'bandwidth_out', 's_loss_in', 's_loss_out'];
-    
-    // Filter out properties that are not in the requiredProperties list
-    const filteredData = Object.fromEntries(Object.entries(data).filter(([key]) => requiredProperties.includes(key)));
-
-    const labels = Object.keys(filteredData);
+// Iterasi melalui properti yang dibutuhkan
+for (const key of requiredProperties) {
+  if (data.hasOwnProperty(key)) {
+    console.log(`${key}: ${data[key]}`);
+    // Lakukan sesuatu dengan properti yang dibutuhkan di sini
+    const labels = ['bandwidth_in', 'bandwidth_out', 's_loss_in', 's_loss_out'];
     const chartData = {
-      labels: labels,
-      datasets: [{
-        label: 'Performance Data',
-        data: labels.map(label => filteredData[label]),
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1
-      }]
+  labels: labels,
+  datasets: [{
+    label: 'Performance Data',
+    data: labels.map(label => data[label]), // Use map to get the corresponding values
+    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+    borderColor: 'rgba(75, 192, 192, 1)',
+    borderWidth: 1
+    
     };
 
     // Get the canvas element
@@ -470,15 +459,13 @@ function createPerformanceChart(data) {
     });
 
   } catch (error) {
-    console.error('Error creating chart:', error);
+    console.error('Error fetching data:', error);
     // Display an error message to the user if desired
   }
 }
 
 // Call the function to fetch data and create the chart
 fetchPerformanceData();
-
-    
     
 // Dashboard Total Log
     async function Totallog() {
