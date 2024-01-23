@@ -436,14 +436,14 @@ async function fetchPerformanceData() {
 
 function createPerformanceChart(data) {
   try {
-    const requiredProperties = ['dt_infotime','s_disk', 's_memory', 's_load1', 's_load5', 's_load15', 
-                            's_write', 's_read', 's_cpu', 'transmission_rate_in', 'transmission_rate_out', 
-                            'bandwidth_in', 'bandwidth_out', 's_loss_in', 's_loss_out', ' s_nf', 'source_ip', 's_time'];
-    
+    const requiredProperties = ['dt_infotime', 's_disk', 's_memory', 's_load1', 's_load5', 's_load15',
+      's_write', 's_read', 's_cpu', 'transmission_rate_in', 'transmission_rate_out',
+      'bandwidth_in', 'bandwidth_out', 's_loss_in', 's_loss_out', ' s_nf', 'source_ip', 's_time'];
+
     // Filter out properties that are not in the requiredProperties list
     const filteredData = Object.fromEntries(Object.entries(data).filter(([key]) => requiredProperties.includes(key)));
+    const labels = filteredData.dt_infotime; // Assuming 'dt_infotime' is an array of labels
 
-    const labels = Object.keys(filteredData);
     const chartData = {
       labels: labels,
       datasets: [{
@@ -464,6 +464,12 @@ function createPerformanceChart(data) {
       data: chartData,
       options: {
         scales: {
+          x: {
+            type: 'time', // Use 'time' scale for the x-axis if 'dt_infotime' contains date/time values
+            time: {
+              unit: 'day' // Adjust the time unit based on your data
+            }
+          },
           y: {
             beginAtZero: true
           }
@@ -479,6 +485,7 @@ function createPerformanceChart(data) {
 
 // Call the function to fetch data and create the chart
 fetchPerformanceData();
+
 
     
 // Dashboard Total Log
