@@ -438,18 +438,21 @@ async function fetchPerformanceData() {
 function createPerformanceChart(data) {
   try {
     // Filter for necessary properties
-    const requiredProperties = ['dt_infotime', 's_memory']; // Assuming the value is in 's_memory'
+    const requiredProperties = ['s_memory'];
     const filteredData = Object.fromEntries(Object.entries(data).filter(([key]) => requiredProperties.includes(key)));
 
     // Extract specific data
-    const timestamp = filteredData.dt_infotime[0];
-    const value = filteredData.s_memory[6]; // Assuming the value is at index 6
+    const values = filteredData.s_memory; // Assuming s_memory is an array
 
+    // Generate sequential numbers as labels
+    const labels = Array.from({ length: values.length }, (_, index) => index + 1);
+
+    // Create chart data
     const chartData = {
-      labels: [timestamp],
+      labels: labels,
       datasets: [{
         label: 'Performance Data',
-        data: [value],
+        data: values,
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1
@@ -459,18 +462,12 @@ function createPerformanceChart(data) {
     // Get the canvas element
     const ctx = document.getElementById('performanceChart').getContext('2d');
 
-    // Create a bar chart
+    // Create a line chart
     const myChart = new Chart(ctx, {
       type: 'line',
       data: chartData,
       options: {
         scales: {
-          x: {
-            type: 'time',
-            time: {
-              unit: 'hour' // Adjust the time unit as needed
-            }
-          },
           y: {
             beginAtZero: true
           }
