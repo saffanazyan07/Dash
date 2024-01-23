@@ -465,6 +465,12 @@ function createPerformanceChart(data) {
       data: chartData,
       options: {
         scales: {
+          x: {
+            type: 'time',
+            time: {
+              unit: 'hour' // Adjust the time unit as needed
+            }
+          },
           y: {
             beginAtZero: true
           }
