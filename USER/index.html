@@ -432,6 +432,8 @@ async function fetchData() {
     // Display an error message to the user if desired
   }
 }
+
+
     //Chart nfs Perform
     async function fetchPerformanceChart() {
   try {
@@ -444,6 +446,16 @@ async function fetchData() {
     }
 
     const data = await response.json();
+    const requiredProperties = ['dt_infotime','s_disk', 's_memory', 's_load1', 's_load5', 's_load15', 
+                            's_write', 's_read', 's_cpu', 'transmission_rate_in', 'transmission_rate_out', 
+                            'bandwidth_in', 'bandwidth_out', 's_loss_in', 's_loss_out', ' s_nf', 'source_ip, 's_time'
+                           ];
+
+// Iterasi melalui properti yang dibutuhkan
+for (const key of requiredProperties) {
+  if (data.hasOwnProperty(key)) {
+    console.log(`${key}: ${data[key]}`);
+    // Lakukan sesuatu dengan properti yang dibutuhkan di sini
     
     // Assuming 'data' has properties like 'labels' and 'values'
     const chartData = {
