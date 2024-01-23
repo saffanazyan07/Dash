@@ -437,17 +437,19 @@ async function fetchPerformanceData() {
 
 function createPerformanceChart(data) {
   try {
-    const requiredProperties = ['bandwidth_in', 'bandwidth_out', 's_loss_in', 's_loss_out'];
-    
-    // Filter out properties that are not in the requiredProperties list
+    // Filter for necessary properties
+    const requiredProperties = ['dt_infotime', 's_memory']; // Assuming the value is in 's_memory'
     const filteredData = Object.fromEntries(Object.entries(data).filter(([key]) => requiredProperties.includes(key)));
 
-    const labels = Object.keys(filteredData);
+    // Extract specific data
+    const timestamp = filteredData.dt_infotime[0];
+    const value = filteredData.s_memory[6]; // Assuming the value is at index 6
+
     const chartData = {
-      labels: labels,
+      labels: [timestamp],
       datasets: [{
         label: 'Performance Data',
-        data: labels.map(label => filteredData[label]),
+        data: [value],
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1
@@ -459,7 +461,7 @@ function createPerformanceChart(data) {
 
     // Create a bar chart
     const myChart = new Chart(ctx, {
-      type: 'bar',
+      type: 'line',
       data: chartData,
       options: {
         scales: {
