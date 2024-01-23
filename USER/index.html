@@ -409,6 +409,7 @@ async function fetchData() {
     
    
 //Free 5G Core perform
+    
 //Chart nfs Perform
 async function fetchPerformanceData() {
   try {
@@ -420,35 +421,13 @@ async function fetchPerformanceData() {
       throw new Error('API request failed with status: ' + response.status);
     }
 
-    const rawData = await response.json();
-
-    // Format ulang data
-    const formattedData = rawData.map(entry => ({
-      dt_infotime: new Date(entry[0]),
-      s_disk: parseFloat(entry[1]),
-      s_memory: parseFloat(entry[2]),
-      s_load1: parseFloat(entry[3]),
-      s_load5: parseFloat(entry[4]),
-      s_load15: parseFloat(entry[5]),
-      s_write: parseFloat(entry[6]),
-      s_read: parseFloat(entry[7]),
-      s_cpu: parseFloat(entry[8]),
-      transmission_rate_in: parseFloat(entry[9]),
-      transmission_rate_out: parseFloat(entry[10]),
-      bandwidth_in: parseFloat(entry[11]),
-      bandwidth_out: parseFloat(entry[12]),
-      s_loss_in: parseFloat(entry[13]),
-      s_loss_out: parseFloat(entry[14]),
-      s_nf: entry[15],
-      source_ip: entry[16],
-      s_time: entry[17]
-    }));
+    const data = await response.json();
 
     // Log the fetched data to the console
-    console.log('Formatted Data:', formattedData);
+    console.log('Fetched Data:', data);
 
-    // Call the function to create the chart based on the formatted data
-    createPerformanceChart(formattedData);
+    // Call the function to create the chart based on the fetched data
+    createPerformanceChart(data);
 
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -456,14 +435,19 @@ async function fetchPerformanceData() {
   }
 }
 
-function createPerformanceChart(formattedData) {
+function createPerformanceChart(data) {
   try {
-    const labels = formattedData.map(entry => entry.dt_infotime);
+    const requiredProperties = ['bandwidth_in', 'bandwidth_out', 's_loss_in', 's_loss_out'];
+    
+    // Filter out properties that are not in the requiredProperties list
+    const filteredData = Object.fromEntries(Object.entries(data).filter(([key]) => requiredProperties.includes(key)));
+
+    const labels = Object.keys(filteredData);
     const chartData = {
       labels: labels,
       datasets: [{
         label: 'Performance Data',
-        data: formattedData.map(entry => entry.s_cpu),
+        data: labels.map(label => filteredData[label]),
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1
@@ -473,18 +457,12 @@ function createPerformanceChart(formattedData) {
     // Get the canvas element
     const ctx = document.getElementById('performanceChart').getContext('2d');
 
-    // Create a line chart
+    // Create a bar chart
     const myChart = new Chart(ctx, {
-      type: 'line',
+      type: 'bar',
       data: chartData,
       options: {
         scales: {
-          x: {
-            type: 'time', // Gunakan 'time' scale untuk sumbu 'x' jika berurusan dengan tanggal/waktu
-            time: {
-              unit: 'day' // Sesuaikan unit waktu sesuai kebutuhan Anda
-            }
-          },
           y: {
             beginAtZero: true
           }
@@ -494,9 +472,13 @@ function createPerformanceChart(formattedData) {
 
   } catch (error) {
     console.error('Error creating chart:', error);
-    // Tampilkan pesan kesalahan ke pengguna jika diinginkan
+    // Display an error message to the user if desired
   }
 }
+
+// Call the function to fetch data and create the chart
+fetchPerformanceData();
+
 
 // Dashboard Total Log
     async function Totallog() {
