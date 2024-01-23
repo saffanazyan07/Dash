@@ -442,9 +442,18 @@ function createPerformanceChart(data) {
     const filteredData = Object.fromEntries(Object.entries(data).filter(([key]) => requiredProperties.includes(key)));
 
     // Extract specific data
-    const values = filteredData.s_memory; // Assuming s_memory is an array
+    let values = filteredData.s_memory; // Assuming s_memory is an array or an object with an array property
 
-    // Generate sequential numbers as labels
+    // Ensure values is an array
+    if (!Array.isArray(values)) {
+      // If s_memory is an object, try to extract the array property
+      if (typeof values === 'object' && values.hasOwnProperty('yourArrayProperty')) {
+        values = values.yourArrayProperty; // Replace 'yourArrayProperty' with the actual property name
+      } else {
+        throw new Error('Invalid s_memory data structure');
+      }
+    }
+
     const labels = Array.from({ length: values.length }, (_, index) => index + 1);
 
     // Create chart data
@@ -483,6 +492,7 @@ function createPerformanceChart(data) {
 
 // Call the function to fetch data and create the chart
 fetchPerformanceData();
+
 
 
 // Dashboard Total Log
