@@ -242,8 +242,7 @@
                     <pre id="warnlog"></pre>
                     <button onclick="log()">Log</button>
                     <pre id="log"></pre>
-                    <button onclick="fetchPerformanceData()">Fetch Performance Data</button>
-                    <pre id="performanceData"></pre>
+                    
                 <!-- Reminders -->
                 </div>
                 <!-- End of Reminders-->
@@ -321,11 +320,8 @@
             </select>
         </div>
     </div>
-    
-
-<div><h3>NF Performace</h3>
-    <canvas id="performanceChart" width="800" height="400"></canvas>
-</div>
+    <button onclick="fetchPerformanceData()">Fetch Performance Data</button>
+  <canvas id="performanceChart" width="400" height="200"></canvas>
    </div> 
 </div>
 </div>   
@@ -380,23 +376,64 @@
     }
     
 //Chart nfs Perform
-async function fetchPerformanceData() {
-  try {
-    const response = await fetch('http://192.168.1.213:5001/nfs/performance?s_nf=free5gc', {
-      method: 'GET',
-    });
+ async function fetchPerformanceData() {
+      try {
+        const response = await fetch('http://192.168.1.213:5001/nfs/performance?s_nf=free5gc', {
+          method: 'GET',
+        });
 
-    if (!response.ok) {
-      throw new Error('API request failed with status: ' + response.status);
+        if (!response.ok) {
+          throw new Error('API request failed with status: ' + response.status);
+        }
+
+        const data = await response.json();
+        createPerformanceChart(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Display an error message to the user if desired
+      }
     }
 
-    const data = await response.json();
-    document.getElementById('performanceData').textContent = JSON.stringify(data, null, 2);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    // Display an error message to the user if desired
-  }
-}
+    function createPerformanceChart(data) {
+      try {
+        // Extract specific data for the chart
+        const timestamps = data.map(entry => new Date(entry[0]));
+        const values = data.map(entry => parseFloat(entry[1]));
+
+        // Get the canvas element
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+
+        // Create a line chart
+        const myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: timestamps,
+            datasets: [{
+              label: 'Performance Data',
+              data: values,
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              x: {
+                type: 'time',
+                time: {
+                  unit: 'minute' // Adjust unit as needed
+                }
+              },
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      } catch (error) {
+        console.error('Error creating chart:', error);
+      }
+    }
 </script>
 
 </body>
