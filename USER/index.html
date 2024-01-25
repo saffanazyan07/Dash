@@ -320,8 +320,10 @@
             </select>
         </div>
     </div>
-    <button onclick="fetchPerformanceData()">Fetch Performance Data</button>
+    <button onclick="fetchPerformanceData()">NF Performance</button>
   <canvas id="performanceChart" width="400" height="200"></canvas>
+    <button onclick="fetchPerformanceDataperday()">NF Performance per day</button>
+  <canvas id="performanceChartperday" width="400" height="200"></canvas>
    </div> 
 </div>
 </div>   
@@ -375,11 +377,11 @@
       }
     }
     
-//Chart nfs Perform
 
-    async function fetchPerformanceData() {
+//NF performanceperday
+    async function fetchPerformanceDataperday() {
       try {
-        const response = await fetch('http://192.168.1.213:5001/nfs/performance?s_nf=free5gc', {
+        const response = await fetch('http://192.168.1.213:5001/nfs/performance/day', {
           method: 'GET',
         });
 
@@ -388,20 +390,22 @@
         }
 
         const data = await response.json();
-        createPerformanceChart(data);
+        createPerformanceChartperday(data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     }
 
-    function createPerformanceChart(data) {
+    function createPerformanceChartperday(data) {
       try {
         // Extract specific data for the chart
         const timestamps = data.map(entry => new Date(entry[0]));
         const values = data.map(entry => parseFloat(entry[1]));
+        const values2 = data.map(entry => parseFloat(entry[2]));
+        const values3 = data.map(entry => parseFloat(entry[8]));
 
         // Get the canvas element
-        const ctx = document.getElementById('performanceChart').getContext('2d');
+        const ctx = document.getElementById('performanceChartperday').getContext('2d');
 
         // Create a line chart
         const myChart = new Chart(ctx, {
@@ -413,6 +417,20 @@
               data: values,
               backgroundColor: 'rgba(75, 192, 192, 0.2)',
               borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Memory',
+              data: values2,
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'CPU',
+              data: values3,
+              backgroundColor: 'rgba(155, 99, 132, 0.2)',
+              borderColor: 'rgba(155, 99, 132, 1)',
               borderWidth: 1
             }]
           },
@@ -434,6 +452,82 @@
         console.error('Error creating chart:', error);
       }
     }
+   //Chart nfs Perform 
+    async function fetchPerformanceData() {
+      try {
+        const response = await fetch('', {
+          method: 'GET',
+        });
+
+        if (!response.ok) {
+          throw new Error('API request failed with status: ' + response.status);
+        }
+
+        const data = await response.json();
+        createPerformanceChart(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    function createPerformanceChart(data) {
+      try {
+        // Extract specific data for the chart
+        const timestamps = data.map(entry => new Date(entry[0]));
+        const values = data.map(entry => parseFloat(entry[1]));
+        const values2 = data.map(entry => parseFloat(entry[2]));
+        const values3 = data.map(entry => parseFloat(entry[8]));
+          
+
+        // Get the canvas element
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+
+        // Create a line chart
+        const myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: timestamps,
+            datasets: [{
+              label: 'Disk',
+              data: values,
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Memory',
+              data: values2,
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'CPU',
+              data: values3,
+              backgroundColor: 'rgba(155, 99, 132, 0.2)',
+              borderColor: 'rgba(155, 99, 132, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              x: {
+                type: 'time',
+                time: {
+                  unit: 'minute' // Adjust unit as needed
+                }
+              },
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      } catch (error) {
+        console.error('Error creating chart:', error);
+      }
+    }
+    
 </script>
 
 </body>
