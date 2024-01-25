@@ -223,69 +223,72 @@
                             <i class='bx bx-filter'></i>
                             <i class='bx bx-plus'></i>
                         </div>
-                      <!-- Update the first form with a unique id -->
-                        <!-- Update the second form with a unique id -->  
-                    <button onclick="fetchData()">Fetch Reminders</button>    
-                    <pre>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td><p>Bandwidth In</p></td>
-                                        <td id="bandwidthin">25374894</td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>Bandwidth Out</p></td>
-                                        <td id="bandwidthout">478402</td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>Time</p></td>
-                                        <td id="time"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>CPU</p></td>
-                                        <td id="cpu"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>Loss In</p></td>
-                                        <td id="lossin"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>Loss Out</p></td>
-                                        <td id="lossout"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>NF</p></td>
-                                        <td id="nf"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>Read</p></td>
-                                        <td id="read"></td>
-                                    </tr>
-                                     <tr>
-                                        <td><p>Write</p></td>
-                                        <td id="write"></td>
-                                    </tr>
-                                     <tr>
-                                        <td><p>Source IP</p></td>
-                                        <td id="source"></td>
-                                    </tr>
-                                     <tr>
-                                        <td><p>Rate In</p></td>
-                                        <td id="ratein"></td>
-                                    </tr>
-                                     <tr>
-                                        <td><p>Rate Out</p></td>
-                                        <td id="rateout"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </pre>
-                   <!-- Table Perform -->
+                    <!-- Update the first form with a unique id -->
+                    <!-- Update the second form with a unique id -->  
+                    <!-- Table Perform -->
                      <button onclick="warnlog()">Warning Log</button>
                     <pre id="warnlog"></pre>
                     <button onclick="log()">Log</button>
                     <pre id="log"></pre>
                     </div>
+                <table border="1">
+                        <thead>
+                          <tr>
+                            <th>Data Point</th>
+                            <th>Value</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Bandwidth In</td>
+                            <td id="bandwidthin">Loading...</td>
+                          </tr>
+                          <tr>
+                            <td>Bandwidth Out</td>
+                            <td id="bandwidthout">Loading...</td>
+                          </tr>
+                          <tr>
+                            <td>Time</td>
+                            <td id="time">Loading...</td>
+                          </tr>
+                          <tr>
+                            <td>CPU</td>
+                            <td id="cpu">Loading...</td>
+                          </tr>
+                          <tr>
+                            <td>Loss In</td>
+                            <td id="lossin">Loading...</td>
+                          </tr>
+                          <tr>
+                            <td>Loss Out</td>
+                            <td id="lossout">Loading...</td>
+                          </tr>
+                          <tr>
+                            <td>NF</td>
+                            <td id="nf">Loading...</td>
+                          </tr>
+                          <tr>
+                            <td>Read</td>
+                            <td id="read">Loading...</td>
+                          </tr>
+                          <tr>
+                            <td>Write</td>
+                            <td id="write">Loading...</td>
+                          </tr>
+                          <tr>
+                            <td>Source</td>
+                            <td id="source">Loading...</td>
+                          </tr>
+                          <tr>
+                            <td>Rate In</td>
+                            <td id="ratein">Loading...</td>
+                          </tr>
+                          <tr>
+                            <td>Rate Out</td>
+                            <td id="rateout">Loading...</td>
+                          </tr>
+                        </tbody>
+                      </table>
                 <!-- Reminders -->
                 </div>
                 <!-- End of Reminders-->
@@ -380,33 +383,48 @@
 async function fetchData() {
   try {
     const response = await fetch('http://192.168.1.213:5001/user/reminders', {
-      method: 'POST', // Replace with the correct method
+      method: 'POST',
       headers: {
         // Add any necessary headers
+        'Content-Type': 'application/json', // Example: setting the content type to JSON
+        // Add other headers as needed
       },
       body: JSON.stringify({
         // Add any necessary request body data
       }),
     });
 
-    const data = await response.json(); // Assuming JSON response
-    document.getElementById('bandwidthin').textContent = JSON.stringify(data.bandwidth_in, null, 2);
-    document.getElementById('bandwidthout').textContent = JSON.stringify(data.bandwidth_out, null, 2);
-    document.getElementById('time').textContent = JSON.stringify(data.dt_infotime, null, 2);
-    document.getElementById('cpu').textContent = JSON.stringify(data.s_cpu, null, 2);
-    document.getElementById('lossin').textContent = JSON.stringify(data.s_loss_in, null, 2);
-    document.getElementById('lossout').textContent = JSON.stringify(data.s_loss_out, null, 2);
-    document.getElementById('nf').textContent = JSON.stringify(data.s_nf, null, 2);
-    document.getElementById('read').textContent = JSON.stringify(data.s_read, null, 2);
-    document.getElementById('write').textContent = JSON.stringify(data.s_write, null, 2);
-    document.getElementById('source').textContent = JSON.stringify(data.source_ip, null, 2);
-    document.getElementById('ratein').textContent = JSON.stringify(data.transmission_rate_in, null, 2);
-    document.getElementById('rateout').textContent = JSON.stringify(data.transmission_rate_out, null, 2);
+    if (!response.ok) {
+      throw new Error('API request failed with status: ' + response.status);
+    }
+
+    const data = await response.json();
+
+    updateElementTextContent('bandwidthin', data.bandwidth_in);
+    updateElementTextContent('bandwidthout', data.bandwidth_out);
+    updateElementTextContent('time', data.dt_infotime);
+    updateElementTextContent('cpu', data.s_cpu);
+    updateElementTextContent('lossin', data.s_loss_in);
+    updateElementTextContent('lossout', data.s_loss_out);
+    updateElementTextContent('nf', data.s_nf);
+    updateElementTextContent('read', data.s_read);
+    updateElementTextContent('write', data.s_write);
+    updateElementTextContent('source', data.source_ip);
+    updateElementTextContent('ratein', data.transmission_rate_in);
+    updateElementTextContent('rateout', data.transmission_rate_out);
+
   } catch (error) {
     console.error('Error fetching data:', error);
   }
 }
-    
+
+function updateElementTextContent(elementId, value) {
+  document.getElementById(elementId).textContent = JSON.stringify(value, null, 2);
+}
+
+// Call the function to fetch data and update the elements
+fetchData();
+
    
 //Free 5G Core perform
     
@@ -495,116 +513,7 @@ fetchPerformanceData();
 
 
 
-// Dashboard Total Log
-    async function Totallog() {
-  try {
-    const response = await fetch('http://192.168.1.213:5001/nfs/totallogs', {
-      method: 'POST',
-    });
 
-    if (!response.ok) {
-      throw new Error('API request failed with status: ' + response.status);
-    }
-
-    const data = await response.json();
-    document.getElementById('info').textContent = JSON.stringify(data.info, null, 2);
-    document.getElementById('warning').textContent = JSON.stringify(data.warning, null, 2);
-    document.getElementById('error').textContent = JSON.stringify(data.error, null, 2);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    // Display an error message to the user if desired
-  }
-}
-//warnlog    
-    async function warnlog() {
-  try {
-    const response = await fetch('http://192.168.1.213:5001/nfs/warnlogs', {
-      method: 'GET',
-    });
-
-    if (!response.ok) {
-      throw new Error('API request failed with status: ' + response.status);
-    }
-
-    const data = await response.json();
-
-    // Create a table element
-    const table = document.createElement("table");
-
-    // Create a header row
-    const headerRow = table.createTHead().insertRow(0);
-    for (const key of Object.keys(data[0])) {
-      const th = document.createElement("th");
-      th.textContent = key;
-      headerRow.appendChild(th);
-    }
-
-    // Create a table body
-    const body = table.createTBody();
-    for (const item of data) {
-      const row = body.insertRow();
-      for (const key of Object.keys(item)) {
-        const cell = row.insertCell();
-        cell.textContent = item[key];
-      }
-    }
-
-    // Append the table to the element with the ID 'warnlog'
-    const warnlogElement = document.getElementById('warnlog');
-    warnlogElement.innerHTML = ''; // Clear existing content
-    warnlogElement.appendChild(table);
-
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    // Display an error message to the user if desired
-  }
-}
-//  log  
-   async function log() {
-  try {
-    const response = await fetch('http://192.168.1.213:5001/nfs/log', {
-      method: 'GET',
-    });
-
-    if (!response.ok) {
-      throw new Error('API request failed with status: ' + response.status);
-    }
-
-    const data = await response.json();
-
-    // Create a table element
-    const table = document.createElement("table");
-
-    // Create a header row
-    const headerRow = table.createTHead().insertRow(0);
-    for (const key of Object.keys(data[0])) {
-      const th = document.createElement("th");
-      th.textContent = key;
-      headerRow.appendChild(th);
-    }
-
-    // Create a table body
-    const body = table.createTBody();
-    for (const item of data) {
-      const row = body.insertRow();
-      for (const key of Object.keys(item)) {
-        const cell = row.insertCell();
-        cell.textContent = item[key];
-      }
-    }
-
-    // Append the table to the element with the ID 'log'
-    const logElement = document.getElementById('log');
-    logElement.innerHTML = ''; // Clear existing content
-    logElement.appendChild(table);
-
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    // Display an error message to the user if desired
-  }
-}
-    
- 
 </script>
 
 </body>
