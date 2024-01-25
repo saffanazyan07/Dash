@@ -224,14 +224,24 @@
                             <i class='bx bx-plus'></i>
                         </div>
                     <!-- Update the first form with a unique id -->
+                     <button onclick="fetchData()">Fetch Reminders</button>
+                          <table border="1">
+                            <thead>
+                              <tr>
+                                <th>Attribute</th>
+                                <th>Value</th>
+                              </tr>
+                            </thead>
+                            <tbody id="dataTableBody">
+                              <!-- Table body will be populated dynamically -->
+                            </tbody>
+                          </table>
                     <!-- Update the second form with a unique id -->  
                     <!-- Table Perform -->
                      <button onclick="warnlog()">Warning Log</button>
                     <pre id="warnlog"></pre>
                     <button onclick="log()">Log</button>
                     <pre id="log"></pre>
-                    <button onclick="fetchData()">Fetch Reminders</button>
-                        <pre id="response"></pre>
                 <!-- Reminders -->
                 </div>
                 <!-- End of Reminders-->
@@ -323,27 +333,49 @@
 </div>
     <script src="index.js"></script>
 <script>
-
-async function fetchData() {
-  try {
-    const response = await fetch('http://192.168.1.213:5001/user/reminders', {
-      method: 'POST', // Replace with the correct method
-      headers: {
-        // Add any necessary headers
-      },
-      body: JSON.stringify({
-        // Add any necessary request body data
-      }),
-    });
-
-    const data = await response.json(); // Assuming JSON response
-    document.getElementById('response').textContent = JSON.stringify(data, null, 2);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-}
    
-//Free 5G Core perform
+//Reminder
+     async function fetchData() {
+      try {
+        const response = await fetch('http://192.168.1.213:5001/user/reminders', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            // Add any other necessary headers
+          },
+          body: JSON.stringify({
+            // Add any necessary request body data
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('API request failed with status: ' + response.status);
+        }
+
+        const data = await response.json();
+        updateTable(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    function updateTable(data) {
+      const dataTableBody = document.getElementById('dataTableBody');
+      dataTableBody.innerHTML = ''; // Clear existing content
+
+      for (const key in data[0]) {
+        const row = document.createElement('tr');
+        const cellKey = document.createElement('td');
+        const cellValue = document.createElement('td');
+
+        cellKey.textContent = key;
+        cellValue.textContent = data[0][key];
+
+        row.appendChild(cellKey);
+        row.appendChild(cellValue);
+        dataTableBody.appendChild(row);
+      }
+    }
     
 //Chart nfs Perform
 async function fetchPerformanceData() {
