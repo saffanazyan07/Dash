@@ -242,6 +242,8 @@
                     <pre id="warnlog"></pre>
                     <button onclick="log()">Log</button>
                     <pre id="log"></pre>
+                    <button onclick="fetchPerformanceData()">Fetch Performance Data</button>
+                    <pre id="performanceData"></pre>
                 <!-- Reminders -->
                 </div>
                 <!-- End of Reminders-->
@@ -389,80 +391,12 @@ async function fetchPerformanceData() {
     }
 
     const data = await response.json();
-
-    // Log the fetched data to the console
-    console.log('Fetched Data:', data);
-
-    // Call the function to create the chart based on the fetched data
-    createPerformanceChart(data);
-
+    document.getElementById('performanceData').textContent = JSON.stringify(data, null, 2);
   } catch (error) {
     console.error('Error fetching data:', error);
     // Display an error message to the user if desired
   }
 }
-
-function createPerformanceChart(data) {
-  try {
-    // Filter for necessary properties
-    const requiredProperties = ['s_memory'];
-    const filteredData = Object.fromEntries(Object.entries(data).filter(([key]) => requiredProperties.includes(key)));
-
-    // Extract specific data
-    let values = filteredData.s_memory; // Assuming s_memory is an array or an object with an array property
-
-    // Ensure values is an array
-    if (!Array.isArray(values)) {
-      // If s_memory is an object, try to extract the array property
-      if (typeof values === 'object' && values.hasOwnProperty('yourArrayProperty')) {
-        values = values.yourArrayProperty; // Replace 'yourArrayProperty' with the actual property name
-      } else {
-        throw new Error('Invalid s_memory data structure');
-      }
-    }
-
-    const labels = Array.from({ length: values.length }, (_, index) => index + 1);
-
-    // Create chart data
-    const chartData = {
-      labels: labels,
-      datasets: [{
-        label: 'Performance Data',
-        data: values,
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1
-      }]
-    };
-
-    // Get the canvas element
-    const ctx = document.getElementById('performanceChart').getContext('2d');
-
-    // Create a line chart
-    const myChart = new Chart(ctx, {
-      type: 'line',
-      data: chartData,
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-
-  } catch (error) {
-    console.error('Error creating chart:', error);
-    // Display an error message to the user if desired
-  }
-}
-
-// Call the function to fetch data and create the chart
-fetchPerformanceData();
-
-
-
-
 </script>
 
 </body>
