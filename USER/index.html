@@ -9,7 +9,7 @@
     <!-- Add this to the head of your HTML file -->
     <script src="https://cdn.jsdelivr.net/npm/moment"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <title>Dashboard User Console | RTDash</title>
 
 <!-- Icon Page bar -->
@@ -376,7 +376,8 @@
     }
     
 //Chart nfs Perform
- async function fetchPerformanceData() {
+
+    async function fetchPerformanceData() {
       try {
         const response = await fetch('http://192.168.1.213:5001/nfs/performance?s_nf=free5gc', {
           method: 'GET',
@@ -390,7 +391,6 @@
         createPerformanceChart(data);
       } catch (error) {
         console.error('Error fetching data:', error);
-        // Display an error message to the user if desired
       }
     }
 
