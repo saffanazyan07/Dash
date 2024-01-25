@@ -55,58 +55,119 @@ toggler.addEventListener('change', function () {
         document.body.classList.remove('dark');
     }
 });
-document.getElementById('logoutButton').addEventListener('click', function() {
-    logout();
-});
-/*logout function*/
- const apiUrl = 'http://192.168.1.213:5001/user/editing';
 
-        function getUserData() {
-            const email = document.getElementById('email').value;
+//  log  
+   async function log() {
+  try {
+    const response = await fetch('http://192.168.1.213:5001/nfs/log', {
+      method: 'GET',
+    });
 
-            fetch(`${apiUrl}?s_email=${email}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the response data
-                console.log('GET Response:', data);
-            })
-            .catch(error => console.error('Error:', error));
-        }
+    if (!response.ok) {
+      throw new Error('API request failed with status: ' + response.status);
+    }
 
-        function editUserData() {
-            const email = document.getElementById('email').value;
-            const name = document.getElementById('name').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const phone = document.getElementById('phone').value;
+    const data = await response.json();
 
-            fetch(apiUrl, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    s_email: email,
-                    s_name: name,
-                    s_password: password,
-                    s_password_confirm: confirmPassword,
-                    s_phone: phone
-                })
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('PUT Success');
-                } else {
-                    throw new Error(`PUT Request Failed with status: ${response.status}`);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        }
+    // Create a table element
+    const table = document.createElement("table");
+
+    // Create a header row
+    const headerRow = table.createTHead().insertRow(0);
+    for (const key of Object.keys(data[0])) {
+      const th = document.createElement("th");
+      th.textContent = key;
+      headerRow.appendChild(th);
+    }
+
+    // Create a table body
+    const body = table.createTBody();
+    for (const item of data) {
+      const row = body.insertRow();
+      for (const key of Object.keys(item)) {
+        const cell = row.insertCell();
+        cell.textContent = item[key];
+      }
+    }
+
+    // Append the table to the element with the ID 'log'
+    const logElement = document.getElementById('log');
+    logElement.innerHTML = ''; // Clear existing content
+    logElement.appendChild(table);
+
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    // Display an error message to the user if desired
+  }
+}
+    
+ // Dashboard Total Log
+    async function Totallog() {
+  try {
+    const response = await fetch('http://192.168.1.213:5001/nfs/totallogs', {
+      method: 'POST',
+    });
+
+    if (!response.ok) {
+      throw new Error('API request failed with status: ' + response.status);
+    }
+
+    const data = await response.json();
+    document.getElementById('info').textContent = JSON.stringify(data.info, null, 2);
+    document.getElementById('warning').textContent = JSON.stringify(data.warning, null, 2);
+    document.getElementById('error').textContent = JSON.stringify(data.error, null, 2);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    // Display an error message to the user if desired
+  }
+}
+
+//warnlog    
+    async function warnlog() {
+  try {
+    const response = await fetch('http://192.168.1.213:5001/nfs/warnlogs', {
+      method: 'GET',
+    });
+
+    if (!response.ok) {
+      throw new Error('API request failed with status: ' + response.status);
+    }
+
+    const data = await response.json();
+
+    // Create a table element
+    const table = document.createElement("table");
+
+    // Create a header row
+    const headerRow = table.createTHead().insertRow(0);
+    for (const key of Object.keys(data[0])) {
+      const th = document.createElement("th");
+      th.textContent = key;
+      headerRow.appendChild(th);
+    }
+
+    // Create a table body
+    const body = table.createTBody();
+    for (const item of data) {
+      const row = body.insertRow();
+      for (const key of Object.keys(item)) {
+        const cell = row.insertCell();
+        cell.textContent = item[key];
+      }
+    }
+
+    // Append the table to the element with the ID 'warnlog'
+    const warnlogElement = document.getElementById('warnlog');
+    warnlogElement.innerHTML = ''; // Clear existing content
+    warnlogElement.appendChild(table);
+
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    // Display an error message to the user if desired
+  }
+}
+
+
 /*logout function*/
 function logout() {
     fetch('http://140.118.121.85:5001/logout', {
@@ -134,4 +195,7 @@ function logout() {
         alert('An error occurred. Please try again later.');
     });
 }
+document.getElementById('logoutButton').addEventListener('click', function() {
+    logout();
+});
 
