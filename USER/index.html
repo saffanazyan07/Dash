@@ -313,17 +313,16 @@
 <div class="orders">
     <div class="header">
         <div class="sidemenulinks"><a href="#"><i class='bx bx-message-square-dots'></i>NF</a>
-            <select id="NF" class="select">
-                <option class="sidemenulinks" onclick="hoverTabs(event, 'AMF')"><a href="#AMF"><i class='bx bx-message-dots'></i>AMF</a></option>
-                <option class="sidemenulinks" onclick="hoverTabs(event, 'SMF')"><a href="#SMF"><i class='bx bx-message-dots'></i>SMF</a></option>
-                <option class="sidemenulinks" onclick="hoverTabs(event, 'UPF')"><a href="#UPF"><i class='bx bx-message-dots'></i>UPF</a></option>
-            </select>
+            <label for="apiSelector">Select API:</label>
+              <select id="apiSelector" onchange="fetchDataPerform()">
+                <option value="api1">NF Performance</option>  
+                <option value="api2">NF Performance Per Day</option>
+                <option value="api3">NF Performance Per Week</option>
+                <option value="api4">NF Performance Per Month</option>  
+              </select>
+              <canvas id="performanceChart" width="400" height="200"></canvas>
+            </div>
         </div>
-    </div>
-    <button onclick="fetchPerformanceData()">NF Performance</button>
-  <canvas id="performanceChart" width="400" height="200"></canvas>
-    <button onclick="fetchPerformanceDataperday()">NF Performance per day</button>
-  <canvas id="performanceChartperday" width="400" height="200"></canvas>
    </div> 
 </div>
 </div>   
@@ -376,136 +375,71 @@
         dataTableBody.appendChild(row);
       }
     }
-    
+   //Chart nfs Perform  
+let myChart;
 
-//NF performanceperday
-    async function fetchPerformanceDataperday() {
+    async function fetchDataPerform() {
+      const selectedApi = document.getElementById('apiSelector').value;
+      let apiUrl;
+
+      switch (selectedApi) {
+  case 'api1':
+    apiUrl = 'http://192.168.1.213:5001/nfs/performance?s_nf=free5gc';
+    break;
+  case 'api2':
+    apiUrl = 'http://192.168.1.213:5001/nfs/performance/day?s_nf=free5gc';
+    break;
+  case 'api3':
+    apiUrl = 'http://192.168.1.213:5001/nfs/performance/week?s_nf=free5gc';
+    break;
+  case 'api4':
+    apiUrl = 'http://192.168.1.213:5001/nfs/performance/month?s_nf=free5gc';
+    break;
+  default:
+    // Handle the case where selectedApi doesn't match any of the above
+    break;
+}
+        
       try {
-        const response = await fetch('http://192.168.1.213:5001/nfs/performance/day?s_nf=free5gc', {
-          method: 'GET',
-        });
+        const response = await fetch(apiUrl);
 
         if (!response.ok) {
-          throw new Error('API request failed with status: ' + response.status);
+          throw new Error('API request failed');
         }
 
         const data = await response.json();
-        createPerformanceChartperday(data);
+
+        // Destroy the existing chart if it exists
+        if (myChart) {
+          myChart.destroy();
+        }
+
+        createChart(data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     }
 
-    function createPerformanceChartperday(data) {
+    function createChart(data) {
       try {
         // Extract specific data for the chart
         const timestamps = data.map(entry => new Date(entry[0]));
         const values = data.map(entry => parseFloat(entry[1]));
         const values2 = data.map(entry => parseFloat(entry[2]));
         const values3 = data.map(entry => parseFloat(entry[8]));
-
-        // Get the canvas element
-        const ctx = document.getElementById('performanceChartperday').getContext('2d');
-
-        // Create a line chart
-        const myChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: timestamps,
-            datasets: [{
-              label: 'Performance Data',
-              data: values,
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1
-            },
-            {
-              label: 'Memory',
-              data: values2,
-              backgroundColor: 'rgba(255, 99, 132, 0.2)',
-              borderColor: 'rgba(255, 99, 132, 1)',
-              borderWidth: 1
-            },
-            {
-              label: 'CPU',
-              data: values3,
-              backgroundColor: 'rgba(155, 99, 132, 0.2)',
-              borderColor: 'rgba(155, 99, 132, 1)',
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              x: {
-                type: 'time',
-                time: {
-                  unit: 'minute' // Adjust unit as needed
-                }
-              },
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-        });
-      } catch (error) {
-        console.error('Error creating chart:', error);
-      }
-    }
-   //Chart nfs Perform 
-    async function fetchPerformanceData() {
-      try {
-        const response = await fetch('http://192.168.1.213:5001/nfs/performance?s_nf=free5gc', {
-          method: 'GET',
-        });
-
-        if (!response.ok) {
-          throw new Error('API request failed with status: ' + response.status);
-        }
-
-        const data = await response.json();
-        createPerformanceChart(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
-
-    function createPerformanceChart(data) {
-      try {
-        // Extract specific data for the chart
-        const timestamps = data.map(entry => new Date(entry[0]));
-        const values = data.map(entry => parseFloat(entry[1]));
-        const values2 = data.map(entry => parseFloat(entry[2]));
-        const values3 = data.map(entry => parseFloat(entry[8]));
-          
-
         // Get the canvas element
         const ctx = document.getElementById('performanceChart').getContext('2d');
 
-        // Create a line chart
-        const myChart = new Chart(ctx, {
+        // Create Line Chart
+        myChart = new Chart(ctx, {
           type: 'line',
           data: {
             labels: timestamps,
             datasets: [{
-              label: 'Disk',
+              label: 'Chart',
               data: values,
               backgroundColor: 'rgba(75, 192, 192, 0.2)',
               borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1
-            },
-            {
-              label: 'Memory',
-              data: values2,
-              backgroundColor: 'rgba(255, 99, 132, 0.2)',
-              borderColor: 'rgba(255, 99, 132, 1)',
-              borderWidth: 1
-            },
-            {
-              label: 'CPU',
-              data: values3,
-              backgroundColor: 'rgba(155, 99, 132, 0.2)',
-              borderColor: 'rgba(155, 99, 132, 1)',
               borderWidth: 1
             }]
           },
@@ -514,7 +448,7 @@
               x: {
                 type: 'time',
                 time: {
-                  unit: 'minute' // Adjust unit as needed
+                  unit: 'day'
                 }
               },
               y: {
@@ -527,6 +461,9 @@
         console.error('Error creating chart:', error);
       }
     }
+
+    // Initial fetch when the page loads
+    fetchDataPerform();
     
 </script>
 
