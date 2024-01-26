@@ -441,7 +441,22 @@ let myChart;
               backgroundColor: 'rgba(75, 192, 192, 0.2)',
               borderColor: 'rgba(75, 192, 192, 1)',
               borderWidth: 1
-            }]
+            },
+            {
+            label: 'Memory',
+            data: values2,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+          },
+          {
+            label: 'CPU',
+            data: values3,
+            backgroundColor: 'rgba(155, 99, 132, 0.2)',
+            borderColor: 'rgba(155, 99, 132, 1)',
+            borderWidth: 1,
+          },
+        ],
           },
           options: {
             scales: {
@@ -457,58 +472,7 @@ let myChart;
             }
           }
         });
-          myChart2 = new Chart(ctx2, {
-          type: 'line',
-          data: {
-            labels: timestamps,
-            datasets: [{
-              label: 'Memory',
-              data: values2,
-              backgroundColor: 'rgba(255, 99, 132, 0.2)',
-              borderColor: 'rgba(255, 99, 132, 1)',
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              x: {
-                type: 'time',
-                time: {
-                  unit: 'day'
-                }
-              },
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-        });
-          myChart3 = new Chart(ctx3, {
-          type: 'line',
-          data: {
-            labels: timestamps,
-            datasets: [{
-              label: 'CPU',
-              data: values3,
-              backgroundColor: 'rgba(155, 99, 132, 0.2)',
-              borderColor: 'rgba(155, 99, 132, 1)',
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              x: {
-                type: 'time',
-                time: {
-                  unit: 'day'
-                }
-              },
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-        });
+          
       } catch (error) {
         console.error('Error creating chart:', error);
       }
