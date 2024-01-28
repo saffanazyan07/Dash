@@ -224,24 +224,25 @@
                             <i class='bx bx-plus'></i>
                         </div>
                     <!-- Update the first form with a unique id -->
-                     <button onclick="fetchData()">Fetch Data</button>
-                      <table id="myTable" style="display: none;">
-                        <thead>
-                          <tr>
-                            <th>Key</th>
-                            <th>Value</th>
-                          </tr>
-                        </thead>
-                        <tbody id="dataTableBody"></tbody>
-                      </table>
-                    <!-- Update the second form with a unique id -->  
-                    <!-- Table Perform -->
-                     <button onclick="warnlog()">Warning Log</button>
-                    <pre id="warnlog"></pre>
-                    <button onclick="log()">Log</button>
-                    <pre id="log"></pre>
-                    
-                <!-- Reminders -->
+                      <!-- Log Table -->
+                          <button id="logButton">Toggle Log Table</button>
+                          <div id="log"></div>
+                        
+                          <!-- Warnlog Table -->
+                          <button id="warnlogButton">Toggle Warnlog Table</button>
+                          <div id="warnlog"></div>
+                        <!-- Reminders -->
+                          <!-- MyTable -->
+                          <button id="myTableButton">Toggle MyTable</button>
+                          <table id="myTable">
+                            <thead>
+                              <tr>
+                                <th>Key</th>
+                                <th>Value</th>
+                              </tr>
+                            </thead>
+                            <tbody id="dataTableBody"></tbody>
+                          </table>
                 </div>
                 <!-- End of Reminders-->
             </div>
