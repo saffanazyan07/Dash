@@ -100,14 +100,6 @@
                         <p>Warning Status</p>
                     </span>
                 </li>
-                <li><i class='bx bx-line-chart'></i>
-                    <span class="info">
-                        <h3>
-                            14,721
-                        </h3>
-                        <p>Success Status</p>
-                    </span>
-                </li>
                 <li><i class='bx bx-dollar-circle'></i>
                     <span class="info">
                         <h3 id="error">
@@ -225,20 +217,23 @@
                         </div>
                     <!-- Update the first form with a unique id -->
                       <!-- Log Table -->
-                          <button id="logButton">Show/Hide Log Table</button>
-                            <div id="log"></div>
-                            <button id="warnlogButton">Show/Hide Warnlog Table</button>
-                            <div id="warnlog"></div>
-                            <button id="myTableButton">Show/Hide Reminder</button>
-                            <table id="myTable">
-                              <thead>
-                                <tr>
-                                  <th>Parameter</th>
-                                  <th>Value</th>
-                                </tr>
-                              </thead>
-                              <tbody id="dataTableBody"></tbody>
-                            </table>
+                          <!-- Update the first form with a unique id -->
+                     <button onclick="fetchData()">Fetch Data</button>
+                      <table id="myTable" style="display: none;">
+                        <thead>
+                          <tr>
+                            <th>Key</th>
+                            <th>Value</th>
+                          </tr>
+                        </thead>
+                        <tbody id="dataTableBody"></tbody>
+                      </table>
+                    <!-- Update the second form with a unique id -->  
+                    <!-- Table Perform -->
+                     <button onclick="warnlog()">Warning Log</button>
+                    <pre id="warnlog"></pre>
+                    <button onclick="log()">Log</button>
+                    <pre id="log"></pre>
                 </div>
                 <!-- End of Reminders-->
             </div>
@@ -327,22 +322,24 @@
 </div>
     <script src="index.js"></script>
 <script>
-let logTableVisible = false;
-let warnlogTableVisible = false;
-let tableVisible = true;
-
-async function fetchDataAndDisplayTable(url, elementId, visibilityVariable, method = 'GET') {
+async function fetchDataAndDisplayTable() {
   try {
-    const data = await fetchData(url, method);
-    createAndShowTable(elementId, data, visibilityVariable);
+    const data = await fetchData();
+    updateTable(data);
   } catch (error) {
-    handleFetchError(error);
+    console.error('Error fetching data:', error);
   }
 }
 
-function fetchData(url, method) {
-  return fetch(url, {
-    method: method,
+function fetchData() {
+  return fetch('http://192.168.1.213:5001/user/reminders', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      // Add any necessary request body data
+    }),
   })
     .then((response) => {
       if (!response.ok) {
@@ -355,45 +352,14 @@ function fetchData(url, method) {
       throw error;
     });
 }
+    function updateTable(data) {
+  const table = document.getElementById('myTable');
+  const dataTableBody = document.getElementById('dataTableBody');
 
-function createAndShowTable(elementId, data, visibilityVariable) {
-  const table = document.createElement('table');
-  const headerRow = table.createTHead().insertRow(0);
-
-  for (const key of Object.keys(data[0])) {
-    const th = document.createElement('th');
-    th.textContent = key;
-    headerRow.appendChild(th);
-  }
-
-  const body = table.createTBody();
-  for (const item of data) {
-    const row = body.insertRow();
-    for (const key of Object.keys(item)) {
-      const cell = row.insertCell();
-      cell.textContent = item[key];
-    }
-  }
-
-  const tableElement = document.getElementById(elementId);
-  tableElement.innerHTML = '';
-  tableElement.appendChild(table);
-
-  visibilityVariable = !visibilityVariable;
-  toggleTableVisibility(tableElement, visibilityVariable);
-}
-
-function toggleTableVisibility(element, visible) {
-  element.style.display = visible ? 'table' : 'none';
-}
-
-function updateTable(elementId, data) {
-  const table = document.getElementById(elementId);
+  dataTableBody.innerHTML = '';
 
   if (data.length > 0) {
-    toggleTableVisibility(table, tableVisible);
-    const dataTableBody = table.querySelector('tbody');
-    dataTableBody.innerHTML = '';
+    table.style.display = 'table';
 
     for (const key in data[0]) {
       const row = document.createElement('tr');
@@ -407,26 +373,20 @@ function updateTable(elementId, data) {
       row.appendChild(cellValue);
       dataTableBody.appendChild(row);
     }
+
+    // Hide the table immediately after displaying it
+    hideTable();
   } else {
-    toggleTableVisibility(table, false);
+    table.style.display = 'none';
   }
 }
 
-function handleFetchError(error) {
-  console.error('Error fetching data:', error);
-  // Display an error message to the user if desired
+function hideTable() {
+  const table = document.getElementById('myTable');
+  table.style.display = 'none';
 }
-
-const myTableButton = document.getElementById('myTableButton');
-myTableButton.addEventListener('click', () => toggleTableVisibility(document.getElementById('myTable'), tableVisible));
-fetchDataAndDisplayTable('http://192.168.1.213:5001/user/reminders', 'myTable', tableVisible, 'POST');
-
-// Add click event listeners to toggle table visibility
-const logButton = document.getElementById('logButton');
-logButton.addEventListener('click', () => fetchDataAndDisplayTable('http://192.168.1.213:5001/nfs/log', 'log', logTableVisible, 'GET'));
-
-const warnlogButton = document.getElementById('warnlogButton');
-warnlogButton.addEventListener('click', () => fetchDataAndDisplayTable('http://192.168.1.213:5001/nfs/warnlogs', 'warnlog', warnlogTableVisible, 'GET'));
+    // Initial fetch when the page loads
+fetchDataAndDisplayTable();
     </script>
 </body>
 
