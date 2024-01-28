@@ -56,114 +56,22 @@ toggler.addEventListener('change', function () {
     }
 });
 
-let logTableVisible = true;
-let warnlogTableVisible = true;
-let myTableVisible = true;
+let logTableVisible = false;
+let warnlogTableVisible = false;
+let tableVisible = true;
 
-async function log() {
+async function fetchDataAndDisplayTable(url, elementId, visibilityVariable) {
   try {
-    const response = await fetch('http://192.168.1.213:5001/nfs/log', {
-      method: 'GET',
-    });
-
-    if (!response.ok) {
-      throw new Error('API request failed with status: ' + response.status);
-    }
-
-    const data = await response.json();
-    updateTable('log', data, logTableVisible);
-        // Create a table element
-    const table = document.createElement("table");
-
-    // Create a header row
-    const headerRow = table.createTHead().insertRow(0);
-    for (const key of Object.keys(data[0])) {
-      const th = document.createElement("th");
-      th.textContent = key;
-      headerRow.appendChild(th);
-    }
-
-    // Create a table body
-    const body = table.createTBody();
-    for (const item of data) {
-      const row = body.insertRow();
-      for (const key of Object.keys(item)) {
-        const cell = row.insertCell();
-        cell.textContent = item[key];
-      }
-    }
-
-    // Append the table to the element with the ID 'log'
-    const logElement = document.getElementById('log');
-    logElement.innerHTML = ''; // Clear existing content
-    logElement.appendChild(table);
-
+    const data = await fetchData(url);
+    createAndShowTable(elementId, data, visibilityVariable);
   } catch (error) {
-    console.error('Error fetching data:', error);
+    handleFetchError(error);
   }
 }
 
-async function warnlog() {
-  try {
-    const response = await fetch('http://192.168.1.213:5001/nfs/warnlogs', {
-      method: 'GET',
-    });
-
-    if (!response.ok) {
-      throw new Error('API request failed with status: ' + response.status);
-    }
-
-    const data = await response.json();
-    updateTable('warnlog', data, warnlogTableVisible);
-    // Create a table element
-    const table = document.createElement("table");
-
-    // Create a header row
-    const headerRow = table.createTHead().insertRow(0);
-    for (const key of Object.keys(data[0])) {
-      const th = document.createElement("th");
-      th.textContent = key;
-      headerRow.appendChild(th);
-    }
-
-    // Create a table body
-    const body = table.createTBody();
-    for (const item of data) {
-      const row = body.insertRow();
-      for (const key of Object.keys(item)) {
-        const cell = row.insertCell();
-        cell.textContent = item[key];
-      }
-    }
-
-    // Append the table to the element with the ID 'warnlog'
-    const warnlogElement = document.getElementById('warnlog');
-    warnlogElement.innerHTML = ''; // Clear existing content
-    warnlogElement.appendChild(table);
-
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-}
-
-async function fetchDataAndDisplayTable() {
-  try {
-    const data = await fetchData();
-    updateTable('myTable', data, myTableVisible);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-}
-
-function fetchData() {
-  return fetch('http://192.168.1.213:5001/user/reminders', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      // Add any necessary request body data
-    }),
+function fetchData(url) {
+  return fetch(url, {
+    method: 'GET',
   })
     .then((response) => {
       if (!response.ok) {
@@ -177,14 +85,44 @@ function fetchData() {
     });
 }
 
-function updateTable(tableId, data, tableVisible) {
-  const table = document.getElementById(tableId);
-  const tableBody = table.querySelector('tbody');
+function createAndShowTable(elementId, data, visibilityVariable) {
+  const table = document.createElement('table');
+  const headerRow = table.createTHead().insertRow(0);
 
-  tableBody.innerHTML = '';
+  for (const key of Object.keys(data[0])) {
+    const th = document.createElement('th');
+    th.textContent = key;
+    headerRow.appendChild(th);
+  }
+
+  const body = table.createTBody();
+  for (const item of data) {
+    const row = body.insertRow();
+    for (const key of Object.keys(item)) {
+      const cell = row.insertCell();
+      cell.textContent = item[key];
+    }
+  }
+
+  const tableElement = document.getElementById(elementId);
+  tableElement.innerHTML = '';
+  tableElement.appendChild(table);
+
+  visibilityVariable = !visibilityVariable;
+  toggleTableVisibility(tableElement, visibilityVariable);
+}
+
+function toggleTableVisibility(element, visible) {
+  element.style.display = visible ? 'table' : 'none';
+}
+
+function updateTable(elementId, data) {
+  const table = document.getElementById(elementId);
 
   if (data.length > 0) {
-    table.style.display = tableVisible ? 'table' : 'none';
+    toggleTableVisibility(table, tableVisible);
+    const dataTableBody = table.querySelector('tbody');
+    dataTableBody.innerHTML = '';
 
     for (const key in data[0]) {
       const row = document.createElement('tr');
@@ -196,40 +134,30 @@ function updateTable(tableId, data, tableVisible) {
 
       row.appendChild(cellKey);
       row.appendChild(cellValue);
-      tableBody.appendChild(row);
+      dataTableBody.appendChild(row);
     }
   } else {
-    table.style.display = 'none';
+    toggleTableVisibility(table, false);
   }
 }
 
-function toggleTableVisibility(tableId, tableVisible) {
-  tableVisible = !tableVisible;
-  const table = document.getElementById(tableId);
-  table.style.display = tableVisible ? 'table' : 'none';
-
-  // Update the corresponding visibility status variable
-  if (tableId === 'log') {
-    logTableVisible = tableVisible;
-  } else if (tableId === 'warnlog') {
-    warnlogTableVisible = tableVisible;
-  } else if (tableId === 'myTable') {
-    myTableVisible = tableVisible;
-  }
+function handleFetchError(error) {
+  console.error('Error fetching data:', error);
+  // Display an error message to the user if desired
 }
 
 // Initial fetch when the page loads
-fetchDataAndDisplayTable();
+fetchDataAndDisplayTable('http://192.168.1.213:5001/user/reminders', 'myTable', tableVisible);
 
 // Add click event listeners to toggle table visibility
 const logButton = document.getElementById('logButton');
-logButton.addEventListener('click', () => toggleTableVisibility('log', logTableVisible));
+logButton.addEventListener('click', () => fetchDataAndDisplayTable('http://192.168.1.213:5001/nfs/log', 'log', logTableVisible));
 
 const warnlogButton = document.getElementById('warnlogButton');
-warnlogButton.addEventListener('click', () => toggleTableVisibility('warnlog', warnlogTableVisible));
+warnlogButton.addEventListener('click', () => fetchDataAndDisplayTable('http://192.168.1.213:5001/nfs/warnlogs', 'warnlog', warnlogTableVisible));
 
 const myTableButton = document.getElementById('myTableButton');
-myTableButton.addEventListener('click', () => toggleTableVisibility('myTable', myTableVisible));
+myTableButton.addEventListener('click', () => toggleTableVisibility(document.getElementById('myTable'), tableVisible));
 
 
 // Additional function Totallog
