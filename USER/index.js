@@ -251,6 +251,99 @@ async function Totallog() {
   }
 }
 
+//Chart nfs Perform  
+let myChart;
+
+async function fetchDataPerform() {
+  const selectedApi = document.getElementById('apiSelector').value;
+  let apiUrl;
+
+  switch (selectedApi) {
+    case 'api1':
+      apiUrl = 'http://192.168.1.213:5001/nfs/performance?s_nf=free5gc';
+      break;
+    case 'api2':
+      apiUrl = 'http://192.168.1.213:5001/nfs/performance/day?s_nf=free5gc';
+      break;
+    case 'api3':
+      apiUrl = 'http://192.168.1.213:5001/nfs/performance/week?s_nf=free5gc';
+      break;
+    case 'api4':
+      apiUrl = 'http://192.168.1.213:5001/nfs/performance/month?s_nf=free5gc';
+      break;
+    default:
+      // Handle the case where selectedApi doesn't match any of the above
+      break;
+  }
+
+  try {
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      throw new Error('API request failed');
+    }
+
+    const data = await response.json();
+
+    // Destroy the existing chart if it exists
+    if (myChart) {
+      myChart.destroy();
+    }
+
+    createChart(data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+function createChart(data) {
+  try {
+    const timestamps = data.map(entry => new Date(entry[0]));
+    const datasets = [];
+
+    // Define labels for each metric
+    const labels = ['Disk', 'Memory', 'Load 1', 'Load 5', 'Load 15', 'Write', 'Read', 'CPU', 'Transmission Rate In', 'Transmission Rate Out', 'Bandwidth In', 'Bandwidth Out', 'Loss In', 'Loss Out'];
+
+    // Create datasets for each metric
+    for (let i = 1; i < data[0].length; i++) {
+      datasets.push({
+        label: labels[i - 1],
+        data: data.map(entry => parseFloat(entry[i])),
+        backgroundColor: `rgba(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255}, 0.2)`,
+        borderColor: `rgba(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255}, 1)`,
+        borderWidth: 1
+      });
+    }
+
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+
+    myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: timestamps,
+        datasets: datasets
+      },
+      options: {
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+              unit: 'day'
+            }
+          },
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Error creating chart:', error);
+  }
+}
+
+// Initial fetch when the page loads
+fetchDataPerform();
 
 /*logout function*/
 function logout() {
