@@ -56,7 +56,8 @@ toggler.addEventListener('change', function () {
     }
 });
 //log 
- let tableVisible = false; // Variable to track the visibility status
+ let logTableVisible = false; // Variable to track the visibility status for log table
+let warnlogTableVisible = false; // Variable to track the visibility status for warnlog table
 
 async function log() {
   try {
@@ -97,10 +98,10 @@ async function log() {
     logElement.appendChild(table);
 
     // Toggle the visibility status
-    tableVisible = !tableVisible;
+    logTableVisible = !logTableVisible;
 
     // Show/hide the table based on the visibility status
-    if (tableVisible) {
+    if (logTableVisible) {
       table.style.display = 'table';
     } else {
       table.style.display = 'none';
@@ -111,8 +112,6 @@ async function log() {
     // Display an error message to the user if desired
   }
 }
-
- let tableVisible = false; // Variable to track the visibility status
 
 async function warnlog() {
   try {
@@ -153,10 +152,10 @@ async function warnlog() {
     warnlogElement.appendChild(table);
 
     // Toggle the visibility status
-    tableVisible = !tableVisible;
+    warnlogTableVisible = !warnlogTableVisible;
 
     // Show/hide the table based on the visibility status
-    if (tableVisible) {
+    if (warnlogTableVisible) {
       table.style.display = 'table';
     } else {
       table.style.display = 'none';
