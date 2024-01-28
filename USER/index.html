@@ -224,18 +224,16 @@
                             <i class='bx bx-plus'></i>
                         </div>
                     <!-- Update the first form with a unique id -->
-                     <button onclick="fetchData()">Fetch Reminders</button>
-                          <table border="1">
-                            <thead>
-                              <tr>
-                                <th>Attribute</th>
-                                <th>Value</th>
-                              </tr>
-                            </thead>
-                            <tbody id="dataTableBody">
-                              <!-- Table body will be populated dynamically -->
-                            </tbody>
-                          </table>
+                     <button onclick="fetchData()">Fetch Data</button>
+                      <table id="myTable" style="display: none;">
+                        <thead>
+                          <tr>
+                            <th>Key</th>
+                            <th>Value</th>
+                          </tr>
+                        </thead>
+                        <tbody id="dataTableBody"></tbody>
+                      </table>
                     <!-- Update the second form with a unique id -->  
                     <!-- Table Perform -->
                      <button onclick="warnlog()">Warning Log</button>
@@ -334,7 +332,7 @@
 <script>
    
 //Reminder
-     async function fetchData() {
+    async function fetchData() {
       try {
         const response = await fetch('http://192.168.1.213:5001/user/reminders', {
           method: 'POST',
@@ -359,128 +357,129 @@
     }
 
     function updateTable(data) {
+      const table = document.getElementById('myTable');
       const dataTableBody = document.getElementById('dataTableBody');
-      dataTableBody.innerHTML = ''; // Clear existing content
 
-      for (const key in data[0]) {
-        const row = document.createElement('tr');
-        const cellKey = document.createElement('td');
-        const cellValue = document.createElement('td');
+      // Clear existing content
+      dataTableBody.innerHTML = '';
 
-        cellKey.textContent = key;
-        cellValue.textContent = data[0][key];
+      // Check if there is data to display
+      if (data.length > 0) {
+        // Display the table
+        table.style.display = 'table';
 
-        row.appendChild(cellKey);
-        row.appendChild(cellValue);
-        dataTableBody.appendChild(row);
+        // Iterate through data and update the table
+        for (const key in data[0]) {
+          const row = document.createElement('tr');
+          const cellKey = document.createElement('td');
+          const cellValue = document.createElement('td');
+
+          cellKey.textContent = key;
+          cellValue.textContent = data[0][key];
+
+          row.appendChild(cellKey);
+          row.appendChild(cellValue);
+          dataTableBody.appendChild(row);
+        }
+      } else {
+        // Hide the table if there is no data
+        table.style.display = 'none';
       }
     }
-   //Chart nfs Perform  
+//Chart nfs Perform  
 let myChart;
 
-    async function fetchDataPerform() {
-      const selectedApi = document.getElementById('apiSelector').value;
-      let apiUrl;
+async function fetchDataPerform() {
+  const selectedApi = document.getElementById('apiSelector').value;
+  let apiUrl;
 
-      switch (selectedApi) {
-  case 'api1':
-    apiUrl = 'http://192.168.1.213:5001/nfs/performance?s_nf=free5gc';
-    break;
-  case 'api2':
-    apiUrl = 'http://192.168.1.213:5001/nfs/performance/day?s_nf=free5gc';
-    break;
-  case 'api3':
-    apiUrl = 'http://192.168.1.213:5001/nfs/performance/week?s_nf=free5gc';
-    break;
-  case 'api4':
-    apiUrl = 'http://192.168.1.213:5001/nfs/performance/month?s_nf=free5gc';
-    break;
-  default:
-    // Handle the case where selectedApi doesn't match any of the above
-    break;
+  switch (selectedApi) {
+    case 'api1':
+      apiUrl = 'http://192.168.1.213:5001/nfs/performance?s_nf=free5gc';
+      break;
+    case 'api2':
+      apiUrl = 'http://192.168.1.213:5001/nfs/performance/day?s_nf=free5gc';
+      break;
+    case 'api3':
+      apiUrl = 'http://192.168.1.213:5001/nfs/performance/week?s_nf=free5gc';
+      break;
+    case 'api4':
+      apiUrl = 'http://192.168.1.213:5001/nfs/performance/month?s_nf=free5gc';
+      break;
+    default:
+      // Handle the case where selectedApi doesn't match any of the above
+      break;
+  }
+
+  try {
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      throw new Error('API request failed');
+    }
+
+    const data = await response.json();
+
+    // Destroy the existing chart if it exists
+    if (myChart) {
+      myChart.destroy();
+    }
+
+    createChart(data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
 }
-        
-      try {
-        const response = await fetch(apiUrl);
 
-        if (!response.ok) {
-          throw new Error('API request failed');
-        }
+function createChart(data) {
+  try {
+    const timestamps = data.map(entry => new Date(entry[0]));
+    const datasets = [];
 
-        const data = await response.json();
+    // Define labels for each metric
+    const labels = ['Disk', 'Memory', 'Load 1', 'Load 5', 'Load 15', 'Write', 'Read', 'CPU', 'Transmission Rate In', 'Transmission Rate Out', 'Bandwidth In', 'Bandwidth Out', 'Loss In', 'Loss Out'];
 
-        // Destroy the existing chart if it exists
-        if (myChart) {
-          myChart.destroy();
-        }
-
-        createChart(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+    // Create datasets for each metric
+    for (let i = 1; i < data[0].length; i++) {
+      datasets.push({
+        label: labels[i - 1],
+        data: data.map(entry => parseFloat(entry[i])),
+        backgroundColor: `rgba(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255}, 0.2)`,
+        borderColor: `rgba(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255}, 1)`,
+        borderWidth: 1
+      });
     }
 
-    function createChart(data) {
-      try {
-        // Extract specific data for the chart
-        const timestamps = data.map(entry => new Date(entry[0]));
-        const values = data.map(entry => parseFloat(entry[1]));
-        const values2 = data.map(entry => parseFloat(entry[2]));
-        const values3 = data.map(entry => parseFloat(entry[8]));
-        // Get the canvas element
-        const ctx = document.getElementById('performanceChart').getContext('2d');
+    const ctx = document.getElementById('performanceChart').getContext('2d');
 
-        // Create Line Chart
-        myChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: timestamps,
-            datasets: [{
-              label: 'Disk',
-              data: values,
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1
-            },
-            {
-            label: 'Memory',
-            data: values2,
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 1,
-          },
-          {
-            label: 'CPU',
-            data: values3,
-            backgroundColor: 'rgba(155, 99, 132, 0.2)',
-            borderColor: 'rgba(155, 99, 132, 1)',
-            borderWidth: 1,
-          },
-        ],
-          },
-          options: {
-            scales: {
-              x: {
-                type: 'time',
-                time: {
-                  unit: 'day',
-                }
-              },
-              y: {
-                beginAtZero: true
-              }
+    myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: timestamps,
+        datasets: datasets
+      },
+      options: {
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+              unit: 'day'
             }
+          },
+          y: {
+            beginAtZero: true
           }
-        });
-          
-      } catch (error) {
-        console.error('Error creating chart:', error);
+        }
       }
-    }
+    });
+  } catch (error) {
+    console.error('Error creating chart:', error);
+  }
+}
 
-    // Initial fetch when the page loads
-    fetchDataPerform();
-    
+// Initial fetch when the page loads
+fetchDataPerform();
+
 </script>
 
 </body>
