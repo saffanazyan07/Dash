@@ -166,7 +166,6 @@ async function warnlog() {
     // Display an error message to the user if desired
   }
 }
-//Reminder
 let tableVisible = true; // Variable to track the visibility status
 
 async function fetchDataAndDisplayTable() {
@@ -234,6 +233,10 @@ function toggleTableVisibility() {
 
 // Initial fetch when the page loads
 fetchDataAndDisplayTable();
+
+// Add a click event listener to the 'myTable' button to toggle table visibility
+const myTableButton = document.getElementById('myTableButton');
+myTableButton.addEventListener('click', toggleTableVisibility);
 
 // Additional function Totallog
 async function Totallog() {
