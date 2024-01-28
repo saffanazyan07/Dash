@@ -226,15 +226,14 @@
                     <!-- Update the first form with a unique id -->
                       <!-- Log Table -->
                           <button id="logButton">Show/Hide Log Table</button>
-                            <button id="warnlogButton">Show/Hide Warnlog Table</button>
-                            <button id="myTableButton">Show/Hide My Table</button>
-                            
                             <div id="log"></div>
+                            <button id="warnlogButton">Show/Hide Warnlog Table</button>
                             <div id="warnlog"></div>
+                            <button id="myTableButton">Show/Hide Reminder</button>
                             <table id="myTable">
                               <thead>
                                 <tr>
-                                  <th>Key</th>
+                                  <th>Parameter</th>
                                   <th>Value</th>
                                 </tr>
                               </thead>
@@ -327,7 +326,67 @@
     </div>
 </div>
     <script src="index.js"></script>
+<script>
+    async function fetchData() {
+  try {
+    const response = await fetch('http://192.168.1.213:5001/user/reminders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // Add any other necessary headers
+      },
+      body: JSON.stringify({
+        // Add any necessary request body data
+      }),
+    });
 
+    if (!response.ok) {
+      throw new Error('API request failed with status: ' + response.status);
+    }
+
+    const data = await response.json();
+    updateTable(data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+function updateTable(data) {
+  const table = document.getElementById('myTable');
+  const dataTableBody = document.getElementById('dataTableBody');
+
+  // Clear existing content
+  dataTableBody.innerHTML = '';
+
+  // Check if there is data to display
+  if (data.length > 0) {
+    // Display the table
+    table.style.display = 'table';
+
+    // Iterate through data and update the table
+    for (const key in data[0]) {
+      const row = document.createElement('tr');
+      const cellKey = document.createElement('td');
+      const cellValue = document.createElement('td');
+
+      cellKey.textContent = key;
+      cellValue.textContent = data[0][key];
+
+      row.appendChild(cellKey);
+      row.appendChild(cellValue);
+      dataTableBody.appendChild(row);
+    }
+  } else {
+    // Hide the table if there is no data
+    table.style.display = 'none';
+  }
+}
+
+function hideTable() {
+  const table = document.getElementById('myTable');
+  table.style.display = 'none';
+}
+    </script>
 </body>
 
 </html>
