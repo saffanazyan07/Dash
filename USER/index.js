@@ -100,6 +100,10 @@ toggler.addEventListener('change', function () {
     // Display an error message to the user if desired
   }
 }
+function hideTablelog() {
+  const table = document.getElementById('log');
+  table.style.display = 'none';
+}
     
  // Dashboard Total Log
     async function Totallog() {
@@ -165,6 +169,10 @@ toggler.addEventListener('change', function () {
     console.error('Error fetching data:', error);
     // Display an error message to the user if desired
   }
+}
+function hideTablewarnlog() {
+  const table = document.getElementById('warnlog');
+  table.style.display = 'none';
 }
 
 
