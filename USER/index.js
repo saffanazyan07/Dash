@@ -127,7 +127,9 @@ function hideTablelog() {
 }
 
 //warnlog    
-    async function warnlog() {
+  let tableVisible = false; // Variable to track the visibility status
+
+async function warnlog() {
   try {
     const response = await fetch('http://192.168.1.213:5001/nfs/warnlogs', {
       method: 'GET',
@@ -165,16 +167,21 @@ function hideTablelog() {
     warnlogElement.innerHTML = ''; // Clear existing content
     warnlogElement.appendChild(table);
 
+    // Toggle the visibility status
+    tableVisible = !tableVisible;
+
+    // Show/hide the table based on the visibility status
+    if (tableVisible) {
+      table.style.display = 'table';
+    } else {
+      table.style.display = 'none';
+    }
+
   } catch (error) {
     console.error('Error fetching data:', error);
     // Display an error message to the user if desired
   }
 }
-function hideTablewarnlog() {
-  const table = document.getElementById('warnlog');
-  table.style.display = 'none';
-}
-
 
 /*logout function*/
 function logout() {
