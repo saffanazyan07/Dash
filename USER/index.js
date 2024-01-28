@@ -56,8 +56,8 @@ toggler.addEventListener('change', function () {
     }
 });
 
-//  log  
- let tableVisible = false; // Variable to track the visibility status
+let logTableVisible = false; // Variable to track the visibility status for log table
+let warnlogTableVisible = false; // Variable to track the visibility status for warnlog table
 
 async function log() {
   try {
@@ -98,10 +98,10 @@ async function log() {
     logElement.appendChild(table);
 
     // Toggle the visibility status
-    tableVisible = !tableVisible;
+    logTableVisible = !logTableVisible;
 
     // Show/hide the table based on the visibility status
-    if (tableVisible) {
+    if (logTableVisible) {
       table.style.display = 'table';
     } else {
       table.style.display = 'none';
@@ -112,31 +112,6 @@ async function log() {
     // Display an error message to the user if desired
   }
 }
-
-    
- // Dashboard Total Log
-    async function Totallog() {
-  try {
-    const response = await fetch('http://192.168.1.213:5001/nfs/totallogs', {
-      method: 'POST',
-    });
-
-    if (!response.ok) {
-      throw new Error('API request failed with status: ' + response.status);
-    }
-
-    const data = await response.json();
-    document.getElementById('info').textContent = JSON.stringify(data.info, null, 2);
-    document.getElementById('warning').textContent = JSON.stringify(data.warning, null, 2);
-    document.getElementById('error').textContent = JSON.stringify(data.error, null, 2);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    // Display an error message to the user if desired
-  }
-}
-
-//warnlog    
-  let tableVisible = false; // Variable to track the visibility status
 
 async function warnlog() {
   try {
@@ -177,10 +152,10 @@ async function warnlog() {
     warnlogElement.appendChild(table);
 
     // Toggle the visibility status
-    tableVisible = !tableVisible;
+    warnlogTableVisible = !warnlogTableVisible;
 
     // Show/hide the table based on the visibility status
-    if (tableVisible) {
+    if (warnlogTableVisible) {
       table.style.display = 'table';
     } else {
       table.style.display = 'none';
@@ -191,6 +166,28 @@ async function warnlog() {
     // Display an error message to the user if desired
   }
 }
+
+// Additional function Totallog
+async function Totallog() {
+  try {
+    const response = await fetch('http://192.168.1.213:5001/nfs/totallogs', {
+      method: 'POST',
+    });
+
+    if (!response.ok) {
+      throw new Error('API request failed with status: ' + response.status);
+    }
+
+    const data = await response.json();
+    document.getElementById('info').textContent = JSON.stringify(data.info, null, 2);
+    document.getElementById('warning').textContent = JSON.stringify(data.warning, null, 2);
+    document.getElementById('error').textContent = JSON.stringify(data.error, null, 2);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    // Display an error message to the user if desired
+  }
+}
+
 
 /*logout function*/
 function logout() {
