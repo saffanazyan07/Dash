@@ -58,7 +58,6 @@ toggler.addEventListener('change', function () {
 
 let logTableVisible = false; // Variable to track the visibility status for log table
 let warnlogTableVisible = false; // Variable to track the visibility status for warnlog table
-let TableVisible = false; // Variable to track the visibility status for log table
 
 async function log() {
   try {
@@ -168,7 +167,7 @@ async function warnlog() {
   }
 }
 //Reminder
- let tableVisible = true;
+let tableVisible = true; // Variable to track the visibility status
 
 async function fetchDataAndDisplayTable() {
   try {
@@ -189,8 +188,13 @@ function fetchData() {
       // Add any necessary request body data
     }),
   })
-    .then(response => response.ok ? response.json() : Promise.reject('API request failed'))
-    .catch(error => {
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('API request failed with status: ' + response.status);
+      }
+      return response.json();
+    })
+    .catch((error) => {
       console.error('Error fetching data:', error);
       throw error;
     });
@@ -205,16 +209,18 @@ function updateTable(data) {
   if (data.length > 0) {
     table.style.display = tableVisible ? 'table' : 'none';
 
-    const row = document.createElement('tr');
     for (const key in data[0]) {
+      const row = document.createElement('tr');
       const cellKey = document.createElement('td');
       const cellValue = document.createElement('td');
+
       cellKey.textContent = key;
       cellValue.textContent = data[0][key];
+
       row.appendChild(cellKey);
       row.appendChild(cellValue);
+      dataTableBody.appendChild(row);
     }
-    dataTableBody.appendChild(row);
   } else {
     table.style.display = 'none';
   }
@@ -226,9 +232,8 @@ function toggleTableVisibility() {
   table.style.display = tableVisible ? 'table' : 'none';
 }
 
-    // Initial fetch when the page loads
-    fetchDataAndDisplayTable();
-
+// Initial fetch when the page loads
+fetchDataAndDisplayTable();
 
 // Additional function Totallog
 async function Totallog() {
