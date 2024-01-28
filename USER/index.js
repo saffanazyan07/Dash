@@ -56,8 +56,9 @@ toggler.addEventListener('change', function () {
     }
 });
 
-let logTableVisible = false; // Variable to track the visibility status for log table
-let warnlogTableVisible = false; // Variable to track the visibility status for warnlog table
+let logTableVisible = false;
+let warnlogTableVisible = false;
+let myTableVisible = true;
 
 async function log() {
   try {
@@ -70,46 +71,10 @@ async function log() {
     }
 
     const data = await response.json();
-
-    // Create a table element
-    const table = document.createElement("table");
-
-    // Create a header row
-    const headerRow = table.createTHead().insertRow(0);
-    for (const key of Object.keys(data[0])) {
-      const th = document.createElement("th");
-      th.textContent = key;
-      headerRow.appendChild(th);
-    }
-
-    // Create a table body
-    const body = table.createTBody();
-    for (const item of data) {
-      const row = body.insertRow();
-      for (const key of Object.keys(item)) {
-        const cell = row.insertCell();
-        cell.textContent = item[key];
-      }
-    }
-
-    // Append the table to the element with the ID 'log'
-    const logElement = document.getElementById('log');
-    logElement.innerHTML = ''; // Clear existing content
-    logElement.appendChild(table);
-
-    // Toggle the visibility status
-    logTableVisible = !logTableVisible;
-
-    // Show/hide the table based on the visibility status
-    if (logTableVisible) {
-      table.style.display = 'table';
-    } else {
-      table.style.display = 'none';
-    }
+    updateTable('log', data, logTableVisible);
 
   } catch (error) {
     console.error('Error fetching data:', error);
-    // Display an error message to the user if desired
   }
 }
 
@@ -124,54 +89,17 @@ async function warnlog() {
     }
 
     const data = await response.json();
-
-    // Create a table element
-    const table = document.createElement("table");
-
-    // Create a header row
-    const headerRow = table.createTHead().insertRow(0);
-    for (const key of Object.keys(data[0])) {
-      const th = document.createElement("th");
-      th.textContent = key;
-      headerRow.appendChild(th);
-    }
-
-    // Create a table body
-    const body = table.createTBody();
-    for (const item of data) {
-      const row = body.insertRow();
-      for (const key of Object.keys(item)) {
-        const cell = row.insertCell();
-        cell.textContent = item[key];
-      }
-    }
-
-    // Append the table to the element with the ID 'warnlog'
-    const warnlogElement = document.getElementById('warnlog');
-    warnlogElement.innerHTML = ''; // Clear existing content
-    warnlogElement.appendChild(table);
-
-    // Toggle the visibility status
-    warnlogTableVisible = !warnlogTableVisible;
-
-    // Show/hide the table based on the visibility status
-    if (warnlogTableVisible) {
-      table.style.display = 'table';
-    } else {
-      table.style.display = 'none';
-    }
+    updateTable('warnlog', data, warnlogTableVisible);
 
   } catch (error) {
     console.error('Error fetching data:', error);
-    // Display an error message to the user if desired
   }
 }
-let tableVisible = true; // Variable to track the visibility status
 
 async function fetchDataAndDisplayTable() {
   try {
     const data = await fetchData();
-    updateTable(data);
+    updateTable('myTable', data, myTableVisible);
   } catch (error) {
     console.error('Error fetching data:', error);
   }
@@ -199,11 +127,11 @@ function fetchData() {
     });
 }
 
-function updateTable(data) {
-  const table = document.getElementById('myTable');
-  const dataTableBody = document.getElementById('dataTableBody');
+function updateTable(tableId, data, tableVisible) {
+  const table = document.getElementById(tableId);
+  const tableBody = table.querySelector('tbody');
 
-  dataTableBody.innerHTML = '';
+  tableBody.innerHTML = '';
 
   if (data.length > 0) {
     table.style.display = tableVisible ? 'table' : 'none';
@@ -218,25 +146,41 @@ function updateTable(data) {
 
       row.appendChild(cellKey);
       row.appendChild(cellValue);
-      dataTableBody.appendChild(row);
+      tableBody.appendChild(row);
     }
   } else {
     table.style.display = 'none';
   }
 }
 
-function toggleTableVisibility() {
+function toggleTableVisibility(tableId, tableVisible) {
   tableVisible = !tableVisible;
-  const table = document.getElementById('myTable');
+  const table = document.getElementById(tableId);
   table.style.display = tableVisible ? 'table' : 'none';
+
+  // Update the corresponding visibility status variable
+  if (tableId === 'log') {
+    logTableVisible = tableVisible;
+  } else if (tableId === 'warnlog') {
+    warnlogTableVisible = tableVisible;
+  } else if (tableId === 'myTable') {
+    myTableVisible = tableVisible;
+  }
 }
 
 // Initial fetch when the page loads
 fetchDataAndDisplayTable();
 
-// Add a click event listener to the 'myTable' button to toggle table visibility
+// Add click event listeners to toggle table visibility
+const logButton = document.getElementById('logButton');
+logButton.addEventListener('click', () => toggleTableVisibility('log', logTableVisible));
+
+const warnlogButton = document.getElementById('warnlogButton');
+warnlogButton.addEventListener('click', () => toggleTableVisibility('warnlog', warnlogTableVisible));
+
 const myTableButton = document.getElementById('myTableButton');
-myTableButton.addEventListener('click', toggleTableVisibility);
+myTableButton.addEventListener('click', () => toggleTableVisibility('myTable', myTableVisible));
+
 
 // Additional function Totallog
 async function Totallog() {
