@@ -332,43 +332,46 @@
 <script>
    
 //Reminder
- async function fetchData() {
+ async function fetchDataAndDisplayTable() {
   try {
-    const response = await fetch('http://192.168.1.213:5001/user/reminders', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        // Add any other necessary headers
-      },
-      body: JSON.stringify({
-        // Add any necessary request body data
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error('API request failed with status: ' + response.status);
-    }
-
-    const data = await response.json();
+    const data = await fetchData();
     updateTable(data);
   } catch (error) {
     console.error('Error fetching data:', error);
   }
 }
 
+function fetchData() {
+  return fetch('http://192.168.1.213:5001/user/reminders', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      // Add any necessary request body data
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('API request failed with status: ' + response.status);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error('Error fetching data:', error);
+      throw error;
+    });
+}
+
 function updateTable(data) {
   const table = document.getElementById('myTable');
   const dataTableBody = document.getElementById('dataTableBody');
 
-  // Clear existing content
   dataTableBody.innerHTML = '';
 
-  // Check if there is data to display
   if (data.length > 0) {
-    // Display the table
     table.style.display = 'table';
 
-    // Iterate through data and update the table
     for (const key in data[0]) {
       const row = document.createElement('tr');
       const cellKey = document.createElement('td');
@@ -381,8 +384,10 @@ function updateTable(data) {
       row.appendChild(cellValue);
       dataTableBody.appendChild(row);
     }
+
+    // Hide the table immediately after displaying it
+    hideTable();
   } else {
-    // Hide the table if there is no data
     table.style.display = 'none';
   }
 }
@@ -391,6 +396,10 @@ function hideTable() {
   const table = document.getElementById('myTable');
   table.style.display = 'none';
 }
+
+// Initial fetch when the page loads
+fetchDataAndDisplayTable();
+
 
 //Chart nfs Perform  
 let myChart;
