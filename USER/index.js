@@ -56,8 +56,8 @@ toggler.addEventListener('change', function () {
     }
 });
 
-let logTableVisible = false;
-let warnlogTableVisible = false;
+let logTableVisible = true;
+let warnlogTableVisible = true;
 let myTableVisible = true;
 
 async function log() {
