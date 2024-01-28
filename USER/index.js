@@ -58,6 +58,7 @@ toggler.addEventListener('change', function () {
 
 let logTableVisible = false; // Variable to track the visibility status for log table
 let warnlogTableVisible = false; // Variable to track the visibility status for warnlog table
+let TableVisible = false; // Variable to track the visibility status for log table
 
 async function log() {
   try {
@@ -166,6 +167,68 @@ async function warnlog() {
     // Display an error message to the user if desired
   }
 }
+//Reminder
+ let tableVisible = true;
+
+async function fetchDataAndDisplayTable() {
+  try {
+    const data = await fetchData();
+    updateTable(data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+function fetchData() {
+  return fetch('http://192.168.1.213:5001/user/reminders', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      // Add any necessary request body data
+    }),
+  })
+    .then(response => response.ok ? response.json() : Promise.reject('API request failed'))
+    .catch(error => {
+      console.error('Error fetching data:', error);
+      throw error;
+    });
+}
+
+function updateTable(data) {
+  const table = document.getElementById('myTable');
+  const dataTableBody = document.getElementById('dataTableBody');
+
+  dataTableBody.innerHTML = '';
+
+  if (data.length > 0) {
+    table.style.display = tableVisible ? 'table' : 'none';
+
+    const row = document.createElement('tr');
+    for (const key in data[0]) {
+      const cellKey = document.createElement('td');
+      const cellValue = document.createElement('td');
+      cellKey.textContent = key;
+      cellValue.textContent = data[0][key];
+      row.appendChild(cellKey);
+      row.appendChild(cellValue);
+    }
+    dataTableBody.appendChild(row);
+  } else {
+    table.style.display = 'none';
+  }
+}
+
+function toggleTableVisibility() {
+  tableVisible = !tableVisible;
+  const table = document.getElementById('myTable');
+  table.style.display = tableVisible ? 'table' : 'none';
+}
+
+    // Initial fetch when the page loads
+    fetchDataAndDisplayTable();
+
 
 // Additional function Totallog
 async function Totallog() {
