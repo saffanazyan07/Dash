@@ -72,6 +72,31 @@ async function log() {
 
     const data = await response.json();
     updateTable('log', data, logTableVisible);
+        // Create a table element
+    const table = document.createElement("table");
+
+    // Create a header row
+    const headerRow = table.createTHead().insertRow(0);
+    for (const key of Object.keys(data[0])) {
+      const th = document.createElement("th");
+      th.textContent = key;
+      headerRow.appendChild(th);
+    }
+
+    // Create a table body
+    const body = table.createTBody();
+    for (const item of data) {
+      const row = body.insertRow();
+      for (const key of Object.keys(item)) {
+        const cell = row.insertCell();
+        cell.textContent = item[key];
+      }
+    }
+
+    // Append the table to the element with the ID 'log'
+    const logElement = document.getElementById('log');
+    logElement.innerHTML = ''; // Clear existing content
+    logElement.appendChild(table);
 
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -90,6 +115,31 @@ async function warnlog() {
 
     const data = await response.json();
     updateTable('warnlog', data, warnlogTableVisible);
+    // Create a table element
+    const table = document.createElement("table");
+
+    // Create a header row
+    const headerRow = table.createTHead().insertRow(0);
+    for (const key of Object.keys(data[0])) {
+      const th = document.createElement("th");
+      th.textContent = key;
+      headerRow.appendChild(th);
+    }
+
+    // Create a table body
+    const body = table.createTBody();
+    for (const item of data) {
+      const row = body.insertRow();
+      for (const key of Object.keys(item)) {
+        const cell = row.insertCell();
+        cell.textContent = item[key];
+      }
+    }
+
+    // Append the table to the element with the ID 'warnlog'
+    const warnlogElement = document.getElementById('warnlog');
+    warnlogElement.innerHTML = ''; // Clear existing content
+    warnlogElement.appendChild(table);
 
   } catch (error) {
     console.error('Error fetching data:', error);
