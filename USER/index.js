@@ -57,7 +57,9 @@ toggler.addEventListener('change', function () {
 });
 
 //  log  
-   async function log() {
+ let tableVisible = false; // Variable to track the visibility status
+
+async function log() {
   try {
     const response = await fetch('http://192.168.1.213:5001/nfs/log', {
       method: 'GET',
@@ -95,15 +97,22 @@ toggler.addEventListener('change', function () {
     logElement.innerHTML = ''; // Clear existing content
     logElement.appendChild(table);
 
+    // Toggle the visibility status
+    tableVisible = !tableVisible;
+
+    // Show/hide the table based on the visibility status
+    if (tableVisible) {
+      table.style.display = 'table';
+    } else {
+      table.style.display = 'none';
+    }
+
   } catch (error) {
     console.error('Error fetching data:', error);
     // Display an error message to the user if desired
   }
 }
-function hideTablelog() {
-  const table = document.getElementById('log');
-  table.style.display = 'none';
-}
+
     
  // Dashboard Total Log
     async function Totallog() {
