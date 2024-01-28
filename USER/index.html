@@ -322,14 +322,6 @@
 </div>
     <script src="index.js"></script>
 <script>
-async function fetchDataAndDisplayTable() {
-  try {
-    const data = await fetchData();
-    updateTable(data);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-}
 
 function fetchData() {
   return fetch('http://192.168.1.213:5001/user/reminders', {
