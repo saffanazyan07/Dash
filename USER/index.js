@@ -56,6 +56,117 @@ toggler.addEventListener('change', function () {
     }
 });
 //log 
+ let tableVisible = false; // Variable to track the visibility status
+
+async function log() {
+  try {
+    const response = await fetch('http://192.168.1.213:5001/nfs/log', {
+      method: 'GET',
+    });
+
+    if (!response.ok) {
+      throw new Error('API request failed with status: ' + response.status);
+    }
+
+    const data = await response.json();
+
+    // Create a table element
+    const table = document.createElement("table");
+
+    // Create a header row
+    const headerRow = table.createTHead().insertRow(0);
+    for (const key of Object.keys(data[0])) {
+      const th = document.createElement("th");
+      th.textContent = key;
+      headerRow.appendChild(th);
+    }
+
+    // Create a table body
+    const body = table.createTBody();
+    for (const item of data) {
+      const row = body.insertRow();
+      for (const key of Object.keys(item)) {
+        const cell = row.insertCell();
+        cell.textContent = item[key];
+      }
+    }
+
+    // Append the table to the element with the ID 'log'
+    const logElement = document.getElementById('log');
+    logElement.innerHTML = ''; // Clear existing content
+    logElement.appendChild(table);
+
+    // Toggle the visibility status
+    tableVisible = !tableVisible;
+
+    // Show/hide the table based on the visibility status
+    if (tableVisible) {
+      table.style.display = 'table';
+    } else {
+      table.style.display = 'none';
+    }
+
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    // Display an error message to the user if desired
+  }
+}
+
+ let tableVisible = false; // Variable to track the visibility status
+
+async function warnlog() {
+  try {
+    const response = await fetch('http://192.168.1.213:5001/nfs/warnlogs', {
+      method: 'GET',
+    });
+
+    if (!response.ok) {
+      throw new Error('API request failed with status: ' + response.status);
+    }
+
+    const data = await response.json();
+
+    // Create a table element
+    const table = document.createElement("table");
+
+    // Create a header row
+    const headerRow = table.createTHead().insertRow(0);
+    for (const key of Object.keys(data[0])) {
+      const th = document.createElement("th");
+      th.textContent = key;
+      headerRow.appendChild(th);
+    }
+
+    // Create a table body
+    const body = table.createTBody();
+    for (const item of data) {
+      const row = body.insertRow();
+      for (const key of Object.keys(item)) {
+        const cell = row.insertCell();
+        cell.textContent = item[key];
+      }
+    }
+
+    // Append the table to the element with the ID 'warnlog'
+    const warnlogElement = document.getElementById('warnlog');
+    warnlogElement.innerHTML = ''; // Clear existing content
+    warnlogElement.appendChild(table);
+
+    // Toggle the visibility status
+    tableVisible = !tableVisible;
+
+    // Show/hide the table based on the visibility status
+    if (tableVisible) {
+      table.style.display = 'table';
+    } else {
+      table.style.display = 'none';
+    }
+
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    // Display an error message to the user if desired
+  }
+}
 
 // Additional function Totallog
 async function Totallog() {
