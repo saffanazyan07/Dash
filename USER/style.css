@@ -69,9 +69,6 @@ body{
     margin: 1px;
 }
 
-.sidebar::-webkit-scrollbar{
-    display: none;
-}
 
 .sidebar.close{
     width: 60px;
