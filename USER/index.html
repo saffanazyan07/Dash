@@ -253,37 +253,40 @@
 
             <!-- End Insights -->
 <!-- User Form -->
+             
 <div class="bottom-data">
-    <div class="orders">
+    <div class="orders"> 
     <div class="header">
     <table>
-    <tbody>
-           <tr>
-              <td><form id="userEditForm"><label for="email">Email:</label></td>
-              <td><input type="email" id="email" required></td>
-            </tr>
-            <tr>
-                <td><label for="name">Name:</label></td>
-                <td><input type="text" id="name" required></td>
-            </tr>
-            <tr>
-                <td><label for="password">Password:</label></td>
-                <td><input type="password" id="password" required></td>
-            </tr>
-            <tr>
-                <td><label for="confirmPassword">Confirm Password:</label></td>
-                <td><input type="password" id="confirmPassword" required></td>
-            </tr>
-            <tr>
-                <td><label for="phone">Phone:</label></td>
-                <td><input type="tel" id="phone" required></td>
-            </tr>
-    </div>
-        <div>
-        <button type="button" onclick="getUserData()">Get User Data</button>
-        <button type="button" onclick="editUserData()">Submit</button>
-     </div>       
-    </form> 
+        <tbody>
+            <form>
+                <div>
+                   <tr>
+                      <td><form id="userEditForm"><label for="email">Email:</label></td>
+                      <td><input type="email" id="email" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="name">Name:</label></td>
+                        <td><input type="text" id="name" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password">Password:</label></td>
+                        <td><input type="password" id="password" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="confirmPassword">Confirm Password:</label></td>
+                        <td><input type="password" id="confirmPassword" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="phone">Phone:</label></td>
+                        <td><input type="tel" id="phone" required></td>
+                    </tr>
+                </div>
+                <div>
+                    <button type="button" onclick="getUserData()">Get User Data</button>
+                    <button type="button" onclick="editUserData()">Submit</button>
+                </div>       
+            </form> 
         </tbody>
     </table>
     </div>
@@ -401,18 +404,18 @@ function hideTable() {
   });
 // tabhover    
 function hoverTabs(event, content) {
-            var i, tabcontent, sidemenulinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            sidemenulinks = document.getElementsByClassName("sidemenulinks");
-            for (i = 0; i < sidemenulinks.length; i++) {
-                sidemenulinks[i].className = sidemenulinks[i].className.replace(" active", "");
-            }
-            document.getElementById(content).style.display = "block";
-            event.currentTarget.className += " active";
-        }
+    var i, tabcontent, sidemenulinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    sidemenulinks = document.getElementsByClassName("sidemenulinks");
+    for (i = 0; i < sidemenulinks.length; i++) {
+        sidemenulinks[i].className = sidemenulinks[i].className.replace(" active", "");
+    }
+    document.getElementById(content).style.display = "block";
+    event.currentTarget.className += " active";
+}
     </script>
 </body>
 
