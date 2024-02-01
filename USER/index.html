@@ -31,12 +31,14 @@
             <li class="sidemenulinks" onclick="Totallog()"><a href="#"><i class='bx bxs-dashboard'></i>Dashboard</a></li>
             <li class="sidemenulinks" onclick="hoverTabs(event, 'UE')"><a href="http://192.168.1.213:5000/#/subscriber"><i class='bx bx-phone'></i>UE</a></li>
             <!-- li class="sidemenulinks" onclick="hoverTabs(event, 'analyse')"><a href="#"><i class='bx bx-analyse'></i>Analytics</a></li -->
-            <li class="sidemenulinks"><a href="#NF"><i class='bx bx-message-square-dots'></i>NF<div id="allNF"><i class='bx bx-caret-down'></div></a></i></li>
-                <ul id="NF">
+                <li class="sidemenulinks">
+                  <a href="#NF"><i class='bx bx-message-square-dots'></i>NF<div id="allNF"><i class='bx bx-caret-down'></i></div></a>
+                  <ul class="sub-menu">
                     <li class="sidemenulinks" onclick="hoverTabs(event, 'AMF')"><a href="#AMF"><i class='bx bx-message-dots'></i>AMF</a></li>
                     <li class="sidemenulinks" onclick="hoverTabs(event, 'SMF')"><a href="#SMF"><i class='bx bx-message-dots'></i>SMF</a></li>
                     <li class="sidemenulinks" onclick="hoverTabs(event, 'UPF')"><a href="#UPF"><i class='bx bx-message-dots'></i>UPF</a></li>
-                </ul>
+                  </ul>
+                </li>
             <li class="sidemenulinks" onclick="hoverTabs(event, 'user')"><a href="#user"><i class='bx bx-group'></i>Users</a></li>
             <li class="sidemenulinks" onclick="hoverTabs(event, 'setting')"><a href="#Setting"><i class='bx bx-cog'></i>Settings</a></li>
         </ul>
