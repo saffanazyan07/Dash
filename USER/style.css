@@ -171,6 +171,10 @@ body{
     font-size: 1.6rem;
     justify-content: center;
 }
+.sidebar .side-menu ul.sub-menu {
+      display: none;
+      padding-left: 20px;
+    }
 /*modif*/
 .sidebar .side-menu ul ul{
     height: 48px;
@@ -222,7 +226,6 @@ body{
     overflow-x: hidden;
     transition: all 0.3s ease;
 }
-
 
 .sidebar.close .side-menu li a li{
     width: calc(48px - (4px * 2));
