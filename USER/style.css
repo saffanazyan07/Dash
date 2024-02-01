@@ -176,7 +176,10 @@ body{
     font-size: 1.6rem;
     justify-content: center;
 }
-
+.sidebar .side-menu li a .bx-caret-down
+{
+    float:right;
+}
 /* Corrected styles for nested ul elements */
 .sidebar .side-menu li ul {
     height: 48px;
