@@ -323,6 +323,7 @@
     <script src="index.js"></script>
 <script>
 
+    //reminder 
 async function fetchData() {
   try {
     const response = await fetch('http://192.168.1.213:5001/user/reminders', {
@@ -382,6 +383,21 @@ function hideTable() {
   const table = document.getElementById('myTable');
   table.style.display = 'none';
 }
+    // Add your JavaScript code here
+  document.addEventListener("DOMContentLoaded", function () {
+    const dropdowns = document.querySelectorAll('.sidemenulinks');
+
+    dropdowns.forEach((dropdown) => {
+      dropdown.addEventListener('click', function (event) {
+        const subMenu = this.querySelector('.sub-menu');
+
+        if (subMenu) {
+          event.preventDefault();
+          subMenu.style.display = subMenu.style.display === 'block' ? 'none' : 'block';
+        }
+      });
+    });
+  });
     </script>
 </body>
 
