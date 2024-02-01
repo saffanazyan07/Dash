@@ -75,8 +75,7 @@
 
     <main>
     <!-- dashboard --> 
-        <div id="dashboard" class="tabcontent">
-            <div class="header">
+            <div id="dashboard" class="header">
                 <div class="left">
                     <h1>Dashboard</h1>
                 </div>
@@ -185,16 +184,12 @@
                             <i class='bx bx-dots-vertical-rounded'></i>
                         </li>
                     </ul>
-
                 </div>
-
                 <!-- End of Reminders-->
             </div>
-        </div>
     <!-- End of Dashboard-->
     <!-- UE-->
-    <div id="UE" class="tabcontent">
-        <div class="header">
+        <div id="UE" class="header">
                 <div class="left">
                     <h1><a href="#">UE</a></h1>
                     <ul class="breadcrumb">
@@ -204,10 +199,8 @@
             </div>
 
             <!-- Insights -->
-            
                         
             <!-- End of Insights -->
-
             <div class="bottom-data">
                 <div class="orders">
                         <div class="header">
@@ -241,8 +234,7 @@
     <!-- End of UE-->
 
     <!-- user -->  
-         <div id="user" class="tabcontent">
-            <div class="header">
+            <div id="user" class="header">
                 <div class="left">
                     <h1><a href="#">User Editing Form</a></h1>
                     <ul class="breadcrumb">
@@ -293,8 +285,7 @@
    </div> 
 </div>
           <!-- AMF -->
-          <div id="NF" class="tabcontent">
-            <div class="header">
+            <div id="NF" class="header">
                 <div class="left">
                     <h1><a href="#">Network Function Performance</a></h1>
                     <ul class="breadcrumb">
@@ -404,10 +395,10 @@ function hideTable() {
   });
 // tabhover    
 function hoverTabs(event, content) {
-    var i, tabcontent, sidemenulinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+    var i, header, sidemenulinks;
+    tabcontent = document.getElementsByClassName("header");
+    for (i = 0; i < header.length; i++) {
+        header[i].style.display = "none";
     }
     sidemenulinks = document.getElementsByClassName("sidemenulinks");
     for (i = 0; i < sidemenulinks.length; i++) {
