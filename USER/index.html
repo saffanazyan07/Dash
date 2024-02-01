@@ -399,12 +399,20 @@ function hideTable() {
       });
     });
   });
-//hoverTabs function
-    function hoverTabs(event, tabName) {
-    // Your tab-switching logic here
-    console.log(`Switching to ${tabName}`);
-    // You can add more logic to handle the switching behavior, such as showing/hiding content, updating styles, etc.
-  }
+// tabhover    
+function hoverTabs(event, content) {
+            var i, tabcontent, sidemenulinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            sidemenulinks = document.getElementsByClassName("sidemenulinks");
+            for (i = 0; i < sidemenulinks.length; i++) {
+                sidemenulinks[i].className = sidemenulinks[i].className.replace(" active", "");
+            }
+            document.getElementById(content).style.display = "block";
+            event.currentTarget.className += " active";
+        }
     </script>
 </body>
 
