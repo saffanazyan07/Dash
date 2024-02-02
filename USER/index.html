@@ -49,7 +49,7 @@
     </div>
     <!-- End of Sidebar -->
 
-    <!-- Main Content -->
+    
     <div class="content">
         <!-- Navbar -->
         <nav>
@@ -70,12 +70,13 @@
                 <img src="images/logo.png">
             </a>
         </nav>
-
         <!-- End of Navbar -->
-
+        
+<!-- Main Content -->
     <main>
     <!-- dashboard --> 
-            <div id="dashboard" class="header">
+         <div id="dashboard" class="maincontent">
+            <div class="header">
                 <div class="left">
                     <h1>Dashboard</h1>
                 </div>
@@ -187,9 +188,13 @@
                 </div>
                 <!-- End of Reminders-->
             </div>
+          </div>   
     <!-- End of Dashboard-->
+
+        
     <!-- UE-->
-        <div id="UE" class="header">
+    <div id="UE" class="maincontent">
+        <div class="header">
                 <div class="left">
                     <h1><a href="#">UE</a></h1>
                     <ul class="breadcrumb">
@@ -197,9 +202,6 @@
                     </ul>
                 </div>
             </div>
-
-            <!-- Insights -->
-                        
             <!-- End of Insights -->
             <div class="bottom-data">
                 <div class="orders">
@@ -231,60 +233,62 @@
                 </div>
                 <!-- End of Reminders-->
             </div>
+        </div>
     <!-- End of UE-->
 
-    <!-- user -->  
-            <div id="user" class="header">
+        <!-- user -->
+        <div id="User" class="maincontent">
+           <div class="header">
                 <div class="left">
                     <h1><a href="#">User Editing Form</a></h1>
                     <ul class="breadcrumb">
                         <li>Subscriber</li>
                     </ul>
                 </div>
+            </div>            
+        <!-- User Form -->   
+            <div class="bottom-data">
+                <div class="orders"> 
+                    <div class="header">
+                        <table>
+                            <tbody>
+                                <form>
+                                    <div>
+                                       <tr>
+                                          <td><form id="userEditForm"><label for="email">Email:</label></td>
+                                          <td><input type="email" id="email" required></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="name">Name:</label></td>
+                                            <td><input type="text" id="name" required></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="password">Password:</label></td>
+                                            <td><input type="password" id="password" required></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="confirmPassword">Confirm Password:</label></td>
+                                            <td><input type="password" id="confirmPassword" required></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="phone">Phone:</label></td>
+                                            <td><input type="tel" id="phone" required></td>
+                                        </tr>
+                                    </div>
+                                    <div>
+                                        <button type="button" onclick="getUserData()">Get User Data</button>
+                                        <button type="button" onclick="editUserData()">Submit</button>
+                                    </div>       
+                                </form> 
+                            </tbody>
+                        </table>
+                    </div>
+               </div> 
             </div>
-
-            <!-- End Insights -->
-<!-- User Form -->
-             
-<div class="bottom-data">
-    <div class="orders"> 
-    <div class="header">
-    <table>
-        <tbody>
-            <form>
-                <div>
-                   <tr>
-                      <td><form id="userEditForm"><label for="email">Email:</label></td>
-                      <td><input type="email" id="email" required></td>
-                    </tr>
-                    <tr>
-                        <td><label for="name">Name:</label></td>
-                        <td><input type="text" id="name" required></td>
-                    </tr>
-                    <tr>
-                        <td><label for="password">Password:</label></td>
-                        <td><input type="password" id="password" required></td>
-                    </tr>
-                    <tr>
-                        <td><label for="confirmPassword">Confirm Password:</label></td>
-                        <td><input type="password" id="confirmPassword" required></td>
-                    </tr>
-                    <tr>
-                        <td><label for="phone">Phone:</label></td>
-                        <td><input type="tel" id="phone" required></td>
-                    </tr>
-                </div>
-                <div>
-                    <button type="button" onclick="getUserData()">Get User Data</button>
-                    <button type="button" onclick="editUserData()">Submit</button>
-                </div>       
-            </form> 
-        </tbody>
-    </table>
-    </div>
-   </div> 
-</div>
-          <!-- AMF -->
+        </div>
+        
+    <!-- AMF -->
+        <div id="AMF" class="maincontent">
             <div id="NF" class="header">
                 <div class="left">
                     <h1><a href="#">Network Function Performance</a></h1>
@@ -293,24 +297,50 @@
                     </ul>
                 </div>
             </div>
-
-<div class="bottom-data">
-<div class="orders">
-    <div class="header">
-        <div class="sidemenulinks"><a href="#"><i class='bx bx-message-square-dots'></i>NF</a>
-            <label for="apiSelector">Select API:</label>
-              <select id="apiSelector" onchange="fetchDataPerform()">
-                <option value="api1">NF Performance</option>  
-                <option value="api2">NF Performance Per Day</option>
-                <option value="api3">NF Performance Per Week</option>
-                <option value="api4">NF Performance Per Month</option>  
-              </select>
-              <canvas id="performanceChart" width="800" height="400"></canvas>
+            <div class="bottom-data">
+                <div class="orders">
+                    <div class="header">
+                        <div class="sidemenulinks"><a href="#"><i class='bx bx-message-square-dots'></i>NF</a>
+                            <label for="apiSelector">Select API:</label>
+                              <select id="apiSelector" onchange="fetchDataPerform()">
+                                <option value="api1">NF Performance</option>  
+                                <option value="api2">NF Performance Per Day</option>
+                                <option value="api3">NF Performance Per Week</option>
+                                <option value="api4">NF Performance Per Month</option>  
+                              </select>
+                              <canvas id="performanceChart" width="800" height="400"></canvas>
+                        </div>
+                    </div>
+                </div> 
             </div>
         </div>
-   </div> 
-</div>
-</div>   
+        <!-- SMF -->
+        <div id="SMF" class="maincontent">
+            <div id="NF" class="header">
+                <div class="left">
+                    <h1><a href="#">Network Function Performance</a></h1>
+                    <ul class="breadcrumb">
+                        <li>Graphic</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bottom-data">
+                <div class="orders">
+                    <div class="header">
+                        <div class="sidemenulinks"><a href="#"><i class='bx bx-message-square-dots'></i>NF</a>
+                            <label for="apiSelector">Select API:</label>
+                              <select id="apiSelector" onchange="fetchDataPerform()">
+                                <option value="api1">NF Performance</option>  
+                                <option value="api2">NF Performance Per Day</option>
+                                <option value="api3">NF Performance Per Week</option>
+                                <option value="api4">NF Performance Per Month</option>  
+                              </select>
+                              <canvas id="performanceChart" width="800" height="400"></canvas>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>   
      <!-- End of Tabcontent-->
         </main>
     </div>
@@ -394,17 +424,17 @@ function hideTable() {
     });
   });
 // tabhover    
-function hoverTabs(event, content) {
-    var i, header, sidemenulinks;
-    tabcontent = document.getElementsByClassName("header");
-    for (i = 0; i < header.length; i++) {
-        header[i].style.display = "none";
+function hoverTabs(event, mainContent) {
+    var i, maincontent, sidemenulinks;
+    maincontent = document.getElementsByClassName("maincontent");
+    for (i = 0; i < maincontent.length; i++) {
+        maincontent[i].style.display = "none";
     }
     sidemenulinks = document.getElementsByClassName("sidemenulinks");
     for (i = 0; i < sidemenulinks.length; i++) {
         sidemenulinks[i].className = sidemenulinks[i].className.replace(" active", "");
     }
-    document.getElementById(content).style.display = "block";
+    document.getElementById(mainContent).style.display = "block";
     event.currentTarget.className += " active";
 }
     </script>
