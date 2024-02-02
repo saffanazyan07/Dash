@@ -110,6 +110,11 @@ body{
     margin-top: 48px;
 }
 
+.sidebar .side-menu .sidemenulinks.active {
+    background-color: #4CAF50; /* Change this to your preferred active background color */
+    color: white; /* Change this to your preferred active text color */
+}
+
 .sidebar .side-menu li {
     height: 48px;
     background: transparent;
